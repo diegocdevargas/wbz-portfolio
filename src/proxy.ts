@@ -5,7 +5,7 @@ import { LOCALE_HEADER, defaultLocale, isLocale } from "@/i18n/config";
  * Portuguese is served without a prefix: "/cases" is rewritten internally to "/pt/cases".
  * "/en/..." and "/es/..." pass through, and an explicit "/pt/..." redirects to the clean URL.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const seg = pathname.split("/")[1];
 

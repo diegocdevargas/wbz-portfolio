@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/content/dictionaries";
-import { alternates, type Locale } from "@/i18n/config";
+import { notFound } from "next/navigation";
+import { alternates, isLocale, type Locale } from "@/i18n/config";
 import { SceneTrack } from "@/components/home/SceneTrack";
 import { Clients } from "@/components/home/Clients";
 import { SelectedWork } from "@/components/home/SelectedWork";
@@ -13,11 +14,14 @@ type Props = { params: Promise<{ locale: Locale }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  if (!isLocale(locale)) return {};
   return { alternates: alternates(locale, "/") };
 }
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
+  // Requests the proxy skips (e.g. /favicon.ico) land here with a non-locale param.
+  if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
   return (
     <>

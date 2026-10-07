@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { LOCALE_HEADER, defaultLocale, isLocale, localePath } from "@/i18n/config";
 
 // not-found pages receive no route params, so the language comes from the header the
-// middleware sets.
+// proxy sets.
 const copy = {
   pt: { eyebrow: "Erro 404", text: "Fora de", accent: "órbita.", body: "A página que você procura não existe ou mudou de endereço.", back: "Voltar para a home" },
   en: { eyebrow: "Error 404", text: "Out of", accent: "orbit.", body: "The page you are looking for does not exist or has moved.", back: "Back to home" },

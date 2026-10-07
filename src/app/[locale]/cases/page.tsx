@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getProjects } from "@/content/projects";
 import { getDictionary } from "@/content/dictionaries";
-import { alternates, type Locale } from "@/i18n/config";
+import { notFound } from "next/navigation";
+import { alternates, isLocale, type Locale } from "@/i18n/config";
 import { WorkGrid } from "@/components/work/WorkGrid";
 import styles from "./page.module.css";
 
@@ -9,12 +10,15 @@ type Props = { params: Promise<{ locale: Locale }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  if (!isLocale(locale)) return {};
   const t = getDictionary(locale).work;
   return { title: t.metaTitle, description: t.intro, alternates: alternates(locale, "/cases") };
 }
 
 export default async function WorkPage({ params }: Props) {
   const { locale } = await params;
+  // Requests the proxy skips (e.g. /favicon.ico) land here with a non-locale param.
+  if (!isLocale(locale)) notFound();
   const t = getDictionary(locale).work;
   const projects = getProjects(locale);
   const years = projects.map((p) => p.year);
