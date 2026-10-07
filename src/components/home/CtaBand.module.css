@@ -11,8 +11,9 @@
   padding: 36px var(--gutter) 160px;
 }
 
+/* The 12 px labels use pure black: --ink on violet is 4.27:1, just under WCAG AA. */
 .eyebrow {
-  color: var(--ink);
+  color: #000;
 }
 
 .title {
@@ -46,7 +47,7 @@
   line-height: 1.3;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: #000;
 }
 
 .mail:hover {

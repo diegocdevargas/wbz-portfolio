@@ -46,6 +46,12 @@ export function SceneTrack({ t }: { t: Dictionary["home"] }) {
       <div id="why-us-section" className={styles.section} data-scene-state="why">
         <div className={styles.delay} />
         <div className={styles.pin}>
+          <div className={styles.valueHeading} data-reveal="rise-exit-up" data-reveal-group="why">
+            <p className="eyebrow">{values.eyebrow}</p>
+            <h2 className={styles.valueTitle}>
+              {values.title.text} <span className="accent">{values.title.accent}</span>
+            </h2>
+          </div>
           <ul className={styles.valueCards}>
             {values.items.map((item, i) => {
               const { icon, side } = valueLayout[i];
@@ -70,12 +76,6 @@ export function SceneTrack({ t }: { t: Dictionary["home"] }) {
               );
             })}
           </ul>
-          <div className={styles.valueHeading} data-reveal="rise-exit-up" data-reveal-group="why">
-            <p className="eyebrow">{values.eyebrow}</p>
-            <h2 className={styles.valueTitle}>
-              {values.title.text} <span className="accent">{values.title.accent}</span>
-            </h2>
-          </div>
         </div>
         <div id="why-us-showup-trigger" className={styles.trigger} data-trigger="why-show" />
         <div className={styles.delay} />
