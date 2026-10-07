@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/content/dictionaries";
 import { notFound } from "next/navigation";
-import { alternates, isLocale, type Locale } from "@/i18n/config";
+import { isLocale, type Locale } from "@/i18n/config";
+import { organizationJsonLd, pageMetadata } from "@/app/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { SceneTrack } from "@/components/home/SceneTrack";
 import { Clients } from "@/components/home/Clients";
 import { SelectedWork } from "@/components/home/SelectedWork";
@@ -15,7 +17,8 @@ type Props = { params: Promise<{ locale: Locale }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  return { alternates: alternates(locale, "/") };
+  const { title, description } = getDictionary(locale).meta;
+  return pageMetadata({ locale, path: "/", title, brandTitle: false, description });
 }
 
 export default async function HomePage({ params }: Props) {
@@ -25,6 +28,7 @@ export default async function HomePage({ params }: Props) {
   const t = getDictionary(locale);
   return (
     <>
+      <JsonLd data={organizationJsonLd(locale, t.meta.description)} />
       <Loader caption={t.home.loader.caption} />
       <SceneTrack t={t.home} />
       <Clients t={t.home.clients} />

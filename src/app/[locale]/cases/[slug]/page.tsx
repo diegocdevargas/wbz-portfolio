@@ -4,7 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNextProject, getProject, projectSlugs } from "@/content/projects";
 import { getDictionary } from "@/content/dictionaries";
-import { alternates, locales, localePath, type Locale } from "@/i18n/config";
+import { locales, localePath, type Locale } from "@/i18n/config";
+import { breadcrumbJsonLd, pageMetadata, projectOgImage } from "@/app/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { Icon } from "@/components/ui/Icon";
 import { MonoButton } from "@/components/ui/MonoButton";
 import { RichText } from "@/components/ui/RichText";
@@ -22,12 +24,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { locale, slug } = await params;
   const project = getProject(slug, locale);
   if (!project) return {};
-  return {
+  return pageMetadata({
+    locale,
+    path: `/cases/${slug}`,
     title: project.title,
-    alternates: alternates(locale, `/cases/${slug}`),
     description: `${project.subtitle}. ${project.challenge.split(". ")[0]}.`,
-    openGraph: { images: [{ url: project.cover.src, width: project.cover.width, height: project.cover.height }] },
-  };
+    image: { ...projectOgImage(slug), alt: project.cover.alt },
+    type: "article",
+  });
 }
 
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {
@@ -51,8 +55,15 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     { heading: t.result, text: project.result },
   ];
 
+  const crumbs = breadcrumbJsonLd(locale, [
+    { name: dict.footer.sitemap.home, path: "/" },
+    { name: dict.work.metaTitle, path: "/cases" },
+    { name: project.title, path: `/cases/${slug}` },
+  ]);
+
   return (
     <article className={styles.page}>
+      <JsonLd data={crumbs} />
       <header className="container">
         <Link href={localePath(locale, "/cases")} className={styles.back} data-cursor-target>
           ← {t.back}

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { getProjects } from "@/content/projects";
 import { getDictionary } from "@/content/dictionaries";
 import { notFound } from "next/navigation";
-import { alternates, isLocale, type Locale } from "@/i18n/config";
+import { isLocale, type Locale } from "@/i18n/config";
+import { pageMetadata } from "@/app/seo";
 import { WorkGrid } from "@/components/work/WorkGrid";
 import styles from "./page.module.css";
 
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = getDictionary(locale).work;
-  return { title: t.metaTitle, description: t.intro, alternates: alternates(locale, "/cases") };
+  return pageMetadata({ locale, path: "/cases", title: t.metaTitle, description: t.intro });
 }
 
 export default async function WorkPage({ params }: Props) {

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { anton, inter, jetbrains, moon } from "../fonts";
 import { site } from "@/content/site";
 import { getDictionary } from "@/content/dictionaries";
-import { alternates, htmlLang, isLocale, locales, ogLocale, type Locale } from "@/i18n/config";
+import { htmlLang, isLocale, locales, type Locale } from "@/i18n/config";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
@@ -21,20 +21,11 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = getDictionary(locale).meta;
+  // Site-wide defaults; each page sets its own canonical, hreflang and share tags (seo.ts).
   return {
     metadataBase: new URL(site.url),
-    title: { default: t.title, template: "%s — Webcraftz" },
+    title: { default: t.title, template: `%s — ${site.name}` },
     description: t.description,
-    alternates: alternates(locale, "/"),
-    openGraph: {
-      title: t.title,
-      description: t.description,
-      url: site.url,
-      siteName: site.name,
-      locale: ogLocale[locale],
-      alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocale[l]),
-      type: "website",
-    },
   };
 }
 
