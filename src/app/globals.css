@@ -27,7 +27,7 @@
   /* Type */
   --font-display: var(--font-anton), "Anton", Impact, sans-serif;
   --font-body: var(--font-inter), "Inter", system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
   --font-logo: var(--font-moon), var(--font-body);
 
   /* Layout */

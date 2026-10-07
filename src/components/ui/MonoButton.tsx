@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-/** JetBrains Mono uppercase button with the up-right arrow, as used across the live site. */
+/** Monospace uppercase button with the up-right arrow, as used across the live site. */
 export function MonoButton({ href, children, variant = "ghost", external, newTabLabel, className }: Props) {
   const cls = `${styles.button} ${styles[variant]} ${className ?? ""}`;
   const content = (

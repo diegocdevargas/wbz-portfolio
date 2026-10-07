@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { anton, inter, jetbrains, moon } from "../fonts";
+import { anton, inter, moon } from "../fonts";
 import { site } from "@/content/site";
 import { getDictionary } from "@/content/dictionaries";
 import { htmlLang, isLocale, locales, type Locale } from "@/i18n/config";
@@ -43,7 +43,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html
       lang={htmlLang[locale]}
-      className={`${anton.variable} ${inter.variable} ${jetbrains.variable} ${moon.variable}`}
+      className={`${anton.variable} ${inter.variable} ${moon.variable}`}
     >
       <body>
         <a className="skip-link" href="#main">
