@@ -157,13 +157,16 @@ export function SceneChoreography() {
       );
     }, track);
 
-    // Fonts and images change layout; re-measure once they settle.
-    const refresh = () => ScrollTrigger.refresh();
-    document.fonts?.ready.then(refresh);
-    window.addEventListener("load", refresh);
+    // Late web fonts change layout; re-measure once they settle. (ScrollTrigger already
+    // refreshes itself on load and resize; each refresh is a full layout pass, so skip
+    // this one when the fonts are in.)
+    let alive = true;
+    if (document.fonts && document.fonts.status !== "loaded") {
+      document.fonts.ready.then(() => alive && ScrollTrigger.refresh());
+    }
 
     return () => {
-      window.removeEventListener("load", refresh);
+      alive = false;
       ctx.revert();
       track.removeAttribute("data-choreo");
       sceneStore.setState("hero");

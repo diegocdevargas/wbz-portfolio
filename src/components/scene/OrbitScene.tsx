@@ -1,8 +1,7 @@
 "use client";
 
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import * as THREE from "three";
 import { sceneConstants as C, sceneStates, type SceneValues } from "./sceneStates";
@@ -12,6 +11,13 @@ import { diskFragmentShader, diskVertexShader } from "./diskShader";
 const DEG = Math.PI / 180;
 
 const SceneEffects = lazy(() => import("./SceneEffects"));
+
+const TEXTURES = [
+  "/textures/planet-albedo.webp",
+  "/textures/planet-normal.webp",
+  "/textures/planet-roughness.png",
+  "/textures/planet-clouds.webp",
+];
 
 type Props = {
   reducedMotion: boolean;
@@ -66,19 +72,9 @@ function Rig({ reducedMotion, compact, onReady }: Props) {
   const spin = useRef({ planet: 0, clouds: 0, disk: 0, time: 0 });
   const values = useRef<SceneValues>({ ...sceneStates[sceneStore.state] });
 
-  const [albedo, normal, roughness, cloudsMap] = useTexture(
-    [
-      "/textures/planet-albedo.webp",
-      "/textures/planet-normal.webp",
-      "/textures/planet-roughness.png",
-      "/textures/planet-clouds.webp",
-    ],
-    (textures) => {
-      const list = Array.isArray(textures) ? textures : [textures];
-      list[0].colorSpace = THREE.SRGBColorSpace;
-      list[3].colorSpace = THREE.SRGBColorSpace;
-    },
-  );
+  const [albedo, normal, roughness, cloudsMap] = useLoader(THREE.TextureLoader, TEXTURES);
+  albedo.colorSpace = THREE.SRGBColorSpace;
+  cloudsMap.colorSpace = THREE.SRGBColorSpace;
 
   const diskUniforms = useMemo(
     () => ({
