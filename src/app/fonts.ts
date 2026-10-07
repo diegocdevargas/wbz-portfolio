@@ -20,12 +20,15 @@ export const inter = localFont({
   display: "swap",
 });
 
+// Not preloaded: on phones it only appears below the fold or in the menu, so it shouldn't
+// compete with the hero's faces for bandwidth.
 export const jetbrains = localFont({
   src: "../fonts/JetBrainsMono-500.woff2",
   weight: "500",
   style: "normal",
   variable: "--font-jetbrains",
   display: "swap",
+  preload: false,
 });
 
 // Moon 2.0 Bold: the Webcraftz wordmark face.
