@@ -1,0 +1,38 @@
+.band {
+  position: relative;
+  z-index: 1;
+  background: var(--surface-1);
+  border-top: 1px solid var(--line);
+}
+
+.title {
+  padding: 46px var(--gutter);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+.marquee {
+  --marquee-gap: 19px;
+  padding-block: 52px;
+  border-bottom: 1px solid var(--line);
+}
+
+.logo img {
+  width: 240px;
+  height: 80px;
+}
+
+@media (max-width: 809px) {
+  .title {
+    padding-block: 36px;
+  }
+
+  .marquee {
+    padding-block: 32px;
+  }
+
+  .logo img {
+    width: 180px;
+    height: 60px;
+  }
+}

@@ -1,0 +1,251 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition:
+    transform 400ms var(--ease-out),
+    background-color 300ms ease,
+    backdrop-filter 300ms ease;
+}
+
+.header[data-state="top"] {
+  background: transparent;
+}
+
+.header[data-state="scrolled"] {
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.header[data-state="hidden"] {
+  transform: translateY(-100%);
+}
+
+.header[data-state="open"] {
+  background: var(--bg);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 20px var(--gutter);
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+.logo {
+  font-family: var(--font-logo);
+  font-size: 39px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+.nav ul {
+  display: flex;
+  gap: 30px;
+}
+
+.navLink {
+  display: block;
+  padding: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22.4px;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  transition: color var(--dur-fast) ease;
+}
+
+.navLink:hover,
+.navLink[aria-current="page"] {
+  color: var(--violet);
+}
+
+.contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 27px;
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22.4px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  transition:
+    border-color var(--dur-fast) ease,
+    color var(--dur-fast) ease;
+}
+
+.contactIcon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.contact:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  color: var(--text-strong);
+}
+
+.contact:hover .contactIcon {
+  transform: translateX(2px);
+}
+
+.toggle {
+  display: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+}
+
+.bar {
+  position: absolute;
+  left: 11px;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text-strong);
+  transition: transform 300ms var(--ease-out);
+}
+
+.bar:first-child {
+  top: 17px;
+}
+
+.bar:last-child {
+  top: 25px;
+}
+
+.toggle[aria-expanded="true"] .bar:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.toggle[aria-expanded="true"] .bar:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.drawer {
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 24px var(--gutter) 40px;
+  background: var(--bg);
+  overflow-y: auto;
+  animation: drawerIn 300ms var(--ease-out);
+}
+
+.drawer[hidden] {
+  display: none;
+}
+
+@keyframes drawerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.drawerList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.drawerLink {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.drawerLink:hover {
+  color: var(--violet);
+}
+
+.drawerContact {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--violet);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.drawerMail {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--violet);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 809px) {
+  .nav,
+  .contact {
+    display: none;
+  }
+
+  .toggle {
+    display: block;
+  }
+
+  .logo {
+    font-size: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .drawer {
+    transition: none;
+    animation: none;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.drawerLang {
+  margin-top: auto;
+}
+
+.drawerLang a {
+  padding: 10px 12px 10px 0;
+  font-size: 14px;
+}
+
+@media (max-width: 809px) {
+  .lang {
+    display: none;
+  }
+}

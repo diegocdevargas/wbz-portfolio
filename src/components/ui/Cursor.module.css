@@ -1,0 +1,81 @@
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.cursor[data-visible] {
+  opacity: 1;
+}
+
+.dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.frame {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.box {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+}
+
+.tl,
+.tr,
+.br,
+.bl {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 0 solid #ffffff;
+}
+
+.tl {
+  top: 0;
+  left: 0;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+
+.tr {
+  top: 0;
+  right: 0;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+
+.br {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+}
+
+.bl {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+
+/* The native pointer is hidden only while the reticle is running. */
+:global(html).hideNative,
+:global(html).hideNative * {
+  cursor: none !important;
+}

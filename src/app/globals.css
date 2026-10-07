@@ -1,0 +1,281 @@
+/* Webcraftz design tokens. Values measured from the live site's computed styles
+   (www.webcraftz.com.br, 1440px and 390px viewports, 2026-10-03). */
+
+:root {
+  /* Palette */
+  --bg: #000000;
+  --surface-1: #0a0a0a;
+  --surface-2: #0c0c0c;
+  --chip: #141418;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --text: #edebe6;
+  --text-strong: #ffffff;
+  --text-body: rgba(255, 255, 255, 0.82);
+  --text-muted: #8f8f8f;
+  --text-dim: #8a8780;
+  --violet: #9b45f5;
+  --violet-hover: #895bf5;
+  /* Live site uses #322eb2 (~2.2:1 on the card frame). Lifted to pass WCAG AA large text (3.4:1);
+     set --indigo back to var(--indigo-live) to match the live colour exactly. */
+  --indigo-live: #322eb2;
+  --indigo: #5550e6;
+  --wordmark: rgba(138, 135, 128, 0.33);
+  --ink: #0b0b0b;
+  --chip-active-bg: #ebdde4;
+
+  /* Type */
+  --font-display: var(--font-anton), "Anton", Impact, sans-serif;
+  --font-body: var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+  --font-logo: var(--font-moon), var(--font-body);
+
+  /* Layout */
+  --gutter: 32px;
+  --container: 1440px;
+  --header-h: 79px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 160ms;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+
+@media (max-width: 809px) {
+  :root {
+    --gutter: 20px;
+    --header-h: 72px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-strong);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  /* Inter stylistic alternates used by the live site: single-storey a, open digits, etc. */
+  font-feature-settings: "cv03", "cv04", "cv09", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  color: #333333;
+  padding: 0 0.2em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--violet);
+  color: var(--ink);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  padding: 10px 16px;
+  background: var(--text);
+  color: var(--ink);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Shared type roles */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  color: var(--text-muted);
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.accent {
+  color: var(--violet);
+}
+
+.accent-indigo {
+  color: var(--indigo);
+}
+
+/* Section headings: Anton 48px desktop, 26px phone */
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3.34vw, 48px);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+/* Lenis smooth scroll (same rules the live site ships). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Scroll reveals for the later sections (see components/ui/Reveal.tsx). */
+[data-reveal-ready] [data-fade] {
+  transition:
+    opacity 1s cubic-bezier(0, 0.58, 0.4, 1),
+    transform 1s cubic-bezier(0, 0.58, 0.4, 1),
+    filter 1s cubic-bezier(0, 0.58, 0.4, 1);
+}
+
+[data-reveal-ready] [data-fade="blur"]:not([data-in]) {
+  opacity: 0;
+  transform: translateY(60px);
+  filter: blur(10px);
+}
+
+[data-reveal-ready] [data-fade="up"]:not([data-in]) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+[data-reveal-ready] [data-fade-stagger] > * {
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
+}
+
+[data-reveal-ready] [data-fade-stagger]:not([data-in]) > * {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+[data-fade-stagger] > :nth-child(2) { transition-delay: 80ms; }
+[data-fade-stagger] > :nth-child(3) { transition-delay: 160ms; }
+[data-fade-stagger] > :nth-child(4) { transition-delay: 240ms; }

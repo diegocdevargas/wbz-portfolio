@@ -1,0 +1,417 @@
+/*
+ * Sizes follow the live site measured at 1440×900, converted to viewport heights:
+ * a 48 px section padding, 50 vh "delay" spacers, 100 vh pinned content and 50 vh
+ * scroll triggers. The landing part totals ≈ 10.2 vh, as live.
+ */
+.track {
+  position: relative;
+  background: var(--bg);
+}
+
+/* Sticky stage: stays behind all four regions. Negative margin lets regions overlay it. */
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.section {
+  position: relative;
+  padding-block: 48px;
+}
+
+.delay,
+.trigger {
+  height: 50svh;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+.heroCopy {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(var(--gutter), 8.33vw, 120px);
+}
+
+.heroTitle {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(55px, 5.21vw, 75px);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.heroLead {
+  max-width: 450px;
+  margin-top: 26px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-body);
+}
+
+.techMarquee {
+  width: 400px;
+  max-width: 100%;
+  margin-top: 30px;
+  --marquee-gap: 64px;
+}
+
+.techItem img {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- Shared card ---------- */
+
+.card {
+  width: 217px;
+  padding: 10px 16px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.cardIcon {
+  flex: none;
+  color: var(--violet);
+}
+
+.cardBody {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  color: var(--text-muted);
+}
+
+/* ---------- Value propositions ---------- */
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+.valueCards {
+  position: absolute;
+  inset: 0;
+}
+
+.valueCard {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.valueCard[data-side="left"] {
+  left: max(var(--gutter), calc(50% - 552px));
+  flex-direction: row-reverse;
+}
+
+.valueCard[data-side="right"] {
+  right: max(var(--gutter), calc(50% - 552px));
+}
+
+.valueCard[data-index="0"],
+.valueCard[data-index="2"] {
+  top: 39.3%;
+}
+
+.valueCard[data-index="1"],
+.valueCard[data-index="3"] {
+  top: 56.8%;
+}
+
+.connector {
+  width: 84px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+}
+
+.valueCard[data-side="left"] .connector {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.18));
+}
+
+.valueHeading {
+  position: absolute;
+  inset: auto 0 5% 0;
+  padding-inline: var(--gutter);
+  text-align: center;
+}
+
+.valueTitle {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3.34vw, 48px);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+/* ---------- Services ---------- */
+
+.servicesHeading {
+  position: absolute;
+  inset: 21% 0 auto 0;
+  padding-inline: var(--gutter);
+  text-align: center;
+}
+
+.servicesHeading h2 {
+  margin-top: 6px;
+}
+
+.servicesGrid {
+  position: absolute;
+  top: 59.8%;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 268px);
+  gap: 47px;
+  justify-content: center;
+  align-items: start;
+}
+
+.serviceCard {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.serviceIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--violet);
+}
+
+/* ---------- Journey ---------- */
+
+.journeySection {
+  position: relative;
+  padding-block: 48px 86px;
+}
+
+.journeyDelay {
+  height: 100svh;
+}
+
+.journey {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-left: max(var(--gutter), calc(50% - 552px));
+}
+
+.step {
+  display: flex;
+  align-items: center;
+}
+
+.stepNumber {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: var(--bg);
+  font-size: 16px;
+  color: var(--text-strong);
+}
+
+.stepLine {
+  width: 84px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ---------- Tablet / phone ---------- */
+
+@media (max-width: 1199px) {
+  .valueCard[data-side="left"] {
+    left: var(--gutter);
+  }
+
+  .valueCard[data-side="right"] {
+    right: var(--gutter);
+  }
+
+  .servicesGrid {
+    grid-template-columns: repeat(2, 268px);
+    gap: 24px;
+    top: 46%;
+  }
+}
+
+/* Journey steps light up as they reach mid-screen (toggled by the choreography):
+   number first, then the dash draws out, then the card slides in. */
+.stepNumber,
+.stepLine,
+.stepCard {
+  transition:
+    opacity 0.5s var(--ease-out),
+    transform 0.5s var(--ease-out);
+}
+
+.stepLine {
+  transform-origin: left center;
+  transition-delay: 0.1s;
+}
+
+.stepCard {
+  transition-delay: 0.2s;
+}
+
+[data-choreo] .step:not([data-visible]) .stepNumber {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+[data-choreo] .step:not([data-visible]) .stepLine {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+[data-choreo] .step:not([data-visible]) .stepCard {
+  opacity: 0;
+  transform: translateX(-12px);
+}
+
+/*
+ * Phone: the live layout drops the scroll-target triggers. Content flows in one
+ * column after a half-screen pause, and each block fades up as it enters.
+ */
+@media (max-width: 809px) {
+  .section {
+    padding-block: 32px;
+  }
+
+  /* Only the leading pause remains; the trigger stretches between steps go away. */
+  .trigger,
+  .trigger ~ .delay {
+    display: none;
+  }
+
+  .pin {
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+  }
+
+  .hero {
+    align-items: flex-start;
+    padding-top: 29svh;
+  }
+
+  .heroCopy {
+    padding-inline: 26px;
+  }
+
+  .heroLead {
+    max-width: 340px;
+  }
+
+  .techMarquee {
+    width: 100%;
+  }
+
+  .valueHeading,
+  .servicesHeading {
+    position: static;
+    order: -1;
+    padding-bottom: 48px;
+  }
+
+  .valueCards {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .valueCard,
+  .valueCard[data-side="left"],
+  .valueCard[data-side="right"] {
+    position: static;
+  }
+
+  .connector {
+    display: none;
+  }
+
+  .servicesGrid {
+    position: static;
+    grid-template-columns: min(268px, calc(100vw - 2 * var(--gutter)));
+    gap: 46px;
+  }
+
+  .serviceCard {
+    padding: 12px 14px;
+  }
+
+  .journey {
+    padding-inline: 15px;
+  }
+
+  .stepLine {
+    width: 46px;
+  }
+}
+
+/* Reduced motion: shorter pauses so nobody scrolls through long empty stretches. */
+@media (prefers-reduced-motion: reduce) {
+  .delay,
+  .trigger {
+    height: 15svh;
+  }
+
+  .journeyDelay {
+    height: 30svh;
+  }
+
+  .stepNumber,
+  .stepLine,
+  .stepCard {
+    transition: none;
+  }
+}

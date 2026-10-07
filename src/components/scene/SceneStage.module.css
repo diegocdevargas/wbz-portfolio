@@ -1,0 +1,25 @@
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+/* No-WebGL fallback: a frame of our own scene in its hero state. */
+.still {
+  position: absolute;
+  inset: 0;
+  background: url("/images/scene-hero.jpg") 70% 50% / cover no-repeat;
+}
+
+/* The live phone layout dims the scene so the stacked copy stays readable. */
+.overlay {
+  display: none;
+}
+
+@media (max-width: 809px) {
+  .overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+}

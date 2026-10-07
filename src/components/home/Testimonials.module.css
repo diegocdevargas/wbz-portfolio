@@ -1,0 +1,97 @@
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 30px 0 0;
+  background: var(--bg);
+}
+
+.head {
+  padding-inline: var(--gutter);
+  text-align: center;
+}
+
+.title {
+  margin-top: 56px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 3.34vw, 48px);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.marquee {
+  --marquee-gap: 20px;
+  max-width: 1100px;
+  margin: 40px auto 0;
+}
+
+.card {
+  width: 320px;
+  min-height: 234px;
+  padding: 26px 28px 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-1);
+}
+
+.card figure {
+  position: relative;
+  height: 100%;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-strong);
+}
+
+.quote {
+  margin: 20px 0 0;
+  padding-right: 24px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.mark {
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  color: var(--violet);
+}
+
+@media (max-width: 809px) {
+  .section {
+    padding-top: 80px;
+  }
+
+  .title {
+    margin-top: 8px;
+  }
+
+  .marquee {
+    margin-top: 40px;
+  }
+
+  .card {
+    width: 280px;
+  }
+}

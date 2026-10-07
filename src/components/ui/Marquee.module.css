@@ -1,0 +1,44 @@
+.marquee {
+  --marquee-gap: 48px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+
+.marquee[data-reverse] .track {
+  animation-direction: reverse;
+}
+
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+
+.list {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--marquee-gap);
+  padding-right: var(--marquee-gap);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+  }
+
+  .track {
+    animation: none;
+  }
+}
