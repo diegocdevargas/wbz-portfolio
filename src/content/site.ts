@@ -5,12 +5,9 @@ export const site = {
   url: "https://www.webcraftz.com.br",
   email: "contact@webcraftz.com.br",
   timeZone: "America/Sao_Paulo",
+  /** Contact buttons ("Contato", "Iniciar projeto") open this profile in a new tab. */
+  workana: "https://www.workana.com/freelancer/0c943e82affa62666714b017f2daabd2",
 };
-
-/** "Iniciar projeto" destination until Diego provides a form or booking link. */
-export function startProjectHref(subject: string): string {
-  return `mailto:${site.email}?subject=${encodeURIComponent(subject)}`;
-}
 
 // Paths are the Portuguese ones; components prefix them with localePath(). Labels are in
 // the dictionaries under header.nav and footer.sitemap.
@@ -22,7 +19,7 @@ export const nav = [
   { key: "faq", href: "/#faq-section" },
 ] as const;
 
-export const contactHref = "/#cta-section";
+export const contactHref = site.workana;
 
 export const sitemap = [
   { key: "home", href: "/" },
@@ -30,10 +27,9 @@ export const sitemap = [
   { key: "contact", href: "/#cta-section" },
 ] as const;
 
-// The live site links LinkedIn to https://linkedin.com and Workana to https://behance.net,
-// which are placeholders. Until Diego supplies the real profile URLs these point at the
-// services' home pages; replace `href` when known.
+// The live site links LinkedIn to https://linkedin.com, a placeholder. Until Diego supplies
+// the real profile URL it points at the service's home page; replace `href` when known.
 export const social = [
   { label: "LinkedIn", href: "https://www.linkedin.com/", needsReview: true },
-  { label: "Workana", href: "https://www.workana.com/", needsReview: true },
+  { label: "Workana", href: site.workana },
 ];

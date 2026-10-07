@@ -58,9 +58,9 @@ export default async function LocaleLayout({ children, params }: Props) {
         <a className="skip-link" href="#main">
           {t.meta.skipLink}
         </a>
-        <Header locale={locale} t={t.header} />
+        <Header locale={locale} t={t.header} newTabLabel={t.newTab} />
         <main id="main">{children}</main>
-        <Footer locale={locale} t={t.footer} />
+        <Footer locale={locale} t={t.footer} newTabLabel={t.newTab} />
         <SmoothScroll />
         <Reveal />
         <Cursor />

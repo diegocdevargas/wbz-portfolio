@@ -21,7 +21,7 @@ export const es: Dictionary = {
     language: "Idioma",
   },
 
-  startProjectSubject: "Nuevo proyecto",
+  newTab: "(se abre en una pestaña nueva)",
 
   home: {
     hero: {

@@ -12,9 +12,9 @@ import styles from "./Header.module.css";
 
 const HIDE_AFTER = 80;
 
-type Props = { locale: Locale; t: Dictionary["header"] };
+type Props = { locale: Locale; t: Dictionary["header"]; newTabLabel: string };
 
-export function Header({ locale, t }: Props) {
+export function Header({ locale, t, newTabLabel }: Props) {
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const [atTop, setAtTop] = useState(true);
@@ -134,8 +134,15 @@ export function Header({ locale, t }: Props) {
 
         <div className={styles.actions}>
         <LanguageSwitcher locale={locale} label={t.language} className={styles.lang} />
-        <Link href={localePath(locale, contactHref)} className={styles.contact} data-cursor-target>
+        <a
+          href={contactHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.contact}
+          data-cursor-target
+        >
           <span>{t.contact}</span>
+          <span className="sr-only"> {newTabLabel}</span>
           <span className={styles.contactIcon} aria-hidden="true">
             <svg viewBox="0 0 4.906 9" width="5" height="9">
               <path
@@ -144,7 +151,7 @@ export function Header({ locale, t }: Props) {
               />
             </svg>
           </span>
-        </Link>
+        </a>
         </div>
 
         <button
@@ -181,10 +188,17 @@ export function Header({ locale, t }: Props) {
             ))}
           </ul>
         </nav>
-        <Link href={localePath(locale, contactHref)} className={styles.drawerContact} onClick={onDrawerLink}>
+        <a
+          href={contactHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.drawerContact}
+          onClick={() => close(false)}
+        >
           {t.contact}
+          <span className="sr-only"> {newTabLabel}</span>
           <span aria-hidden="true">↗</span>
-        </Link>
+        </a>
         <a className={styles.drawerMail} href={`mailto:${site.email}`}>
           {site.email}
         </a>

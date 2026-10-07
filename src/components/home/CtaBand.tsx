@@ -1,11 +1,11 @@
 import type { Dictionary } from "@/content/dictionaries";
-import { site, startProjectHref } from "@/content/site";
+import { contactHref, site } from "@/content/site";
 import { MonoButton } from "@/components/ui/MonoButton";
 import styles from "./CtaBand.module.css";
 
-type Props = { t: Dictionary["home"]["cta"]; startProjectSubject: string };
+type Props = { t: Dictionary["home"]["cta"]; newTabLabel: string };
 
-export function CtaBand({ t: cta, startProjectSubject }: Props) {
+export function CtaBand({ t: cta, newTabLabel }: Props) {
   return (
     <section id="cta-section" className={styles.band} aria-labelledby="cta-title">
       <div className={styles.inner}>
@@ -16,7 +16,7 @@ export function CtaBand({ t: cta, startProjectSubject }: Props) {
           ))}
         </h2>
         <div className={styles.actions}>
-          <MonoButton href={startProjectHref(startProjectSubject)} variant="dark">
+          <MonoButton href={contactHref} variant="dark" newTabLabel={newTabLabel}>
             {cta.button}
           </MonoButton>
           <a className={styles.mail} href={`mailto:${site.email}`}>

@@ -21,8 +21,8 @@ export const pt = {
     language: "Idioma",
   },
 
-  /** Subject line of the "Iniciar projeto" e-mail. */
-  startProjectSubject: "Novo projeto",
+  /** Screen-reader note on links that open in a new tab. */
+  newTab: "(abre em nova aba)",
 
   home: {
     // Lines are kept so the desktop break "Ideias Em / Produtos / Reais." is preserved.

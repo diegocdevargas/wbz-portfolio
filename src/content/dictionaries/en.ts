@@ -22,7 +22,7 @@ export const en: Dictionary = {
     language: "Language",
   },
 
-  startProjectSubject: "New project",
+  newTab: "(opens in a new tab)",
 
   home: {
     hero: {

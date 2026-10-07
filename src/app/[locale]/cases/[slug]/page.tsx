@@ -35,7 +35,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   const project = getProject(slug, locale);
   if (!project) notFound();
   const next = getNextProject(slug, locale);
-  const t = getDictionary(locale).caseStudy;
+  const dict = getDictionary(locale);
+  const t = dict.caseStudy;
 
   const meta = [
     { label: t.client, value: project.client },
@@ -69,7 +70,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         </dl>
 
         {project.url && (
-          <MonoButton href={project.url} className={styles.visit}>
+          <MonoButton href={project.url} className={styles.visit} newTabLabel={dict.newTab}>
             {t.visit}
           </MonoButton>
         )}

@@ -31,7 +31,7 @@ export default async function HomePage({ params }: Props) {
       <SelectedWork locale={locale} t={t.home.selectedWork} />
       <Testimonials t={t.home.testimonials} />
       <Faq t={t.home.faq} />
-      <CtaBand t={t.home.cta} startProjectSubject={t.startProjectSubject} />
+      <CtaBand t={t.home.cta} newTabLabel={t.newTab} />
     </>
   );
 }

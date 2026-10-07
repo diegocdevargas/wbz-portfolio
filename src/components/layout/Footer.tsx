@@ -7,9 +7,9 @@ import styles from "./Footer.module.css";
 
 const WORDMARK = "WEBCRAFTZ".split("");
 
-type Props = { locale: Locale; t: Dictionary["footer"] };
+type Props = { locale: Locale; t: Dictionary["footer"]; newTabLabel: string };
 
-export function Footer({ locale, t: footer }: Props) {
+export function Footer({ locale, t: footer, newTabLabel }: Props) {
   return (
     <footer className={styles.footer}>
       <div className={styles.top}>
@@ -49,6 +49,7 @@ export function Footer({ locale, t: footer }: Props) {
               <li key={item.label}>
                 <a className={styles.link} href={item.href} target="_blank" rel="noopener noreferrer">
                   {item.label}
+                  <span className="sr-only"> {newTabLabel}</span>
                 </a>
               </li>
             ))}
