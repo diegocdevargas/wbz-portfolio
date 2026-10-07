@@ -22,6 +22,7 @@ export function Header({ locale, t }: Props) {
   const lastY = useRef(0);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const pendingHash = useRef<string | null>(null);
 
   // Hide while scrolling down, reveal on scroll up; dark blurred bar away from the top.
   useEffect(() => {
@@ -41,6 +42,17 @@ export function Header({ locale, t }: Props) {
     setOpen(false);
     if (restoreFocus) toggleRef.current?.focus();
   }, []);
+
+  // A drawer link to a section on this page: Lenis ignores anchor clicks while the drawer
+  // has it stopped, so hold the target and scroll once the drawer has closed.
+  const onDrawerLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const url = new URL(e.currentTarget.href);
+    if (url.pathname === window.location.pathname && url.hash) {
+      e.preventDefault();
+      pendingHash.current = url.hash;
+    }
+    close(false);
+  };
 
   // Close the drawer on route change.
   useEffect(() => {
@@ -80,6 +92,11 @@ export function Header({ locale, t }: Props) {
     return () => {
       root.style.overflow = prev;
       smoothScroll.start();
+      const hash = pendingHash.current;
+      if (hash) {
+        pendingHash.current = null;
+        smoothScroll.toHash(hash);
+      }
       document.removeEventListener("keydown", onKey);
     };
   }, [open, close]);
@@ -157,14 +174,14 @@ export function Header({ locale, t }: Props) {
           <ul className={styles.drawerList}>
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={localePath(locale, item.href)} className={styles.drawerLink} onClick={() => close(false)}>
+                <Link href={localePath(locale, item.href)} className={styles.drawerLink} onClick={onDrawerLink}>
                   {t.nav[item.key]}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <Link href={localePath(locale, contactHref)} className={styles.drawerContact} onClick={() => close(false)}>
+        <Link href={localePath(locale, contactHref)} className={styles.drawerContact} onClick={onDrawerLink}>
           {t.contact}
           <span aria-hidden="true">↗</span>
         </Link>
