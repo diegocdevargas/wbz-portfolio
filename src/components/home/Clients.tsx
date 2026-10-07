@@ -13,7 +13,14 @@ export function Clients({ t }: { t: Dictionary["home"]["clients"] }) {
         {clientLogos.map((logo) => (
           <li key={logo.file} className={styles.logo}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/images/clients/${logo.file}.svg`} alt={logo.name} width={240} height={80} />
+            <img
+              src={`/images/clients/${logo.file}.svg`}
+              alt={logo.name}
+              width={240}
+              height={80}
+              loading="lazy"
+              decoding="async"
+            />
           </li>
         ))}
       </Marquee>

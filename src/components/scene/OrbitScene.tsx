@@ -68,10 +68,10 @@ function Rig({ reducedMotion, compact, onReady }: Props) {
 
   const [albedo, normal, roughness, cloudsMap] = useTexture(
     [
-      "/textures/planet-albedo.png",
-      "/textures/planet-normal.png",
+      "/textures/planet-albedo.webp",
+      "/textures/planet-normal.webp",
       "/textures/planet-roughness.png",
-      "/textures/planet-clouds.jpg",
+      "/textures/planet-clouds.webp",
     ],
     (textures) => {
       const list = Array.isArray(textures) ? textures : [textures];

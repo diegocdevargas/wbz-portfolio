@@ -35,7 +35,7 @@ export function SceneTrack({ t }: { t: Dictionary["home"] }) {
             {techMarks.map((name) => (
               <li key={name} className={styles.techItem}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/images/tech/${name}.svg`} alt="" width={24} height={24} />
+                <img src={`/images/tech/${name}.svg`} alt="" width={24} height={24} fetchPriority="low" decoding="async" />
               </li>
             ))}
           </Marquee>
