@@ -56,8 +56,11 @@ export const sceneStates: Record<SceneStateName, SceneValues> = {
   },
   features: {
     cameraZ: 15,
-    groupX: 0,
-    groupY: 0,
+    // The camera sits at (-1, -1, 15) looking at the origin, so its line of sight crosses
+    // the disk's depth (z = 25 - 35 = -10) at (2/3, 2/3). Moving the group there puts the
+    // disk dead centre on screen (Framer's 0, 0 left it low and to the left).
+    groupX: 2 / 3,
+    groupY: 2 / 3,
     groupZ: 25,
     groupRotX: 0,
     planetScale: 0.1,

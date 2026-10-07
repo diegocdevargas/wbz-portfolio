@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
+import { Bloom, ChromaticAberration, EffectComposer, ToneMapping, Vignette } from "@react-three/postprocessing";
+import { ToneMappingMode } from "postprocessing";
 import gsap from "gsap";
 import * as THREE from "three";
 import { sceneConstants as C, sceneStates, type SceneValues } from "./sceneStates";
@@ -22,6 +24,9 @@ type Props = {
  * shader-driven accretion disk, lit by one violet key light. It animates toward the
  * state the scroll choreography puts in `sceneStore`, over 1 s eased in and out,
  * like the live Framer component.
+ *
+ * On larger screens a post-processing pass adds bloom, a touch of chromatic aberration
+ * and a vignette; phones skip it and the disk shader compresses its own highlights.
  */
 export default function OrbitScene({ reducedMotion, compact, onReady }: Props) {
   const [active, setActive] = useState(sceneStore.active);
@@ -43,6 +48,7 @@ export default function OrbitScene({ reducedMotion, compact, onReady }: Props) {
       style={{ position: "absolute", inset: 0 }}
     >
       <Rig reducedMotion={reducedMotion} compact={compact} onReady={onReady} />
+      {!compact && <Effects />}
     </Canvas>
   );
 }
@@ -76,6 +82,8 @@ function Rig({ reducedMotion, compact, onReady }: Props) {
       uVal: { value: 0.17 },
       uVal3: { value: 1 },
       uOctaves: { value: compact ? 2 : 3 },
+      uSpin: { value: 0 },
+      uHdr: { value: compact ? 0 : 1 },
     }),
     [compact],
   );
@@ -129,6 +137,7 @@ function Rig({ reducedMotion, compact, onReady }: Props) {
       disk.current.rotation.set(C.diskRotX * DEG, C.diskRotY * DEG, v.diskRotZ * DEG + s.disk);
     }
     diskUniforms.uTime.value = s.time;
+    diskUniforms.uSpin.value = v.diskRotZ * DEG + s.disk;
 
     if (!readyFired.current) {
       readyFired.current = true;
@@ -188,5 +197,27 @@ function Rig({ reducedMotion, compact, onReady }: Props) {
         </group>
       </group>
     </>
+  );
+}
+
+const ABERRATION = new THREE.Vector2(0.0007, 0.0007);
+
+/** Desktop-only finish: the disk's over-bright gas and photon ring bloom, then ACES maps it down. */
+function Effects() {
+  const gl = useThree((s) => s.gl);
+  // Draw an opaque black backdrop while the effects run (the page behind is black too), so
+  // the bloom glows over it instead of fading out with the alpha.
+  useEffect(() => {
+    gl.setClearColor(0x000000, 1);
+    return () => gl.setClearColor(0x000000, 0);
+  }, [gl]);
+
+  return (
+    <EffectComposer multisampling={4}>
+      <Bloom mipmapBlur luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={0.9} radius={0.7} />
+      <ChromaticAberration offset={ABERRATION} radialModulation modulationOffset={0.35} />
+      <Vignette offset={0.3} darkness={0.6} />
+      <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
+    </EffectComposer>
   );
 }
