@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
-import { Bloom, ChromaticAberration, EffectComposer, ToneMapping, Vignette } from "@react-three/postprocessing";
-import { ToneMappingMode } from "postprocessing";
 import gsap from "gsap";
 import * as THREE from "three";
 import { sceneConstants as C, sceneStates, type SceneValues } from "./sceneStates";
@@ -12,6 +10,8 @@ import { sceneStore } from "./sceneStore";
 import { diskFragmentShader, diskVertexShader } from "./diskShader";
 
 const DEG = Math.PI / 180;
+
+const SceneEffects = lazy(() => import("./SceneEffects"));
 
 type Props = {
   reducedMotion: boolean;
@@ -48,7 +48,11 @@ export default function OrbitScene({ reducedMotion, compact, onReady }: Props) {
       style={{ position: "absolute", inset: 0 }}
     >
       <Rig reducedMotion={reducedMotion} compact={compact} onReady={onReady} />
-      {!compact && <Effects />}
+      {!compact && (
+        <Suspense fallback={null}>
+          <SceneEffects />
+        </Suspense>
+      )}
     </Canvas>
   );
 }
@@ -197,27 +201,5 @@ function Rig({ reducedMotion, compact, onReady }: Props) {
         </group>
       </group>
     </>
-  );
-}
-
-const ABERRATION = new THREE.Vector2(0.0007, 0.0007);
-
-/** Desktop-only finish: the disk's over-bright gas and photon ring bloom, then ACES maps it down. */
-function Effects() {
-  const gl = useThree((s) => s.gl);
-  // Draw an opaque black backdrop while the effects run (the page behind is black too), so
-  // the bloom glows over it instead of fading out with the alpha.
-  useEffect(() => {
-    gl.setClearColor(0x000000, 1);
-    return () => gl.setClearColor(0x000000, 0);
-  }, [gl]);
-
-  return (
-    <EffectComposer multisampling={4}>
-      <Bloom mipmapBlur luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={0.9} radius={0.7} />
-      <ChromaticAberration offset={ABERRATION} radialModulation modulationOffset={0.35} />
-      <Vignette offset={0.3} darkness={0.6} />
-      <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
-    </EffectComposer>
   );
 }

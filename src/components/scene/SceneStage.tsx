@@ -17,19 +17,45 @@ function hasWebGL() {
 }
 
 /**
- * Client wrapper for the sticky scene: picks WebGL or the still fallback, and tells
- * the scene whether to run its reduced-motion and phone variants.
+ * Run `cb` once the page has loaded and the main thread is idle, so the scene's ~1 MB of
+ * script and textures never competes with first paint or hydration. Returns a cancel.
+ */
+function afterLoadIdle(cb: () => void) {
+  let idle = 0;
+  const schedule = () => {
+    idle = window.requestIdleCallback
+      ? window.requestIdleCallback(cb, { timeout: 1500 })
+      : window.setTimeout(cb, 200);
+  };
+  if (document.readyState === "complete") schedule();
+  else window.addEventListener("load", schedule, { once: true });
+  return () => {
+    window.removeEventListener("load", schedule);
+    if (window.cancelIdleCallback) window.cancelIdleCallback(idle);
+    else window.clearTimeout(idle);
+  };
+}
+
+/**
+ * Client wrapper for the sticky scene: picks WebGL or the still fallback (after load, see
+ * `afterLoadIdle`), and tells the scene whether to run its reduced-motion and phone variants.
  */
 export function SceneStage() {
   const [mode, setMode] = useState<"pending" | "webgl" | "still">("pending");
   const [reducedMotion, setReducedMotion] = useState(false);
   const [compact, setCompact] = useState(false);
 
-  useEffect(() => {
-    const webgl = hasWebGL();
-    setMode(webgl ? "webgl" : "still");
-    if (!webgl) sceneStore.markReady();
+  useEffect(
+    () =>
+      afterLoadIdle(() => {
+        const webgl = hasWebGL();
+        setMode(webgl ? "webgl" : "still");
+        if (!webgl) sceneStore.markReady();
+      }),
+    [],
+  );
 
+  useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const phone = window.matchMedia("(max-width: 809px)");
     const sync = () => {
