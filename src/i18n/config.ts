@@ -5,9 +5,6 @@ export const locales = ["pt", "en", "es"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "pt";
 
-/** Request header the proxy sets with the page language. */
-export const LOCALE_HEADER = "x-webcraftz-locale";
-
 export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }

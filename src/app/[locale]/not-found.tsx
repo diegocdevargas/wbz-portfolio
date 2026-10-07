@@ -1,18 +1,20 @@
-import Link from "next/link";
-import { headers } from "next/headers";
-import { LOCALE_HEADER, defaultLocale, isLocale, localePath } from "@/i18n/config";
+"use client";
 
-// not-found pages receive no route params, so the language comes from the header the
-// proxy sets.
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { defaultLocale, isLocale, localePath } from "@/i18n/config";
+
+// not-found pages receive no route params, so the language comes from the path. Reading it
+// on the client (not from request headers) keeps every route statically generated.
 const copy = {
   pt: { eyebrow: "Erro 404", text: "Fora de", accent: "órbita.", body: "A página que você procura não existe ou mudou de endereço.", back: "Voltar para a home" },
   en: { eyebrow: "Error 404", text: "Out of", accent: "orbit.", body: "The page you are looking for does not exist or has moved.", back: "Back to home" },
   es: { eyebrow: "Error 404", text: "Fuera de", accent: "órbita.", body: "La página que buscas no existe o cambió de dirección.", back: "Volver al inicio" },
 };
 
-export default async function NotFound() {
-  const value = (await headers()).get(LOCALE_HEADER) ?? "";
-  const locale = isLocale(value) ? value : defaultLocale;
+export default function NotFound() {
+  const seg = usePathname()?.split("/")[1] ?? "";
+  const locale = isLocale(seg) ? seg : defaultLocale;
   const t = copy[locale];
   return (
     <section
