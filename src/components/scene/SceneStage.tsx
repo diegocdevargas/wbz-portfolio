@@ -7,10 +7,21 @@ import styles from "./SceneStage.module.css";
 
 const OrbitScene = dynamic(() => import("./OrbitScene"), { ssr: false });
 
-function hasWebGL() {
+/**
+ * True only for hardware-accelerated WebGL. Software renderers (SwiftShader, llvmpipe: no
+ * GPU, as on some old laptops and on PageSpeed's test machines) draw the scene on the CPU,
+ * freezing the page for seconds, so they get the still frame instead.
+ */
+function hasFastWebGL() {
   try {
     const canvas = document.createElement("canvas");
-    return Boolean(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+    const options: WebGLContextAttributes = { failIfMajorPerformanceCaveat: true };
+    const gl = canvas.getContext("webgl2", options) ?? canvas.getContext("webgl", options);
+    if (!gl) return false;
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return !/swiftshader|llvmpipe|softpipe|software/i.test(renderer);
   } catch {
     return false;
   }
@@ -37,23 +48,23 @@ function afterLoadIdle(cb: () => void) {
 }
 
 /**
- * Client wrapper for the sticky scene: picks WebGL or the still fallback (after load, see
- * `afterLoadIdle`), and tells the scene whether to run its reduced-motion and phone variants.
+ * Client wrapper for the sticky scene: picks WebGL or the still fallback, and tells the
+ * scene whether to run its reduced-motion and phone variants. The still frame shows at
+ * once; the WebGL scene mounts after load (see `afterLoadIdle`).
  */
 export function SceneStage() {
   const [mode, setMode] = useState<"pending" | "webgl" | "still">("pending");
   const [reducedMotion, setReducedMotion] = useState(false);
   const [compact, setCompact] = useState(false);
 
-  useEffect(
-    () =>
-      afterLoadIdle(() => {
-        const webgl = hasWebGL();
-        setMode(webgl ? "webgl" : "still");
-        if (!webgl) sceneStore.markReady();
-      }),
-    [],
-  );
+  useEffect(() => {
+    if (!hasFastWebGL()) {
+      setMode("still");
+      sceneStore.markReady();
+      return;
+    }
+    return afterLoadIdle(() => setMode("webgl"));
+  }, []);
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");

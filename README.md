@@ -20,7 +20,7 @@ Site oficial da Webcraftz, rebuilt in Next.js (App Router) + React.
 - `src/components/scene/` holds the WebGL scene (React Three Fiber). `sceneStates.ts` has the four states (hero, about, services, journey) and `diskShader.ts` the accretion disk shader, both copied from the live Framer component.
 - `src/components/home/SceneChoreography.tsx` is the single scroll controller (GSAP ScrollTrigger): it switches scene states when each section reaches the top of the screen and scrubs the card reveals between the `*-showup-trigger` and `*-cleanup-trigger` regions. Region sizes live in `SceneTrack.module.css`.
 - Smooth scrolling uses Lenis, as on the live site. Reduced motion turns off smooth scroll, scene motion and scrubbing, and shortens the pauses.
-- Without WebGL, `public/images/scene-hero.jpg` (a frame of our own scene) is shown instead.
+- Without hardware-accelerated WebGL (no WebGL, or a software renderer such as SwiftShader), `public/images/scene-hero.jpg` (a frame of our own scene) is shown instead.
 
 ## Development
 
