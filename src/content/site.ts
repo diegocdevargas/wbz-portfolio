@@ -30,6 +30,6 @@ export const sitemap = [
 // The live site links LinkedIn to https://linkedin.com, a placeholder. Until Diego supplies
 // the real profile URL it points at the service's home page; replace `href` when known.
 export const social = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/", needsReview: true },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/webcraftz/", needsReview: false },
   { label: "Workana", href: site.workana },
 ];
