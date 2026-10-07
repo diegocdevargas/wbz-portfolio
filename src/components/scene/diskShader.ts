@@ -35,6 +35,8 @@ uniform float uSpin;  // disk Z rotation, radians
 uniform float uHdr;   // 1 when bloom + tone mapping run after this pass
 
 const float PI = 3.14159265;
+// Overall disk brightness: lower to dim the gas, glow and photon ring together.
+const float BRIGHTNESS = 0.3;
 
 vec3 hsv2rgb(vec3 c) {
     vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
@@ -125,6 +127,7 @@ void main() {
 
     vec3 compositeColor = (finalColor * diskProfile) + (violet * safeGlow) +
                           ringColor * (photonRing * 4.0 + echoRing * 1.5);
+    compositeColor *= BRIGHTNESS;
     if (uHdr < 0.5) {
         compositeColor = compositeColor / (1.0 + max(compositeColor - 0.8, 0.0));
     }
