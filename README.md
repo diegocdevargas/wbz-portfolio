@@ -1,6 +1,6 @@
-# wbz-modern-portfolio
+# wbz-portfolio
 
-Site oficial da Webcraftz, rebuilt in Next.js (App Router) + React from the Framer site at https://www.webcraftz.com.br/.
+Site oficial da Webcraftz, rebuilt in Next.js (App Router) + React.
 
 ## Routes
 
