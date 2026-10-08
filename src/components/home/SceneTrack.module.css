@@ -387,7 +387,7 @@
   .servicesGrid {
     position: static;
     grid-template-columns: min(268px, calc(100vw - 2 * var(--gutter)));
-    gap: 46px;
+    gap: 7px;
   }
 
   .serviceCard {

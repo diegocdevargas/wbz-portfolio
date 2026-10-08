@@ -51,6 +51,19 @@ export function actionLabel(t: HTMLElement): string | null {
   return null;
 }
 
+/**
+ * Reveals fade blocks in with opacity, and a faded-out block still sits under the pointer,
+ * so hit-testing alone would frame it. Walk up the tree and treat the target as hidden
+ * while any ancestor (or the target) is mostly transparent or `visibility: hidden`.
+ */
+function isShown(t: HTMLElement): boolean {
+  for (let n: HTMLElement | null = t; n; n = n.parentElement) {
+    const s = getComputedStyle(n);
+    if (s.visibility === "hidden" || Number(s.opacity) < 0.5) return false;
+  }
+  return true;
+}
+
 export function useCursor(root: RefObject<HTMLDivElement | null>, setup: CursorSetup): boolean {
   const [enabled, setEnabled] = useState(false);
 
@@ -95,9 +108,10 @@ export function useCursor(root: RefObject<HTMLDivElement | null>, setup: CursorS
     const tick = (now: number) => {
       const dt = Math.min((now - last) / 1000, 1 / 30);
       last = now;
-      const target = seen
+      const hit = seen
         ? document.elementFromPoint(pointerX, pointerY)?.closest<HTMLElement>(CURSOR_TARGET) ?? null
         : null;
+      const target = hit && isShown(hit) ? hit : null;
       draw({ dt, x: pointerX, y: pointerY, pressed, target, entered });
       entered = false;
       raf = requestAnimationFrame(tick);
