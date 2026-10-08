@@ -26,6 +26,11 @@
   margin: 40px auto 0;
 }
 
+/* Stretch the cards to the tallest quote so every box matches. */
+.marquee ul {
+  align-items: stretch;
+}
+
 .card {
   width: 320px;
   min-height: 234px;

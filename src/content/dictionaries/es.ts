@@ -49,8 +49,8 @@ export const es: Dictionary = {
       items: [
         { title: "Aplicaciones Web", body: "Apps full-stack con React, Next.js y APIs sólidas." },
         { title: "Sitios & E-commerce", body: "Sitios y tiendas hechos para rendir y vender." },
-        { title: "UI/UX", body: "Interfaces que las personas entienden a la primera." },
-        { title: "Asistentes con IA & RAG", body: "Chatbots que responden con base en tus documentos y datos." },
+        { title: "UI/UX", body: "Intuitivas por diseño, no por casualidad." },
+        { title: "Asistentes IA & RAG", body: "Chatbots que responden con base en tus documentos y datos." },
         { title: "Automatización de Procesos", body: "Flujos en n8n que conectan tus herramientas y reducen el trabajo manual." },
         { title: "Deploy & Soporte", body: "Hosting, seguridad y cuidado mucho después del lanzamiento." },
       ],

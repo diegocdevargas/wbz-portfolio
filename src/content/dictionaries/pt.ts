@@ -53,8 +53,8 @@ export const pt = {
       items: [
         { title: "Aplicações Web", body: "Apps full-stack com React, Next.js e APIs sólidas." },
         { title: "Sites & E-commerce", body: "Sites e lojas feitos para performar e vender." },
-        { title: "UI/UX", body: "Interfaces que as pessoas entendem de primeira." },
-        { title: "Assistentes com IA & RAG", body: "Chatbots que respondem com base nos seus documentos e dados." },
+        { title: "UI/UX", body: "Intuitiva por design, não por acaso." },
+        { title: "Assistentes IA & RAG", body: "Chatbots que respondem com base nos seus documentos e dados." },
         { title: "Automação de Processos", body: "Fluxos no n8n que conectam suas ferramentas e reduzem o trabalho manual." },
         { title: "Deploy & Suporte", body: "Hospedagem, segurança e cuidado muito depois do lançamento." },
       ],

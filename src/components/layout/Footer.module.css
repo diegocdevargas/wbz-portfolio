@@ -116,14 +116,17 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Giant edge-to-edge wordmark; each letter rolls to violet on hover. */
+/* Giant wordmark spanning the same container and gutters as the block above; the font
+   scales with that inner width. Each letter rolls to violet on hover. */
 .wordmark {
+  --wordmark-width: calc(min(100vw, var(--container)) - 2 * var(--gutter));
   display: flex;
   justify-content: space-between;
-  margin-top: 72px;
-  padding-inline: 0;
+  max-width: var(--container);
+  margin: 72px auto 0;
+  padding-inline: var(--gutter);
   font-family: var(--font-display);
-  font-size: 23.67vw;
+  font-size: calc(var(--wordmark-width) * 0.2367);
   line-height: 0.95;
   letter-spacing: 0;
   user-select: none;
@@ -200,7 +203,7 @@
 
   .wordmark {
     margin-top: 56px;
-    font-size: 22.25vw;
+    font-size: calc(var(--wordmark-width) * 0.2225);
   }
 
   .bottom {

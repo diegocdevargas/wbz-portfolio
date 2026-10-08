@@ -194,7 +194,7 @@
   right: 0;
   display: grid;
   grid-template-columns: repeat(3, 268px);
-  gap: 47px;
+  gap: 15px;
   justify-content: center;
   align-items: start;
 }
@@ -217,6 +217,11 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   color: var(--violet);
+}
+
+/* Service card titles: 7.6% smaller than the shared 16px card title. */
+.serviceCard .cardTitle {
+  font-size: 14.784px;
 }
 
 /* ---------- Journey ---------- */

@@ -8,7 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { Reveal } from "@/components/ui/Reveal";
-import { Cursor } from "@/components/ui/Cursor";
+import { CoordsCursor } from "@/components/ui/cursor/CoordsCursor";
 import "../globals.css";
 
 type Props = { children: React.ReactNode; params: Promise<{ locale: string }> };
@@ -54,7 +54,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <Footer locale={locale} t={t.footer} newTabLabel={t.newTab} />
         <SmoothScroll />
         <Reveal />
-        <Cursor />
+        <CoordsCursor />
       </body>
     </html>
   );

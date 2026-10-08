@@ -9,6 +9,25 @@ export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }
 
+/** Cookie holding the language a visitor picked in the switcher; it outranks the browser's. */
+export const LOCALE_COOKIE = "NEXT_LOCALE";
+export const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+
+/** The visitor's best supported language from an Accept-Language header, or null. */
+export function negotiateLocale(header: string | null): Locale | null {
+  if (!header) return null;
+  const ranked = header
+    .split(",")
+    .map((part, i) => {
+      const [tag, ...params] = part.trim().split(";");
+      const q = params.map((p) => p.trim()).find((p) => p.startsWith("q="));
+      return { lang: tag.trim().toLowerCase().split("-")[0], q: q ? Number(q.slice(2)) : 1, i };
+    })
+    .filter((r) => r.lang && r.q > 0)
+    .sort((a, b) => b.q - a.q || a.i - b.i);
+  return ranked.find((r): r is typeof r & { lang: Locale } => isLocale(r.lang))?.lang ?? null;
+}
+
 /** Value for <html lang> and hreflang. */
 export const htmlLang: Record<Locale, string> = { pt: "pt-BR", en: "en", es: "es" };
 

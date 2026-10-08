@@ -22,14 +22,14 @@ export const testimonials: Testimonial[] = [
     name: "Pedro",
     quote:
       "Profissional brilhante, muito hábil superou todas minhas expectativas! Recomendo 100%.",
-    avatar: "/images/testimonials/pedro.jpg",
+    avatar: "/images/testimonials/pedro-avatar.jpg",
     source: "Workana",
   },
   {
     name: "Analee",
     quote:
       "Projeto desenvolvido com diligência e atenção a pontos técnicos. Sempre disponível a esclarecerecimentos em linguagem acessível.",
-    avatar: "/images/testimonials/analee.jpg",
+    avatar: "/images/testimonials/analee-avatar.jpg",
     source: "Workana",
     needsReview: 'Typo "esclarecerecimentos" kept as on the live site until confirmed.',
   },
