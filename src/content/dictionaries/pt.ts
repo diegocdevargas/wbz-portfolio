@@ -3,7 +3,7 @@
 
 export const pt = {
   meta: {
-    title: "Webcraftz — da faísca para a órbita.",
+    title: "Desenvolvimento criativo",
     description:
       "Para fundadores e empresas que precisam de mais do que um site. Aplicações web, assistentes de IA e automações, entregues por meio de um processo claro, da primeira ideia ao lançamento e além.",
     skipLink: "Pular para o conteúdo",

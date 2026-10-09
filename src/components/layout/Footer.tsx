@@ -20,7 +20,7 @@ export function Footer({ locale, t: footer, newTabLabel }: Props) {
             <br />
             {footer.lead[1]}
           </p>
-          <a className={styles.mail} href={`mailto:${site.email}`}>
+          <a className={styles.mail} href={`mailto:${site.email}`} data-cursor-target>
             {site.email}
           </a>
         </div>
@@ -32,7 +32,11 @@ export function Footer({ locale, t: footer, newTabLabel }: Props) {
           <ul>
             {sitemap.map((item, i) => (
               <li key={item.href}>
-                <Link href={localePath(locale, item.href)} className={i === 0 ? styles.linkStrong : styles.link}>
+                <Link
+                  href={localePath(locale, item.href)}
+                  className={i === 0 ? styles.linkStrong : styles.link}
+                  data-cursor-target
+                >
                   {footer.sitemap[item.key]}
                 </Link>
               </li>
@@ -47,7 +51,7 @@ export function Footer({ locale, t: footer, newTabLabel }: Props) {
           <ul>
             {social.map((item) => (
               <li key={item.label}>
-                <a className={styles.link} href={item.href} target="_blank" rel="noopener noreferrer">
+                <a className={styles.link} href={item.href} target="_blank" rel="noopener noreferrer" data-cursor-target>
                   {item.label}
                   <span className="sr-only"> {newTabLabel}</span>
                 </a>
@@ -69,7 +73,7 @@ export function Footer({ locale, t: footer, newTabLabel }: Props) {
 
       <div className={styles.wordmark} aria-hidden="true">
         {WORDMARK.map((ch, i) => (
-          <span key={i} className={styles.letter}>
+          <span key={i} className={styles.letter} data-cursor-target>
             <span className={styles.letterBase}>{ch}</span>
             <span className={styles.letterHover}>{ch}</span>
           </span>

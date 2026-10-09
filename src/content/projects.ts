@@ -340,7 +340,7 @@ const data: Project[] = [
     categories: [
       "websites"
     ],
-    url: null,
+    url: "https://ceunsa.webcraftz.com.br/",
     featured: false,
     order: 5,
     cover: {
@@ -387,7 +387,6 @@ const data: Project[] = [
       }
     ],
     needsReview: [
-      "url: o site atual aponta para example.com",
       "discipline",
       "metrics em inglês no site atual",
       "imagens parecem do template Framer (alt \"Atelier Sōl\"), não do CEUNSA"
