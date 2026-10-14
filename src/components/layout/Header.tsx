@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { nav, contactHref, site } from "@/content/site";
+import { nav, contactHref, platforms, site } from "@/content/site";
 import type { Dictionary } from "@/content/dictionaries/format";
 import { localePath, type Locale } from "@/i18n/config";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -133,6 +133,25 @@ export function Header({ locale, t, newTabLabel }: Props) {
         </nav>
 
         <div className={styles.actions}>
+        <ul className={styles.platforms}>
+          {platforms.map((p) => (
+            <li key={p.name}>
+              <a
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.platform}
+                data-cursor-target
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.logo} alt="" width={p.width} height={p.height} data-mono={p.mono || undefined} />
+                <span className="sr-only">
+                  {p.name} {newTabLabel}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
         <LanguageSwitcher locale={locale} label={t.language} className={styles.lang} />
         <a
           href={contactHref}

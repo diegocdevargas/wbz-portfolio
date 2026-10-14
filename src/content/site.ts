@@ -21,6 +21,13 @@ export const nav = [
 
 export const contactHref = site.workana;
 
+// Freelance marketplace marks shown in the header, each linking to the profile.
+export const platforms = [
+  { name: "Workana", href: site.workana, logo: "/images/platforms/workana.svg", width: 19, height: 19, mono: false },
+  { name: "99Freelas", href: "https://www.99freelas.com.br/user/diegokazs", logo: "/images/platforms/99.png", width: 21, height: 17, mono: true },
+  { name: "Upwork", href: "https://www.upwork.com/freelancers/~0156786efbf18f6f3b", logo: "/images/platforms/upwork.svg", width: 20, height: 20, mono: true },
+] as const;
+
 export const sitemap = [
   { key: "home", href: "/" },
   { key: "work", href: "/cases" },

@@ -235,6 +235,40 @@
   gap: 16px;
 }
 
+.platforms {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.platform {
+  display: grid;
+  place-items: center;
+  height: 38px;
+  padding: 0 8px;
+  opacity: 0.6;
+  transition: opacity var(--dur-fast) ease;
+}
+
+.platform img {
+  display: block;
+}
+
+/* Single-colour logos are forced white to match the nav; the Workana symbol keeps its colours. */
+.platform img[data-mono] {
+  filter: brightness(0) invert(1);
+}
+
+.platform:hover {
+  opacity: 1;
+}
+
+@media (max-width: 1099px) {
+  .platforms {
+    display: none;
+  }
+}
+
 .drawerLang {
   margin-top: auto;
 }

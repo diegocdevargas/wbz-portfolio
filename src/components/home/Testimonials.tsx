@@ -18,9 +18,9 @@ export function Testimonials({ t }: { t: Dictionary["home"]["testimonials"] }) {
           <li key={t.name} className={styles.card} data-cursor-target>
             <figure>
               <figcaption className={styles.person}>
-                {t.avatar && (
+                {/* {t.avatar && (
                   <Image src={t.avatar} alt="" width={50} height={50} className={styles.avatar} />
-                )}
+                )} */}
                 <span className={styles.name}>{t.name}</span>
               </figcaption>
               <blockquote className={styles.quote} lang="pt-BR">{t.quote}</blockquote>
