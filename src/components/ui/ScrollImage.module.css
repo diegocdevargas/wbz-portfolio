@@ -1,0 +1,41 @@
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/*
+ * `top` is a percentage of the frame and `translateY` a percentage of the image, so moving
+ * from top:0 to top:100% + translateY(-100%) slides the image's bottom edge up to the frame's
+ * bottom edge, whatever the image height.
+ */
+.track {
+  position: absolute;
+  inset: 0 0 auto 0;
+  transition:
+    top 1.4s var(--ease-out),
+    transform 1.4s var(--ease-out);
+  will-change: top, transform;
+}
+
+.frame:hover .track,
+.frame:focus-within .track,
+:global([data-scroll-hover]:hover) .track,
+:global([data-scroll-hover]:focus-visible) .track {
+  top: 100%;
+  transform: translateY(-100%);
+  transition-duration: var(--scroll-duration, 7s);
+  transition-timing-function: cubic-bezier(0.45, 0, 0.35, 1);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transition: none;
+  }
+}

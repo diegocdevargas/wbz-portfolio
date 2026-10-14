@@ -10,7 +10,11 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { Icon } from "@/components/ui/Icon";
 import { MonoButton } from "@/components/ui/MonoButton";
 import { RichText } from "@/components/ui/RichText";
+import { ScrollImage } from "@/components/ui/ScrollImage";
 import styles from "./page.module.css";
+
+const GALLERY_SIZES = "(min-width: 1440px) 437px, (min-width: 810px) 31vw, 92vw";
+const WIDE_GALLERY_SIZES = "(min-width: 1440px) 1376px, 92vw";
 
 type Params = { locale: Locale; slug: string };
 
@@ -132,17 +136,30 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       {project.gallery.length > 0 && (
         <section className={`container ${styles.gallery}`} aria-label={t.galleryLabel}>
           <ul className={styles.galleryList}>
-            {project.gallery.map((img) => (
-              <li key={img.src} className={styles.galleryItem}>
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  sizes="(min-width: 1440px) 437px, (min-width: 810px) 31vw, 92vw"
-                  className={styles.galleryImage}
-                />
-              </li>
-            ))}
+            {project.gallery.map((img, i) => {
+              const tall = img.height / img.width > 2;
+              // A tall print that would sit alone in the last row spans the full width instead.
+              const wide = tall && i === project.gallery.length - 1 && project.gallery.length % 3 === 1;
+              return (
+                <li
+                  key={img.src}
+                  className={wide ? `${styles.galleryItem} ${styles.galleryItemWide}` : styles.galleryItem}
+                  data-cursor-target={tall ? "" : undefined}
+                >
+                  {tall ? (
+                    <ScrollImage
+                      src={img.src}
+                      alt={img.alt}
+                      width={img.width}
+                      height={img.height}
+                      sizes={wide ? WIDE_GALLERY_SIZES : GALLERY_SIZES}
+                    />
+                  ) : (
+                    <Image src={img.src} alt={img.alt} fill sizes={GALLERY_SIZES} className={styles.galleryImage} />
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </section>
       )}

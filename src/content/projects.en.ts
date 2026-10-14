@@ -21,7 +21,7 @@ export const projectsEn: Record<string, ProjectCopy> = {
     galleryAlts: [
       "Azeitonas Verdes logo artwork with dripping green letters and an olive with a face",
       "Illustration of a green olive melting in space, surrounded by purple rings",
-      "Psychedelic illustration of an olive with a guitar on a planet, in green, purple and blue",
+      "Full Azeitonas Verdes website, from header to footer",
     ],
   },
   sulboro: {
@@ -65,7 +65,7 @@ export const projectsEn: Record<string, ProjectCopy> = {
     galleryAlts: [
       "Woman lying down and smiling while holding a Xiaomi smartphone",
       "Woman showing a Xiaomi smartwatch on her wrist",
-      "Person wearing Xiaomi wireless earbuds",
+      "Full Xiaomi Brasil store home page, from header to footer",
     ],
   },
   "athie-wohnrath": {

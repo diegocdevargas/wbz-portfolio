@@ -23,6 +23,24 @@
   transform: scale(1.03);
 }
 
+/* Hidden without a fine hover pointer or with reduced motion (also keeps the image unfetched). */
+.preview {
+  display: none;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .preview {
+    display: block;
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .link:hover .preview,
+  .link:focus-visible .preview {
+    opacity: 1;
+  }
+}
+
 .meta {
   display: flex;
   align-items: baseline;

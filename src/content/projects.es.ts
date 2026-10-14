@@ -18,7 +18,7 @@ export const projectsEs: Record<string, ProjectCopy> = {
     galleryAlts: [
       "Arte del logotipo de Azeitonas Verdes con letras verdes que chorrean y una aceituna con rostro",
       "Ilustración de una aceituna verde derritiéndose en el espacio, rodeada de anillos morados",
-      "Ilustración psicodélica de una aceituna con guitarra sobre un planeta, en verde, morado y azul",
+      "Sitio completo de Azeitonas Verdes, del encabezado al pie de página",
     ],
   },
   sulboro: {
@@ -56,7 +56,7 @@ export const projectsEs: Record<string, ProjectCopy> = {
     galleryAlts: [
       "Mujer recostada sonriendo mientras sostiene un smartphone Xiaomi",
       "Mujer mostrando un smartwatch Xiaomi en la muñeca",
-      "Persona usando audífonos inalámbricos Xiaomi",
+      "Página de inicio completa de la tienda Xiaomi Brasil, del encabezado al pie de página",
     ],
   },
   "athie-wohnrath": {

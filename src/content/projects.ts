@@ -115,10 +115,10 @@ const data: Project[] = [
         height: 768
       },
       {
-        src: "/images/projects/azeitonas-verdes/gallery-3.jpg",
-        alt: "Ilustração psicodélica de uma azeitona com guitarra sobre um planeta, em verde, roxo e azul",
-        width: 928,
-        height: 1152
+        src: "/images/projects/azeitonas-verdes/full-page.webp",
+        alt: "Página inicial completa do site da Azeitonas Verdes, do topo ao rodapé",
+        width: 1600,
+        height: 6497
       }
     ],
     needsReview: [
@@ -247,10 +247,10 @@ const data: Project[] = [
         height: 539
       },
       {
-        src: "/images/projects/mi-brasil/gallery-3.webp",
-        alt: "Pessoa usando um fone de ouvido sem fio Xiaomi",
-        width: 439,
-        height: 539
+        src: "/images/projects/mi-brasil/gallery-4.webp",
+        alt: "Página inicial completa da loja Xiaomi Brasil, do topo ao rodapé",
+        width: 1349,
+        height: 2728
       }
     ],
     needsReview: [

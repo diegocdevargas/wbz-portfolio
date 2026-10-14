@@ -10,7 +10,7 @@ export const pt = {
   },
 
   header: {
-    nav: { about: "Sobre", cases: "Cases", services: "Serviços", journey: "Jornada", faq: "FAQ" },
+    nav: { about: "Sobre", cases: "Projetos", services: "Serviços", journey: "Jornada", faq: "FAQ" },
     contact: "Contato",
     homeLabel: "página inicial",
     mainNav: "Principal",
@@ -135,7 +135,7 @@ export const pt = {
   },
 
   work: {
-    metaTitle: "Cases",
+    metaTitle: "Projetos",
     kicker: "Case studies",
     title: "Em Órbita",
     intro:
