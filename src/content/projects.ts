@@ -84,8 +84,8 @@ const data: Project[] = [
       width: 1408,
       height: 768
     },
-    challenge: "Azeitonas Verdes é um power trio do interior do Rio Grande do Sul que toca punk rock cru e direto, com uma veia psicodélica. As músicas, os vídeos e as datas de show estavam espalhados pelas redes sociais. A banda precisava de uma casa própria que soasse como ela parece: barulhenta, grudenta e meio descontrolada, mas que ainda facilitasse achar o próximo show ou dar o play.",
-    approach: "Construímos a marca em torno de uma imagem: a azeitona como gosma. Um logotipo escorrendo, com contornos roxo e amarelo deslocados, resgata as fotocópias desalinhadas do punk. Filtros SVG de efeito gosma fazem as azeitonas derreterem e se fundirem, pulsando em sincronia com a música. O sistema é enxuto: um palco quase preto, um único verde-ácido como cor de destaque, roxo e amarelo guardados para os toques psicodélicos, tipografia condensada de cartaz e rótulos `//` em estilo terminal, que seguram o caos. Cada seção funciona como uma faixa de disco: sobre, vídeos, discografia, shows, galeria, a banda (\"os ingredientes da conserva\") e contato.",
+    challenge: "Azeitonas Verdes é um power trio do interior do Rio Grande do Sul, o som se basea em rock, punk e um toque de psicodelia, embora existam raizes em muita coisa aléatoria também. As músicas, os vídeos e as datas de show estavam espalhados de forma aleatória. Então surgiu a necessidade de uma identidade que refletisse essa energia: alta, barulhenta, aleatória e meio descontrolada, mas que ainda facilitasse achar o próximo show ou dar o play.",
+    approach: "Construímos a marca em torno de uma imagem: a azeitona. Um logotipo com contornos roxo e amarelo deslocados, resgata as fotocópias desalinhadas do punk. Filtros SVG de efeito misturados com manipulação de audio em sincronia com a música.",
     result: "A banda agora tem um hub único e próprio para os vídeos ao vivo, os lançamentos e a agenda de shows, com uma identidade forte o bastante para cartazes, merch e visuais de palco.",
     metrics: [
       {
