@@ -12,10 +12,11 @@ export const site = {
 // Paths are the Portuguese ones; components prefix them with localePath(). Labels are in
 // the dictionaries under header.nav and footer.sitemap.
 export const nav = [
-  { key: "about", href: "/#why-us-showup-trigger" },
+  { key: "about", href: "/#why-us-content" },
   { key: "cases", href: "/cases" },
-  { key: "services", href: "/#features-content-showup-trigger" },
-  { key: "journey", href: "/#journey-content" },
+  { key: "playground", href: "/playground" },
+  { key: "services", href: "/#features-content" },
+  { key: "journey", href: "/#journey-section" },
   { key: "faq", href: "/#faq-section" },
 ] as const;
 
@@ -31,6 +32,7 @@ export const platforms = [
 export const sitemap = [
   { key: "home", href: "/" },
   { key: "work", href: "/cases" },
+  { key: "playground", href: "/playground" },
   { key: "contact", href: "/#cta-section" },
 ] as const;
 

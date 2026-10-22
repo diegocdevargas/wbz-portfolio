@@ -15,9 +15,10 @@ export type SceneValues = {
   planetScale: number;
   cloudsScale: number;
   planetRotY: number;
-  /** Auto-rotation of the textured sphere and its cloud shell, radians per 60 fps frame. */
+  /** Auto-rotation of the planet and cloud shell, radians per 60 fps frame. */
   planetSpin: number;
   cloudsSpin: number;
+  diskScale: number;
   diskX: number;
   diskY: number;
   diskRotZ: number;
@@ -35,6 +36,7 @@ export const sceneStates: Record<SceneStateName, SceneValues> = {
     planetRotY: 0,
     planetSpin: 0.0006,
     cloudsSpin: 0.0004,
+    diskScale: 10,
     diskX: -5,
     diskY: 2,
     diskRotZ: 0,
@@ -50,6 +52,7 @@ export const sceneStates: Record<SceneStateName, SceneValues> = {
     planetRotY: 0,
     planetSpin: 0.001,
     cloudsSpin: 0.0008,
+    diskScale: 13,
     diskX: 0,
     diskY: 0,
     diskRotZ: 0,
@@ -68,6 +71,7 @@ export const sceneStates: Record<SceneStateName, SceneValues> = {
     planetRotY: -45,
     planetSpin: 0.001,
     cloudsSpin: 0.0008,
+    diskScale: 10,
     diskX: 0,
     diskY: 0,
     diskRotZ: 45,
@@ -83,6 +87,7 @@ export const sceneStates: Record<SceneStateName, SceneValues> = {
     planetRotY: -45,
     planetSpin: 0.001,
     cloudsSpin: 0.0008,
+    diskScale: 10,
     diskX: 0,
     diskY: 0,
     diskRotZ: 45,
@@ -99,9 +104,28 @@ export const sceneConstants = {
   diskZ: -35,
   diskRotX: 6,
   diskRotY: 1,
+  diskRenderOrder: 1,
+  wRenderOrder: 2,
   diskScale: 10,
   /** Disk spins counter-clockwise about Z by this much per 60 fps frame. */
   diskSpin: 0.01,
+  /** The W follows a tilted orbit around the planet. */
+  orbitSpin: 0.008,
+  orbitTiltX: 24,
+  orbitTiltY: -12,
+  orbitRadius: 2.8,
+  orbitOscillationAmplitude: 4,
+  orbitOscillationSpeed: 0.8,
+  wDepth: 0,
+  wSpin: 0.012,
+  wRadius: 2,
+  wScale: 0.38,
+  wEmissive: 0x32105f,
+  wEmissiveIntensity: 0.7,
+  planetHoverWScale: 1.12,
+  planetHoverWGlow: 0.9,
+  planetHoverDiskScale: 1.08,
+  planetHoverResponse: 5,
   sphereRadius: 2,
   planeSize: 4,
   light: {

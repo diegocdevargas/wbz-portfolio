@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Project } from "@/content/projects";
 import { ScrollImage } from "@/components/ui/ScrollImage";
 import { localePath, type Locale } from "@/i18n/config";
+import { HoverVideoPreview } from "./HoverVideoPreview";
 import styles from "./ProjectCard.module.css";
 
 type Props = {
@@ -18,13 +19,14 @@ export function ProjectCard({ project, locale, sizes, priority }: Props) {
   // A full-page layout print in the gallery previews on hover: it fades in over the cover and
   // scrolls from top to bottom. Decorative (the cover already describes the project).
   const tall = project.gallery.find((img) => img.height / img.width > 2);
+  const hasScrollPreview = Boolean(project.previewVideo || tall);
   return (
     <article className={styles.card}>
       <Link
         href={localePath(locale, `/cases/${project.slug}`)}
         className={styles.link}
         data-cursor-target
-        data-scroll-hover={tall ? "" : undefined}
+        data-scroll-hover={hasScrollPreview ? "" : undefined}
       >
         <div className={styles.media}>
           <Image
@@ -35,7 +37,9 @@ export function ProjectCard({ project, locale, sizes, priority }: Props) {
             className={styles.image}
             priority={priority}
           />
-          {tall && (
+          {project.previewVideo ? (
+            <HoverVideoPreview src={project.previewVideo} className={styles.preview} />
+          ) : tall ? (
             <ScrollImage
               src={tall.src}
               alt=""
@@ -44,7 +48,7 @@ export function ProjectCard({ project, locale, sizes, priority }: Props) {
               sizes={mediaSizes}
               className={styles.preview}
             />
-          )}
+          ) : null}
         </div>
         <div className={styles.meta}>
           <h3 className={styles.title}>{project.title}</h3>

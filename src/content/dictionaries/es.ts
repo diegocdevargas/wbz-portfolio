@@ -10,7 +10,7 @@ export const es: Dictionary = {
   },
 
   header: {
-    nav: { about: "Sobre mí", cases: "Proyectos", services: "Servicios", journey: "Proceso", faq: "FAQ" },
+    nav: { about: "Sobre mí", cases: "Proyectos", playground: "Playground", services: "Servicios", journey: "Proceso", faq: "FAQ" },
     contact: "Contacto",
     homeLabel: "página de inicio",
     mainNav: "Principal",
@@ -119,7 +119,7 @@ export const es: Dictionary = {
     eyebrow: "¿Listo para empezar?",
     lead: ["Construyamos, lancemos", "y sigamos en movimiento."],
     sitemapTitle: "Mapa del sitio",
-    sitemap: { home: "Inicio", work: "Proyectos", contact: "Contacto" },
+    sitemap: { home: "Inicio", work: "Proyectos", playground: "Playground", contact: "Contacto" },
     socialTitle: "Redes",
     studioTitle: "Estudio",
     location: ["Rio Grande do Sul,", "Brasil"],
@@ -145,6 +145,14 @@ export const es: Dictionary = {
     liveCount: "{count} proyectos en {label}",
     empty: "Todavía no hay proyectos en esta categoría.",
     showAll: "Ver todos los proyectos",
+  },
+
+  playground: {
+    metaTitle: "Playground",
+    kicker: "Experimentos en preparación",
+    intro: "Un espacio para ideas experimentales, conceptos anteriores y proyectos que exploran otros caminos.",
+    emptyTitle: "Muy pronto habrá algo nuevo.",
+    emptyBody: "Pronto podrás explorar aquí experimentos, ideas inacabadas y proyectos conceptuales del archivo.",
   },
 
   caseStudy: {

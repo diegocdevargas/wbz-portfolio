@@ -109,7 +109,12 @@ export function useCursor(root: RefObject<HTMLDivElement | null>, setup: CursorS
       const dt = Math.min((now - last) / 1000, 1 / 30);
       last = now;
       const hit = seen
-        ? document.elementFromPoint(pointerX, pointerY)?.closest<HTMLElement>(CURSOR_TARGET) ?? null
+        ? document.elementFromPoint(pointerX, pointerY)?.closest<HTMLElement>(CURSOR_TARGET) ??
+          Array.from(document.querySelectorAll<HTMLElement>("[data-cursor-hit-area]")).find((candidate) => {
+            const rect = candidate.getBoundingClientRect();
+            return pointerX >= rect.left && pointerX <= rect.right && pointerY >= rect.top && pointerY <= rect.bottom;
+          }) ??
+          null
         : null;
       const target = hit && isShown(hit) ? hit : null;
       draw({ dt, x: pointerX, y: pointerY, pressed, target, entered });

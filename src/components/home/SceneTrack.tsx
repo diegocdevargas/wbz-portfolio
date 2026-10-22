@@ -12,12 +12,12 @@ import styles from "./SceneTrack.module.css";
  * units), and the ids keep the live anchor names. `SceneChoreography` reads the
  * `data-*` hooks below to switch scene states and scrub the reveals.
  */
-export function SceneTrack({ t }: { t: Dictionary["home"] }) {
+export function SceneTrack({ t, projectsLabel }: { t: Dictionary["home"]; projectsLabel: string }) {
   const { hero, values, services, journey } = t;
   return (
     <section id="landing-part-1" className={styles.track} aria-label="Webcraftz" data-scene-track>
-      <div className={styles.stage} aria-hidden="true">
-        <SceneStage />
+      <div className={styles.stage}>
+        <SceneStage projectsLabel={projectsLabel} />
       </div>
 
       {/* Hero copy over the scene; it scrolls away normally. */}
@@ -77,7 +77,7 @@ export function SceneTrack({ t }: { t: Dictionary["home"] }) {
             })}
           </ul>
         </div>
-        <div id="why-us-showup-trigger" className={styles.trigger} data-trigger="why-show" />
+        <div id="why-us-content" className={styles.trigger} data-trigger="why-show" data-anchor-reveal />
         <div className={styles.delay} />
         <div id="why-us-cleanup-trigger" className={styles.trigger} data-trigger="why-clean" />
       </div>
@@ -110,7 +110,12 @@ export function SceneTrack({ t }: { t: Dictionary["home"] }) {
         </div>
         <div id="features-title-showup-trigger" className={styles.trigger} data-trigger="features-title-show" />
         <div className={styles.delay} />
-        <div id="features-content-showup-trigger" className={styles.trigger} data-trigger="features-content-show" />
+        <div
+          id="features-content"
+          className={styles.trigger}
+          data-trigger="features-content-show"
+          data-anchor-reveal
+        />
         <div className={styles.delay} />
         <div id="features-cleanup-trigger" className={styles.trigger} data-trigger="features-clean" />
       </div>
