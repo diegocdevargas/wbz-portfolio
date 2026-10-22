@@ -50,8 +50,22 @@ export function Header({ locale, t, newTabLabel }: Props) {
     if (url.pathname === window.location.pathname && url.hash) {
       e.preventDefault();
       pendingHash.current = url.hash;
+      window.history.pushState(null, "", url.href);
     }
     close(false);
+  };
+
+  const onNavLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const url = new URL(e.currentTarget.href);
+    if (url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash) {
+      smoothScroll.toHash(url.hash);
+    }
+  };
+
+  const onLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (pathname === localePath(locale, "/")) smoothScroll.toTop();
   };
 
   // Close the drawer on route change.
@@ -108,6 +122,8 @@ export function Header({ locale, t, newTabLabel }: Props) {
       <div className={styles.row}>
         <Link
           href={localePath(locale, "/")}
+          scroll={false}
+          onClick={onLogoClick}
           className={styles.logo}
           data-cursor-target
           aria-label={`${site.name}, ${t.homeLabel}`}
@@ -121,6 +137,8 @@ export function Header({ locale, t, newTabLabel }: Props) {
               <li key={item.href}>
                 <Link
                   href={localePath(locale, item.href)}
+                  scroll={false}
+                  onClick={onNavLink}
                   className={styles.navLink}
                   data-cursor-target
                   aria-current={pathname === localePath(locale, item.href) ? "page" : undefined}
@@ -200,7 +218,12 @@ export function Header({ locale, t, newTabLabel }: Props) {
           <ul className={styles.drawerList}>
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={localePath(locale, item.href)} className={styles.drawerLink} onClick={onDrawerLink}>
+                <Link
+                  href={localePath(locale, item.href)}
+                  scroll={false}
+                  className={styles.drawerLink}
+                  onClick={onDrawerLink}
+                >
                   {t.nav[item.key]}
                 </Link>
               </li>

@@ -52,7 +52,7 @@ function afterLoadIdle(cb: () => void) {
  * scene whether to run its reduced-motion and phone variants. The still frame shows at
  * once; the WebGL scene mounts after load (see `afterLoadIdle`).
  */
-export function SceneStage() {
+export function SceneStage({ projectsLabel }: { projectsLabel: string }) {
   const [mode, setMode] = useState<"pending" | "webgl" | "still">("pending");
   const [reducedMotion, setReducedMotion] = useState(false);
   const [compact, setCompact] = useState(false);
@@ -86,7 +86,12 @@ export function SceneStage() {
     <div className={styles.stage} data-mode={mode}>
       {mode === "still" && <div className={styles.still} />}
       {mode === "webgl" && (
-        <OrbitScene reducedMotion={reducedMotion} compact={compact} onReady={sceneStore.markReady} />
+        <OrbitScene
+          reducedMotion={reducedMotion}
+          compact={compact}
+          onReady={sceneStore.markReady}
+          projectsLabel={projectsLabel}
+        />
       )}
       <div className={styles.overlay} />
     </div>

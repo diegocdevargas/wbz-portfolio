@@ -9,7 +9,7 @@
 
 .media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #111;
 }
@@ -25,6 +25,19 @@
 
 /* Hidden without a fine hover pointer or with reduced motion (also keeps the image unfetched). */
 .preview {
+  display: none;
+}
+
+.videoPreview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.videoPreview[data-error] {
   display: none;
 }
 

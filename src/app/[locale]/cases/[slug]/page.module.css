@@ -113,9 +113,9 @@
 }
 
 .storyHeading {
-  font-size: 16px;
+  font-size: clamp(24px, 2.22vw, 32px);
   font-weight: 700;
-  line-height: 1.6;
+  line-height: 1.15;
   color: var(--text-strong);
 }
 

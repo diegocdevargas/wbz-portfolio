@@ -11,7 +11,7 @@ export const en: Dictionary = {
   },
 
   header: {
-    nav: { about: "About", cases: "Work", services: "Services", journey: "Journey", faq: "FAQ" },
+    nav: { about: "About", cases: "Work", playground: "Playground", services: "Services", journey: "Journey", faq: "FAQ" },
     contact: "Contact",
     homeLabel: "home page",
     mainNav: "Main",
@@ -120,7 +120,7 @@ export const en: Dictionary = {
     eyebrow: "Ready to start?",
     lead: ["Let's build, launch", "and keep it moving."],
     sitemapTitle: "Sitemap",
-    sitemap: { home: "Home", work: "Work", contact: "Contact" },
+    sitemap: { home: "Home", work: "Work", playground: "Playground", contact: "Contact" },
     socialTitle: "Social",
     studioTitle: "Studio",
     location: ["Rio Grande do Sul,", "Brazil"],
@@ -146,6 +146,14 @@ export const en: Dictionary = {
     liveCount: "{count} projects in {label}",
     empty: "No projects in this category yet.",
     showAll: "See all work",
+  },
+
+  playground: {
+    metaTitle: "Playground",
+    kicker: "Experiments in progress",
+    intro: "A space for experimental ideas, older concepts and projects that explore a different direction.",
+    emptyTitle: "Something new is on the way.",
+    emptyBody: "Soon, you’ll be able to explore experiments, unfinished ideas and concept projects from the archive here.",
   },
 
   caseStudy: {

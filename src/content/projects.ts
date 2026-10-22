@@ -36,6 +36,7 @@ export interface Project {
   featured: boolean;
   order: number;
   cover: ImageAsset;
+  previewVideo?: string;
   /** Paragraphs support `inline code` spans. */
   challenge: string;
   approach: string;
@@ -143,7 +144,7 @@ const data: Project[] = [
     ],
     url: "https://www.sulboro.com.br/",
     featured: true,
-    order: 2,
+    order: 3,
     cover: {
       src: "/images/projects/sulboro/cover.jpeg",
       alt: "Vista aérea de um produtor de chapéu no meio de uma lavoura de milho",
@@ -209,7 +210,7 @@ const data: Project[] = [
     ],
     url: "https://www.mibrasil.com.br/",
     featured: true,
-    order: 3,
+    order: 4,
     cover: {
       src: "/images/projects/mi-brasil/cover.jpg",
       alt: "Homem com bolsa transversal preta sobre jaqueta marrom, em foto de produto",
@@ -276,7 +277,7 @@ const data: Project[] = [
     ],
     url: "https://www.athiewohnrath.com.br/",
     featured: true,
-    order: 4,
+    order: 5,
     cover: {
       src: "/images/projects/athie-wohnrath/cover.webp",
       alt: "Escritório corporativo com pé-direito alto, madeira, plantas e poltronas",
@@ -340,15 +341,16 @@ const data: Project[] = [
     categories: [
       "websites"
     ],
-    url: "https://ceunsa.webcraftz.com.br/",
-    featured: false,
-    order: 5,
+    url: "https://ceunsa.com.br/",
+    featured: true,
+    order: 2,
     cover: {
-      src: "/images/projects/ceunsa/cover.jpg",
-      alt: "Arara com roupas pretas penduradas em cabides",
-      width: 2400,
-      height: 1600
+      src: "/images/projects/ceunsa/cover-canopy.jpg",
+      alt: "Vista de baixo para cima de uma grande árvore, com galhos e folhas verdes iluminados pelo sol",
+      width: 768,
+      height: 1364
     },
+    previewVideo: "/images/projects/ceunsa/scroll-preview-from-7s.mp4",
     challenge: "Fundado em Porto Alegre em 1959, o CEUNSA acolhe pessoas há mais de seis décadas com passes, giras e trabalho de caridade. Quem chega pela primeira vez quase sempre traz perguntas práticas: em que dia vir, que roupa usar, se precisa agendar, o que pode trazer. O templo precisava de um site que respondesse a tudo isso com a mesma calma e acolhimento que as pessoas sentem na porta, honrando 60 anos de história e os guias espirituais que formaram a casa.",
     approach: "Desenhamos o site como uma visita ao templo, um espaço de cada vez. Ele começa com as boas-vindas e a história do templo, depois vêm a linhagem de caciques e seus aparelhos, a diretoria atual, os horários, os espaços, os depoimentos de visitantes, um tour pelas quatro áreas sagradas, hinos e orações, perguntas frequentes e contato. O sistema visual é sereno e luminoso: uma paleta suave de azul-aço com luz dourada quente, a Newsreader para uma voz editorial respeitosa e a Work Sans para uma leitura clara e prática. A programação é o recurso mais útil. Um calendário mostra o que cada dia reserva (Pretos Velhos às segundas, Povo do Oriente às quintas, Caboclos às sextas), o que trazer e a fase da lua do dia. O conteúdo é gerenciado no WordPress e entregue por um front-end rápido em Next.js.",
     result: "O CEUNSA agora tem uma casa digital que funciona como a sua recepção: acolhedora, clara e sempre aberta. Quem vem pela primeira vez sabe quando vir e como se preparar antes mesmo de sair de casa, e os voluntários do templo atualizam horários, hinos e avisos no WordPress sem mexer no front-end.",

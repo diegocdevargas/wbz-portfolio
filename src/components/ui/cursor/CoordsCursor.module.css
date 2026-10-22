@@ -31,8 +31,13 @@
 
 .box {
   border: 1px solid #ffffff;
+  border-radius: 0;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, border-radius 0.2s;
+}
+
+.box[data-shape="circle"] {
+  border-radius: 50%;
 }
 
 [data-framed] > .box {

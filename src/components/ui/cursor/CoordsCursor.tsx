@@ -51,6 +51,7 @@ const setup: CursorSetup = (el) => {
 
     if (f.target) {
       const r = f.target.getBoundingClientRect();
+      box.dataset.shape = f.target.dataset.cursorShape ?? "rectangle";
       bx.target = r.left - PAD;
       by.target = r.top - PAD;
       bw.target = r.width + PAD * 2;
@@ -64,6 +65,7 @@ const setup: CursorSetup = (el) => {
         el.dataset.framed = "";
       }
     } else {
+      delete box.dataset.shape;
       bx.target = f.x;
       by.target = f.y;
       bw.target = bh.target = 0;
@@ -94,7 +96,7 @@ export function CoordsCursor() {
   if (!enabled) return null;
 
   return (
-    <div ref={root} className={base.root} aria-hidden="true">
+    <div ref={root} className={base.root} data-site-cursor aria-hidden="true">
       <div data-part="h" className={styles.h} />
       <div data-part="v" className={styles.v} />
       <div data-part="box" className={styles.box} />

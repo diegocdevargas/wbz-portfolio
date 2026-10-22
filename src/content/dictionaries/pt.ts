@@ -10,7 +10,7 @@ export const pt = {
   },
 
   header: {
-    nav: { about: "Sobre", cases: "Projetos", services: "Serviços", journey: "Jornada", faq: "FAQ" },
+    nav: { about: "Sobre", cases: "Projetos", playground: "Playground", services: "Serviços", journey: "Jornada", faq: "FAQ" },
     contact: "Contato",
     homeLabel: "página inicial",
     mainNav: "Principal",
@@ -63,7 +63,7 @@ export const pt = {
       // The live site shows no visible heading for this section; this one is for screen readers.
       srTitle: "Jornada do projeto",
       steps: [
-        { title: "Faísca", body: "Transformamos sua ideia em plano, escopo e orçamento claros." },
+        { title: "Fagulia", body: "Transformamos sua ideia em plano, escopo e orçamento claros." },
         { title: "Forma", body: "Desenhamos a experiência antes da primeira linha de código." },
         { title: "Construção", body: "Desenvolvemos o produto, as integrações e as automações." },
         { title: "Test Drive", body: "Refinamos cada detalhe com o seu feedback real." },
@@ -125,7 +125,7 @@ export const pt = {
     eyebrow: "Pronto para começar?",
     lead: ["Vamos construir, lançar", "e manter em movimento."],
     sitemapTitle: "Sitemap",
-    sitemap: { home: "Home", work: "Work", contact: "Contato" },
+    sitemap: { home: "Home", work: "Projetos", playground: "Playground", contact: "Contato" },
     socialTitle: "Social",
     studioTitle: "Studio",
     location: ["Rio Grande do Sul,", "Brasil"],
@@ -152,6 +152,14 @@ export const pt = {
     liveCount: "{count} projetos em {label}",
     empty: "Nenhum projeto nesta categoria ainda.",
     showAll: "Ver todos os trabalhos",
+  },
+
+  playground: {
+    metaTitle: "Playground",
+    kicker: "Experimentos em construção",
+    intro: "Um espaço para ideias experimentais, conceitos antigos e projetos que exploram caminhos diferentes.",
+    emptyTitle: "Tem coisa nova vindo aí.",
+    emptyBody: "Em breve, você vai poder explorar por aqui experimentos, ideias inacabadas e projetos conceituais do arquivo.",
   },
 
   caseStudy: {

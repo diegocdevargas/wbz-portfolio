@@ -32,8 +32,17 @@ export const smoothScroll = {
   toHash: (hash: string, immediate = false) => {
     const el = anchorTarget(hash);
     if (!el) return;
-    if (instance) instance.scrollTo(el, { immediate, force: true });
-    else el.scrollIntoView({ block: "start" });
+    const anchor = document.getElementById(decodeURIComponent(hash.slice(1)));
+    const revealOffset =
+      anchor?.dataset.anchorReveal !== undefined && anchor.getClientRects().length > 0
+        ? anchor.getBoundingClientRect().height - window.innerHeight
+        : 0;
+    if (instance) instance.scrollTo(el, { offset: revealOffset, immediate, force: true });
+    else window.scrollTo(0, window.scrollY + el.getBoundingClientRect().top + revealOffset);
+  },
+  toTop: () => {
+    if (instance) instance.scrollTo(0, { immediate: true, force: true });
+    window.scrollTo(0, 0);
   },
 };
 
@@ -82,7 +91,7 @@ export function SmoothScroll() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduce.matches) return;
 
-    const lenis = new Lenis({ autoRaf: false, anchors: true });
+    const lenis = new Lenis({ autoRaf: false, anchors: false });
     instance = lenis;
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => lenis.raf(time * 1000);
