@@ -6,7 +6,7 @@ Site oficial da Webcraftz, rebuilt in Next.js (App Router) + React.
 
 - `/` Home: scroll-driven 3D scene (hero, why us, services, journey), clients, selected work, testimonials, FAQ, contact band
 - `/cases` Work index with category filters
-- `/cases/[slug]` Case study pages, generated from `src/content/projects.ts`
+- `/cases/[slug]` Case study pages`
 
 ## Editing content
 
