@@ -118,7 +118,7 @@ export const pt = {
       button: "Iniciar Projeto",
       mailLead: "ou escreva para",
     },
-    loader: { caption: "Preparando a órbita" },
+    loader: { caption: "Preparando a órbita", enter: "Clique para entrar", soundNotice: "Este site usa som para uma melhor experiência." },
   },
 
   footer: {

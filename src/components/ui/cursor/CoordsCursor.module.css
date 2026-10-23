@@ -40,6 +40,10 @@
   border-radius: 50%;
 }
 
+.box[data-shape="pill"] {
+  border-radius: 999px;
+}
+
 [data-framed] > .box {
   opacity: 1;
 }

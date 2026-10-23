@@ -33,12 +33,16 @@ export const smoothScroll = {
     const el = anchorTarget(hash);
     if (!el) return;
     const anchor = document.getElementById(decodeURIComponent(hash.slice(1)));
-    const revealOffset =
-      anchor?.dataset.anchorReveal !== undefined && anchor.getClientRects().length > 0
-        ? anchor.getBoundingClientRect().height - window.innerHeight
+    const offset =
+      anchor?.getClientRects().length
+        ? anchor.dataset.anchorReveal !== undefined
+          ? anchor.getBoundingClientRect().height - window.innerHeight
+          : anchor.dataset.anchorCenter !== undefined
+            ? (anchor.getBoundingClientRect().height - window.innerHeight) / 2
+            : 0
         : 0;
-    if (instance) instance.scrollTo(el, { offset: revealOffset, immediate, force: true });
-    else window.scrollTo(0, window.scrollY + el.getBoundingClientRect().top + revealOffset);
+    if (instance) instance.scrollTo(el, { offset, immediate, force: true });
+    else window.scrollTo(0, window.scrollY + el.getBoundingClientRect().top + offset);
   },
   toTop: () => {
     if (instance) instance.scrollTo(0, { immediate: true, force: true });

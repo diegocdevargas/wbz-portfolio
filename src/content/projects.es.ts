@@ -2,6 +2,24 @@
 import type { ProjectCopy } from "./projects";
 
 export const projectsEs: Record<string, ProjectCopy> = {
+  "luh-reis": {
+    subtitle: "Páginas de venta / Fitness",
+    discipline: "Digital",
+    services: ["Estrategia de conversión", "Diseño UX/UI", "Sitio web", "Desarrollo front-end"],
+    coverAlt: "Página de ventas de escritorio de Luh Reis para el programa de entrenamiento Destrave Delas",
+    challenge:
+      "Luh Reis necesitaba presentar su método de entrenamiento con claridad a mujeres que buscan bajar de peso, definir el cuerpo y crear una rutina saludable. La página debía explicar las opciones de planes y asesoría personalizada, responder preguntas frecuentes y facilitar el siguiente paso.",
+    approach:
+      "Estructuramos la página como un recorrido de venta: una llamada principal clara, dificultades habituales al entrenar sin un plan, la trayectoria de Luh, el método Destrave Delas, historias de clientas, opciones de entrenamiento, etapas de la asesoría y preguntas frecuentes. Las llamadas a la acción acompañan a las visitantes durante todo el recorrido.",
+    result:
+      "El sitio reúne planes de entrenamiento por objetivo y asesoría personalizada, y explica el método, los resultados, el proceso y las dudas frecuentes antes del contacto o la compra.",
+    metrics: [],
+    galleryAlts: [
+      "Captura completa de escritorio de la página de ventas de Luh Reis, del encabezado al pie",
+      "Foto ilustrativa de Unsplash de entrenamiento de fuerza con barra en un gimnasio",
+      "Foto ilustrativa de Unsplash de una mujer haciendo ejercicio en el suelo",
+    ],
+  },
   "azeitonas-verdes": {
     subtitle: "Tema punk rock",
     discipline: "Branding",

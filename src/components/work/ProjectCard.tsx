@@ -26,6 +26,7 @@ export function ProjectCard({ project, locale, sizes, priority }: Props) {
         href={localePath(locale, `/cases/${project.slug}`)}
         className={styles.link}
         data-cursor-target
+        data-hover-sound="card"
         data-scroll-hover={hasScrollPreview ? "" : undefined}
       >
         <div className={styles.media}>

@@ -29,7 +29,10 @@ export default async function HomePage({ params }: Props) {
   return (
     <>
       <JsonLd data={organizationJsonLd(locale, t.meta.description)} />
-      <Loader caption={t.home.loader.caption} />
+      <Loader
+        enterLabel={t.home.loader.enter}
+        soundNotice={t.home.loader.soundNotice}
+      />
       <SceneTrack t={t.home} projectsLabel={t.header.nav.cases} />
       <Clients t={t.home.clients} />
       <SelectedWork locale={locale} t={t.home.selectedWork} />

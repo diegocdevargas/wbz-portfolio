@@ -1,63 +1,95 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { sceneStore } from "@/components/scene/sceneStore";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { unlockMenuAudio } from "@/components/ui/menuChord";
 import styles from "./Loader.module.css";
 
-const SAFETY_TIMEOUT = 2500;
+const WORDMARK = "Webcraftz";
 
 // Only the first visit in a session shows it; client-side returns to Home skip it.
 let lifted = false;
 
 /**
- * Home loader, as on the live site: black screen, wordmark, a thin orbiting indicator
- * and "Preparando a órbita". It lifts once fonts and the first scene frame are ready,
- * or after 2.5 s. The page is server-rendered underneath, so nothing waits on it.
+ * Home loader: black screen, a wordmark whose letters fade in one over another, and a
+ * small "click to enter" button with a sound notice. It only lifts on click, which also
+ * unlocks audio. The page is server-rendered underneath.
  */
-export function Loader({ caption }: { caption: string }) {
+export function Loader({
+  enterLabel,
+  soundNotice,
+}: {
+  enterLabel: string;
+  soundNotice: string;
+}) {
   const [state, setState] = useState<"shown" | "leaving" | "gone">(() => (lifted ? "gone" : "shown"));
+  const root = useRef<HTMLDivElement>(null);
+  const leaveTimer = useRef(0);
 
+  useEffect(() => () => window.clearTimeout(leaveTimer.current), []);
+
+  // Letters fade in one in front of another, then the button and the notice follow.
   useEffect(() => {
-    if (lifted) return;
-    let done = false;
-    let leaveTimer = 0;
-    const lift = () => {
-      if (done) return;
-      done = true;
-      lifted = true;
-      setState("leaving");
-      leaveTimer = window.setTimeout(() => setState("gone"), 600);
-    };
-    let fontsReady = false;
-    let sceneReady = false;
-    const check = () => fontsReady && sceneReady && lift();
-    document.fonts?.ready.then(() => {
-      fontsReady = true;
-      check();
-    });
-    const off = sceneStore.onReady(() => {
-      sceneReady = true;
-      check();
-    });
-    const safety = window.setTimeout(lift, SAFETY_TIMEOUT);
+    const element = root.current;
+    if (!element || state !== "shown") return;
+    const letters = element.querySelectorAll<HTMLElement>("[data-letter]");
+    const prompt = element.querySelectorAll<HTMLElement>("[data-reveal-item]");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set([letters, prompt], { opacity: 1 });
+      return;
+    }
+    const timeline = gsap.timeline();
+    timeline
+      .fromTo(
+        letters,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.9, ease: "power2.out", stagger: 0.12 },
+      )
+      .fromTo(
+        prompt,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", stagger: 0.15 },
+        "-=0.4",
+      );
     return () => {
-      off();
-      window.clearTimeout(safety);
-      window.clearTimeout(leaveTimer);
+      timeline.kill();
     };
-  }, []);
+  }, [state]);
+
+  const enter = () => {
+    if (lifted) return;
+    lifted = true;
+    unlockMenuAudio();
+    setState("leaving");
+    leaveTimer.current = window.setTimeout(() => setState("gone"), 600);
+  };
 
   if (state === "gone") return null;
 
   return (
-    <div className={styles.loader} data-state={state} role="status" aria-live="polite">
-      <p className={styles.logo} aria-hidden="true">
-        Webcraftz
+    <div
+      ref={root}
+      className={styles.loader}
+      data-state={state}
+      role="dialog"
+      aria-label={enterLabel}
+      onClick={enter}
+    >
+      <p className={styles.logo} aria-label={WORDMARK}>
+        {WORDMARK.split("").map((letter, index) => (
+          <span key={index} data-letter aria-hidden="true" className={styles.letter}>
+            {letter}
+          </span>
+        ))}
       </p>
-      <span className={styles.orbit} aria-hidden="true">
-        <span className={styles.dot} />
-      </span>
-      <p className={styles.caption}>{caption}</p>
+      <div className={styles.prompt}>
+        <button type="button" className={styles.enter} data-reveal-item data-cursor-target data-cursor-shape="pill" autoFocus>
+          {enterLabel}
+        </button>
+        <p className={styles.notice} data-reveal-item>
+          {soundNotice}
+        </p>
+      </div>
     </div>
   );
 }

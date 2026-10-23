@@ -1,5 +1,5 @@
 /**
- * Accretion disk shader, built on the live Framer component's: a 4×4 plane scaled ×10
+ * Accretion disk shader, built on the live component's: a 4×4 plane scaled ×10
  * with a dark event horizon, lensing distortion toward the core and spiral gas from
  * value noise, with alpha 0 outside the disk so only the gas is drawn.
  *

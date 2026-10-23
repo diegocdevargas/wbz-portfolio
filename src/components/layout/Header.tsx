@@ -8,6 +8,7 @@ import type { Dictionary } from "@/content/dictionaries/format";
 import { localePath, type Locale } from "@/i18n/config";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { smoothScroll } from "./SmoothScroll";
+import { playMenuChord, playMenuComposition, playSelectorNote, unlockMenuAudio } from "@/components/ui/menuChord";
 import styles from "./Header.module.css";
 
 const HIDE_AFTER = 80;
@@ -23,6 +24,32 @@ export function Header({ locale, t, newTabLabel }: Props) {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const pendingHash = useRef<string | null>(null);
+
+  useEffect(() => {
+    const unlock = () => unlockMenuAudio();
+    window.addEventListener("pointerdown", unlock, { once: true });
+    window.addEventListener("keydown", unlock, { once: true });
+
+    // Server-rendered areas opt in with data attributes: right-menu selector notes, project
+    // card notes (walking up the scale), and one chord per footer wordmark letter.
+    let cardStep = 0;
+    const onPointerOver = (event: PointerEvent) => {
+      if (event.pointerType === "touch" || !(event.target instanceof Element)) return;
+      const source = event.target.closest<HTMLElement>("[data-hover-sound]");
+      if (!source || source.contains(event.relatedTarget as Node | null)) return;
+      const note = Number(source.dataset.hoverNote ?? 0);
+      if (source.dataset.hoverSound === "selector") playSelectorNote(note);
+      else if (source.dataset.hoverSound === "card") playSelectorNote(cardStep++ * 2 + 1);
+      else if (source.dataset.hoverSound === "letter") playMenuChord(note);
+      else if (source.dataset.hoverSound === "cta") playMenuComposition();
+    };
+    document.addEventListener("pointerover", onPointerOver, { passive: true });
+    return () => {
+      document.removeEventListener("pointerover", onPointerOver);
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+  }, []);
 
   // Hide while scrolling down, reveal on scroll up; dark blurred bar away from the top.
   useEffect(() => {
@@ -124,6 +151,7 @@ export function Header({ locale, t, newTabLabel }: Props) {
           href={localePath(locale, "/")}
           scroll={false}
           onClick={onLogoClick}
+          onPointerEnter={playMenuComposition}
           className={styles.logo}
           data-cursor-target
           aria-label={`${site.name}, ${t.homeLabel}`}
@@ -133,7 +161,7 @@ export function Header({ locale, t, newTabLabel }: Props) {
 
         <nav className={styles.nav} aria-label={t.mainNav}>
           <ul>
-            {nav.map((item) => (
+            {nav.map((item, index) => (
               <li key={item.href}>
                 <Link
                   href={localePath(locale, item.href)}
@@ -142,6 +170,10 @@ export function Header({ locale, t, newTabLabel }: Props) {
                   className={styles.navLink}
                   data-cursor-target
                   aria-current={pathname === localePath(locale, item.href) ? "page" : undefined}
+                  onPointerEnter={() => playMenuChord(index)}
+                  onFocus={(event) => {
+                    if (event.currentTarget.matches(":focus-visible")) playMenuChord(index);
+                  }}
                 >
                   {t.nav[item.key]}
                 </Link>
@@ -152,7 +184,7 @@ export function Header({ locale, t, newTabLabel }: Props) {
 
         <div className={styles.actions}>
         <ul className={styles.platforms}>
-          {platforms.map((p) => (
+          {platforms.map((p, index) => (
             <li key={p.name}>
               <a
                 href={p.href}
@@ -160,6 +192,8 @@ export function Header({ locale, t, newTabLabel }: Props) {
                 rel="noopener noreferrer"
                 className={styles.platform}
                 data-cursor-target
+                data-hover-sound="selector"
+                data-hover-note={index}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.logo} alt="" width={p.width} height={p.height} data-mono={p.mono || undefined} />
@@ -177,6 +211,8 @@ export function Header({ locale, t, newTabLabel }: Props) {
           rel="noopener noreferrer"
           className={styles.contact}
           data-cursor-target
+          data-hover-sound="selector"
+          data-hover-note={platforms.length}
         >
           <span>{t.contact}</span>
           <span className="sr-only"> {newTabLabel}</span>

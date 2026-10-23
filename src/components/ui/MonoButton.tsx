@@ -29,6 +29,7 @@ export function MonoButton({ href, children, variant = "ghost", external, newTab
       <a
         className={cls}
         data-cursor-target
+        data-hover-sound={variant === "dark" ? "cta" : undefined}
         href={href}
         {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
@@ -38,7 +39,7 @@ export function MonoButton({ href, children, variant = "ghost", external, newTab
     );
   }
   return (
-    <Link className={cls} href={href} data-cursor-target>
+    <Link className={cls} href={href} data-cursor-target data-hover-sound={variant === "dark" ? "cta" : undefined}>
       {content}
     </Link>
   );

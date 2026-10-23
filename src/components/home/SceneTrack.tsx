@@ -47,10 +47,10 @@ export function SceneTrack({ t, projectsLabel }: { t: Dictionary["home"]; projec
         <div className={styles.delay} />
         <div className={styles.pin}>
           <div className={styles.valueHeading} data-reveal="rise-exit-up" data-reveal-group="why">
-            <p className="eyebrow">{values.eyebrow}</p>
-            <h2 className={styles.valueTitle}>
+            {/* <p className="eyebrow">{values.eyebrow}</p> */}
+            {/* <h2 className={styles.valueTitle}>
               {values.title.text} <span className="accent">{values.title.accent}</span>
-            </h2>
+            </h2> */}
           </div>
           <ul className={styles.valueCards}>
             {values.items.map((item, i) => {
@@ -87,7 +87,7 @@ export function SceneTrack({ t, projectsLabel }: { t: Dictionary["home"]; projec
         <div className={styles.delay} />
         <div className={styles.pin}>
           <div className={styles.servicesHeading} data-reveal="rise-exit-up" data-reveal-group="features-title">
-            <p className="eyebrow">{services.eyebrow}</p>
+            {/* <p className="eyebrow">{services.eyebrow}</p> */}
             <h2 className="section-title">
               {services.title.text}
               <br />
@@ -123,7 +123,7 @@ export function SceneTrack({ t, projectsLabel }: { t: Dictionary["home"]; projec
       {/* Journey: the disk tilts away; each step's card lights up as it reaches mid-screen. */}
       <div id="journey-section" className={styles.journeySection} data-scene-state="journey">
         <div className={styles.journeyDelay} />
-        <div id="journey-content" className={styles.journeyContent}>
+        <div id="journey-content" className={styles.journeyContent} data-anchor-center>
           <h2 className="sr-only">{journey.srTitle}</h2>
           <ol className={styles.journey}>
             {journey.steps.map((step, i) => (

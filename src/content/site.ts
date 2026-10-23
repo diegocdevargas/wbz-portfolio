@@ -16,7 +16,7 @@ export const nav = [
   { key: "cases", href: "/cases" },
   { key: "playground", href: "/playground" },
   { key: "services", href: "/#features-content" },
-  { key: "journey", href: "/#journey-section" },
+  { key: "journey", href: "/#journey-content" },
   { key: "faq", href: "/#faq-section" },
 ] as const;
 

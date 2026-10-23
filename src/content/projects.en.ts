@@ -2,6 +2,24 @@
 import type { ProjectCopy } from "./projects";
 
 export const projectsEn: Record<string, ProjectCopy> = {
+  "luh-reis": {
+    subtitle: "Fitness sales pages",
+    discipline: "Digital",
+    services: ["Conversion strategy", "UX/UI Design", "Website", "Front-end development"],
+    coverAlt: "Luh Reis desktop sales page for the Destrave Delas training program",
+    challenge:
+      "Luh Reis needed to present her training method clearly to women looking to lose weight, build definition and create a healthy routine. The page needed to explain the training-plan and personal-consulting options, answer common questions and make the next step easy.",
+    approach:
+      "We structured the page as a sales journey: a clear hero, relatable training challenges, Luh's background, the Destrave Delas method, client stories, training options, the consulting process and FAQs. Calls to action guide visitors throughout the page.",
+    result:
+      "The site brings goal-based training plans and personalized consulting together, explaining the method, results, process and common questions before visitors get in touch or purchase.",
+    metrics: [],
+    galleryAlts: [
+      "Full desktop capture of the Luh Reis sales page, from header to footer",
+      "Illustrative Unsplash photo of strength training with a barbell in a gym",
+      "Illustrative Unsplash photo of a woman doing a floor exercise",
+    ],
+  },
   "azeitonas-verdes": {
     subtitle: "Punk rock theme",
     discipline: "Branding",

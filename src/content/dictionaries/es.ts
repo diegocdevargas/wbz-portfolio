@@ -112,7 +112,7 @@ export const es: Dictionary = {
       button: "Iniciar Proyecto",
       mailLead: "o escribe a",
     },
-    loader: { caption: "Preparando la órbita" },
+    loader: { caption: "Preparando la órbita", enter: "Haz clic para entrar", soundNotice: "Este sitio usa sonido para una mejor experiencia." },
   },
 
   footer: {

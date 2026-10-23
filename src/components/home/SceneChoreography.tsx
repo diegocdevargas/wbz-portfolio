@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { sceneStore } from "@/components/scene/sceneStore";
+import { playSceneChord } from "@/components/ui/menuChord";
 import type { SceneStateName } from "@/components/scene/sceneStates";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,6 +24,7 @@ const SCENE_ORDER: SceneStateName[] = ["hero", "why", "features", "journey"];
 
 // Live easing for appear effects: cubic-bezier(0, 0.58, 0.4, 1).
 const APPEAR_EASE = "power2.out";
+const snapEase = (progress: number) => progress * progress * (3 - 2 * progress);
 
 const FROM = {
   "from-right": { opacity: 0, x: 40, y: 0 },
@@ -58,6 +60,24 @@ export function SceneChoreography() {
     const q = <T extends Element = HTMLElement>(sel: string) => Array.from(track.querySelectorAll<T & HTMLElement>(sel));
     const triggerEl = (name: string) => track.querySelector<HTMLElement>(`[data-trigger="${name}"]`);
 
+    // Scroll-synced cues: ignore the initial layout/restore pass and throttle bursts from fast scrolls.
+    const mountedAt = performance.now();
+    let lastCue = 0;
+    const settled = () => {
+      const now = performance.now();
+      if (now - mountedAt < 1200 || now - lastCue < 140) return false;
+      lastCue = now;
+      return true;
+    };
+    const cueReveal = (el: HTMLElement) => {
+      if (!settled()) return;
+      if (el.dataset.revealGroup === "why") playSceneChord(0, Number(el.dataset.index ?? 0));
+      else if (el.dataset.revealGroup === "features-content") {
+        const cards = el.querySelectorAll("[data-appear]").length;
+        for (let index = 0; index < cards; index += 1) playSceneChord(1, index, index * 0.09);
+      }
+    };
+
     const ctx = gsap.context(() => {
       // Render only while the track is on screen.
       ScrollTrigger.create({
@@ -89,11 +109,14 @@ export function SceneChoreography() {
       syncState();
 
       // Journey steps.
-      q("[data-journey-step]").forEach((step) => {
+      q("[data-journey-step]").forEach((step, stepIndex) => {
         ScrollTrigger.create({
           trigger: step,
           start: "center 55%",
-          onEnter: () => step.setAttribute("data-visible", ""),
+          onEnter: () => {
+            step.setAttribute("data-visible", "");
+            if (settled()) playSceneChord(2, stepIndex);
+          },
           onLeaveBack: () => step.removeAttribute("data-visible"),
         });
       });
@@ -108,6 +131,47 @@ export function SceneChoreography() {
           const { desktop } = context.conditions as { desktop: boolean; phone: boolean };
 
           if (desktop) {
+            const snapTargets = q(
+              "#hero-section, [data-scene-state='why'], #journey-content",
+            );
+            // The features grid is fully revealed once its show trigger's bottom reaches the viewport bottom.
+            const featuresContentTrigger = triggerEl("features-content-show");
+            ScrollTrigger.create({
+              trigger: track,
+              start: "top top",
+              end: "bottom bottom",
+              snap: {
+                snapTo: (progress, self) => {
+                  if (!self) return progress;
+                  const range = self.end - self.start;
+                  if (range <= 0) return progress;
+                  const toProgress = (scrollY: number) => gsap.utils.clamp(0, 1, (scrollY - self.start) / range);
+                  const stops = [
+                    0,
+                    1,
+                    ...snapTargets.map((target) => {
+                      const center = window.scrollY + target.getBoundingClientRect().top + target.offsetHeight / 2;
+                      return toProgress(center - window.innerHeight / 2);
+                    }),
+                    ...(featuresContentTrigger
+                      ? [
+                          toProgress(
+                            window.scrollY + featuresContentTrigger.getBoundingClientRect().bottom - window.innerHeight,
+                          ),
+                        ]
+                      : []),
+                  ];
+                  return stops.reduce((nearest, stop) =>
+                    Math.abs(stop - progress) < Math.abs(nearest - progress) ? stop : nearest,
+                  );
+                },
+                delay: 0.16,
+                duration: { min: 0.35, max: 0.9 },
+                ease: snapEase,
+                inertia: false,
+              },
+            });
+
             q("[data-reveal]").forEach((el) => {
               const kind = el.dataset.reveal as RevealKind;
               const group = GROUPS[el.dataset.revealGroup ?? ""];
@@ -121,6 +185,8 @@ export function SceneChoreography() {
                 y: 0,
                 ease: "none",
                 immediateRender: true,
+                // Fires once the block is fully revealed (scrolling down), not on every scrub tick.
+                onComplete: () => cueReveal(el),
                 scrollTrigger: { trigger: show, start: "top bottom", end: "bottom bottom", scrub: true },
               });
               gsap.fromTo(

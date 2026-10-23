@@ -113,7 +113,7 @@ export const en: Dictionary = {
       button: "Start a Project",
       mailLead: "or write to",
     },
-    loader: { caption: "Preparing for orbit" },
+    loader: { caption: "Preparing for orbit", enter: "Click to enter", soundNotice: "This site uses sound for the best experience." },
   },
 
   footer: {

@@ -73,7 +73,7 @@ export function Footer({ locale, t: footer, newTabLabel }: Props) {
 
       <div className={styles.wordmark} aria-hidden="true">
         {WORDMARK.map((ch, i) => (
-          <span key={i} className={styles.letter} data-cursor-target>
+          <span key={i} className={styles.letter} data-cursor-target data-hover-sound="letter" data-hover-note={i}>
             <span className={styles.letterBase}>{ch}</span>
             <span className={styles.letterHover}>{ch}</span>
           </span>
