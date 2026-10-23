@@ -73,8 +73,7 @@ export function SceneChoreography() {
       if (!settled()) return;
       if (el.dataset.revealGroup === "why") playSceneChord(0, Number(el.dataset.index ?? 0));
       else if (el.dataset.revealGroup === "features-content") {
-        const cards = el.querySelectorAll("[data-appear]").length;
-        for (let index = 0; index < cards; index += 1) playSceneChord(1, index, index * 0.09);
+        playSceneChord(1, 0);
       }
     };
 

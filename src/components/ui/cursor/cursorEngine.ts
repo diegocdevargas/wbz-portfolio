@@ -108,12 +108,17 @@ export function useCursor(root: RefObject<HTMLDivElement | null>, setup: CursorS
     const tick = (now: number) => {
       const dt = Math.min((now - last) / 1000, 1 / 30);
       last = now;
+      const top = seen ? document.elementFromPoint(pointerX, pointerY) : null;
+      // A modal (the loader) covers the page: the planet's hit area must not leak through it.
+      const covered = Boolean(top?.closest('[role="dialog"]'));
       const hit = seen
-        ? document.elementFromPoint(pointerX, pointerY)?.closest<HTMLElement>(CURSOR_TARGET) ??
-          Array.from(document.querySelectorAll<HTMLElement>("[data-cursor-hit-area]")).find((candidate) => {
-            const rect = candidate.getBoundingClientRect();
-            return pointerX >= rect.left && pointerX <= rect.right && pointerY >= rect.top && pointerY <= rect.bottom;
-          }) ??
+        ? top?.closest<HTMLElement>(CURSOR_TARGET) ??
+          (covered
+            ? null
+            : Array.from(document.querySelectorAll<HTMLElement>("[data-cursor-hit-area]")).find((candidate) => {
+                const rect = candidate.getBoundingClientRect();
+                return pointerX >= rect.left && pointerX <= rect.right && pointerY >= rect.top && pointerY <= rect.bottom;
+              })) ??
           null
         : null;
       const target = hit && isShown(hit) ? hit : null;
