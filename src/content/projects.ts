@@ -414,10 +414,10 @@ const data: Project[] = [
     featured: true,
     order: 6,
     cover: {
-      src: "/images/projects/luh-reis/cover.webp",
+      src: "/images/projects/luh-reis/cover-v2.webp",
       alt: "Página de vendas desktop da Luh Reis para o método de treino Destrave Delas",
       width: 1905,
-      height: 1080
+      height: 1072
     },
     challenge: "A Luh Reis precisava apresentar seu método de treino de forma clara para mulheres que querem emagrecer, definir o corpo e construir uma rotina saudável. A página precisava explicar as opções de planilhas e consultoria, responder dúvidas comuns e facilitar o próximo passo.",
     approach: "Estruturamos a página como uma jornada de venda: uma chamada principal, identificação das dificuldades de quem tenta treinar sem um plano, apresentação da trajetória da Luh, explicação do método Destrave Delas, histórias de clientes, opções de treino, etapas da consultoria e perguntas frequentes. Chamadas para ação acompanham a visitante ao longo da página.",
@@ -425,22 +425,22 @@ const data: Project[] = [
     metrics: [],
     gallery: [
       {
-        src: "/images/projects/luh-reis/full-page.webp",
-        alt: "Captura completa da página de vendas da Luh Reis em desktop, do cabeçalho ao rodapé",
-        width: 1905,
-        height: 9322
-      },
-      {
-        src: "/images/projects/luh-reis/gallery-1.webp",
+        src: "/images/projects/luh-reis/gallery-1-v2.webp",
         alt: "Foto ilustrativa de treino de força com barra em uma academia, por Unsplash",
         width: 1400,
         height: 933
       },
       {
-        src: "/images/projects/luh-reis/gallery-2.webp",
+        src: "/images/projects/luh-reis/gallery-2-v2.webp",
         alt: "Foto ilustrativa de uma mulher fazendo exercício abdominal, por Unsplash",
         width: 1400,
         height: 933
+      },
+      {
+        src: "/images/projects/luh-reis/full-page-v3.webp",
+        alt: "Captura completa da página de vendas da Luh Reis em desktop, do cabeçalho ao rodapé",
+        width: 768,
+        height: 3718
       }
     ]
   }
@@ -465,9 +465,10 @@ function localize(project: Project, locale: Locale): Project {
   };
 }
 
-const sorted = [...data].sort((a, b) => a.order - b.order);
+// Newest year first; `order` breaks ties within the same year.
+const sorted = [...data].sort((a, b) => b.year - a.year || a.order - b.order);
 
-/** All projects in `order`, with text in the requested language. */
+/** All projects, newest year first, with text in the requested language. */
 export function getProjects(locale: Locale): Project[] {
   return sorted.map((p) => localize(p, locale));
 }
