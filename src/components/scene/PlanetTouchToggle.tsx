@@ -30,7 +30,7 @@ const HAND = [
  * hover state (sparks, glow, soundscape) on, and tapping again releases it. The icon morphs
  * between a pointing hand (off) and an open hand (on).
  */
-export function PlanetTouchToggle({ label, reducedMotion }: { label: string; reducedMotion: boolean }) {
+export function PlanetTouchToggle({ label, tip, reducedMotion }: { label: string; tip: string; reducedMotion: boolean }) {
   const [on, setOn] = useState(false);
   const [used, setUsed] = useState(false);
   const paths = useRef<(SVGPathElement | null)[]>([]);
@@ -53,24 +53,31 @@ export function PlanetTouchToggle({ label, reducedMotion }: { label: string; red
     const [cuff, ...fingers] = paths.current;
     if (!cuff) return;
     const duration = reducedMotion ? 0 : 0.5;
-    const ctx = gsap.context(() => {
-      gsap.to(cuff, { opacity: on ? 0 : 1, duration: duration * 0.6, ease: "power2.out" });
-      fingers.forEach((path, index) => {
-        if (!path) return;
-        gsap.to(path, {
-          morphSVG: on ? HAND[index] : POINTER[index + 1],
-          duration,
-          ease: "power2.inOut",
-        });
+    // No context revert between toggles: it would snap the paths back to the pointer before morphing.
+    gsap.to(cuff, { opacity: on ? 0 : 1, duration: duration * 0.6, ease: "power2.out", overwrite: true });
+    fingers.forEach((path, index) => {
+      if (!path) return;
+      gsap.to(path, {
+        morphSVG: on ? HAND[index] : POINTER[index + 1],
+        duration,
+        ease: "power2.inOut",
+        overwrite: true,
       });
     });
-    return () => ctx.revert();
   }, [on, reducedMotion]);
+
+  useEffect(
+    () => () => {
+      gsap.killTweensOf(paths.current.filter(Boolean));
+    },
+    [],
+  );
 
   return (
     <button
       type="button"
       className={styles.toggle}
+      data-touch-toggle
       aria-pressed={on}
       aria-label={label}
       data-used={used || undefined}
@@ -90,6 +97,9 @@ export function PlanetTouchToggle({ label, reducedMotion }: { label: string; red
           />
         ))}
       </svg>
+      <span className={styles.tip} aria-hidden="true">
+        {tip}
+      </span>
     </button>
   );
 }

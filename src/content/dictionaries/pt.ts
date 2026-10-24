@@ -120,7 +120,9 @@ export const pt = {
     },
     loader: { caption: "Preparando a órbita", enter: "Clique para entrar", soundNotice: "Este site usa som para uma melhor experiência." },
     planetToggle: "Ativar ou desativar os efeitos e o som do planeta",
-    planetHint: "Clique no planeta para explorar",
+    planetToggleTip: "Toque aqui para ativar os sinais",
+    planetHint: "no planeta para explorar",
+    planetHintOr: "ou",
   },
 
   footer: {

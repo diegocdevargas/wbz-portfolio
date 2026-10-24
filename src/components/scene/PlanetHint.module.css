@@ -21,7 +21,14 @@
 }
 
 .text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   animation: hintBlink 2.8s ease-in-out infinite;
+}
+
+.icon {
+  flex: none;
 }
 
 /* Dots light up one after another, travelling toward the planet above. */
@@ -36,7 +43,7 @@
 .dots i {
   width: 4px;
   height: 4px;
-  border-radius: 50%;
+  border-radius: 0;
   background: var(--violet);
   opacity: 0.15;
   animation: dotTravel 2.8s ease-in-out infinite;

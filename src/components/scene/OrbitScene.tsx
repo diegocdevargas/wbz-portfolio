@@ -162,6 +162,7 @@ const PAGE_CONTENT_SELECTOR = [
   "[data-scene-track] > [data-scene-state]",
   "[data-scene-track] > #journey-section",
   "[data-planet-hint]",
+  "[data-touch-toggle]",
   "[data-site-cursor]",
 ].join(", ");
 
@@ -215,9 +216,10 @@ type Props = {
   onReady?: () => void;
   projectsLabel: string;
   touchToggleLabel: string;
+  touchToggleTip: string;
 };
 
-type RigProps = Omit<Props, "locale" | "projectsLabel" | "touchToggleLabel"> & {
+type RigProps = Omit<Props, "locale" | "projectsLabel" | "touchToggleLabel" | "touchToggleTip"> & {
   cursorTarget: React.RefObject<HTMLAnchorElement | null>;
   entering: React.RefObject<{ progress: number; boom: number }>;
 };
@@ -231,7 +233,7 @@ type RigProps = Omit<Props, "locale" | "projectsLabel" | "touchToggleLabel"> & {
  * On larger screens a post-processing pass adds bloom, a touch of chromatic aberration
  * and a vignette; phones skip it and the disk shader compresses its own highlights.
  */
-export default function OrbitScene({ reducedMotion, compact, onReady, projectsLabel, touchToggleLabel }: Props) {
+export default function OrbitScene({ reducedMotion, compact, onReady, projectsLabel, touchToggleLabel, touchToggleTip }: Props) {
   const [active, setActive] = useState(sceneStore.active);
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const cursorTarget = useRef<HTMLAnchorElement>(null);
@@ -349,7 +351,7 @@ export default function OrbitScene({ reducedMotion, compact, onReady, projectsLa
               onPointerLeave={() => setPlanetSoundscape(sceneStore.touchHover)}
               style={{ position: "fixed", zIndex: 99, pointerEvents: "auto", display: active ? undefined : "none" }}
             />
-            {compact && active && <PlanetTouchToggle label={touchToggleLabel} reducedMotion={reducedMotion} />}
+            {compact && active && <PlanetTouchToggle label={touchToggleLabel} tip={touchToggleTip} reducedMotion={reducedMotion} />}
           </>,
           portalRoot,
         )}
@@ -470,20 +472,30 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
     () => createStarGeometry(compact ? C.starField.compactCount : C.starField.count),
     [compact],
   );
-  const starMaterial = useMemo(
-    () =>
-      new THREE.PointsMaterial({
-        size: 1.6,
-        sizeAttenuation: false,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.85,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        toneMapped: false,
-      }),
-    [],
-  );
+  const starTime = useMemo(() => ({ value: 0 }), []);
+  const starMaterial = useMemo(() => {
+    const material = new THREE.PointsMaterial({
+      size: 1.6,
+      sizeAttenuation: false,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      toneMapped: false,
+    });
+    // GPU-only twinkle: each star gets its own phase from its position.
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime = starTime;
+      shader.vertexShader = shader.vertexShader
+        .replace("void main() {", "uniform float uTime;\nvoid main() {")
+        .replace(
+          "#include <color_vertex>",
+          "#include <color_vertex>\n#ifdef USE_COLOR\nvColor.rgb *= 0.7 + 0.3 * sin(uTime * 1.6 + position.x * 12.9898 + position.y * 78.233);\n#endif",
+        );
+    };
+    return material;
+  }, [starTime]);
   const glowTexture = useMemo(() => createGlowTexture(), []);
   const flareCoreMaterial = useMemo(
     () =>
@@ -581,7 +593,8 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
     return () => window.removeEventListener("pointermove", onPointerMove);
   }, [compact, gl]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
+    starTime.value = reducedMotion ? 0 : state.clock.elapsedTime;
     const v = values.current;
     const s = spin.current;
     const transition = entering.current.progress;

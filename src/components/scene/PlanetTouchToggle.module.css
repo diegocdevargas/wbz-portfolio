@@ -42,6 +42,44 @@
   animation: none;
 }
 
+/* Small label to the left of the button: shows on load, fades after a few seconds or on first tap. */
+.tip {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 10px);
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--text-strong);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  animation: tipShow 6s ease-in-out 1s both;
+}
+
+.toggle[data-used] .tip {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes tipShow {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  8%,
+  85% {
+    opacity: 1;
+  }
+}
+
 @keyframes tapHint {
   0%,
   60%,

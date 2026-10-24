@@ -115,7 +115,9 @@ export const en: Dictionary = {
     },
     loader: { caption: "Preparing for orbit", enter: "Click to enter", soundNotice: "This site uses sound for the best experience." },
     planetToggle: "Toggle planet effects and sound",
-    planetHint: "Click planet to explore",
+    planetToggleTip: "Tap here to activate signals",
+    planetHint: "planet to explore",
+    planetHintOr: "or",
   },
 
   footer: {

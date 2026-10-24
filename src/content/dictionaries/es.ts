@@ -114,7 +114,9 @@ export const es: Dictionary = {
     },
     loader: { caption: "Preparando la órbita", enter: "Haz clic para entrar", soundNotice: "Este sitio usa sonido para una mejor experiencia." },
     planetToggle: "Activar o desactivar los efectos y el sonido del planeta",
-    planetHint: "Haz clic en el planeta para explorar",
+    planetToggleTip: "Toca aquí para activar las señales",
+    planetHint: "el planeta para explorar",
+    planetHintOr: "o",
   },
 
   footer: {
