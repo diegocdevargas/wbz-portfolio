@@ -257,13 +257,13 @@
 
 .valueCard[data-lit] .card::before,
 .serviceCard[data-lit]::before {
-  animation: borderDraw 0.45s ease-out 0.15s forwards;
+  animation: borderDraw 0.16s ease-out 0.06s forwards;
 }
 
 .valueCard[data-lit] .card::after,
 .serviceCard[data-lit]::after {
   opacity: 1;
-  transition-delay: 0.55s;
+  transition-delay: 0.22s;
 }
 
 /* The icon fires first (transform only); the border then draws around the box. */

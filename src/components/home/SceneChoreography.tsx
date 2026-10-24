@@ -28,7 +28,7 @@ const APPEAR_EASE = "power2.out";
 const snapEase = (progress: number) => progress * progress * (3 - 2 * progress);
 
 // Seconds between one box's chord (and border drawing) and the next on desktop.
-const CUE_STAGGER = 0.55;
+const CUE_STAGGER = 0.21;
 
 const FROM = {
   "from-right": { opacity: 0, x: 40, y: 0 },
