@@ -1,0 +1,75 @@
+/* Phone only: touch screens have no hover. Sits 5rem below the menu button, top right. */
+.toggle {
+  position: fixed;
+  top: calc(var(--header-h) + 5rem);
+  right: var(--gutter);
+  z-index: 99;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--text-strong);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    border-color 0.3s var(--ease-out),
+    background 0.3s var(--ease-out),
+    transform 0.2s var(--ease-out);
+}
+
+.toggle[aria-pressed="true"] {
+  border-color: var(--violet);
+  background: color-mix(in srgb, var(--violet) 28%, transparent);
+}
+
+.toggle:active {
+  transform: scale(0.92);
+}
+
+/* A few gentle taps until the first use, so the control reads as tappable. */
+.icon {
+  transform-origin: 50% 100%;
+  animation: tapHint 1.8s ease-in-out 1.2s 3;
+}
+
+.toggle[data-used] .icon {
+  animation: none;
+}
+
+@keyframes tapHint {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  25% {
+    transform: translateY(-3px) scale(1.08);
+  }
+
+  40% {
+    transform: translateY(1px) scale(0.94);
+  }
+}
+
+@media (min-width: 810px), (prefers-reduced-motion: reduce) {
+  .icon {
+    animation: none;
+  }
+
+  .toggle {
+    transition: none;
+  }
+}
+
+@media (min-width: 810px) {
+  .toggle {
+    display: none;
+  }
+}

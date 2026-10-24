@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
     agentUpgrade: "security",
   },
   reactStrictMode: true,
+  // Lets phones on the local network (http://192.168.x.x:3000) load the dev server's assets.
+  allowedDevOrigins: ["192.168.*.*"],
   images: {
     formats: ["image/avif", "image/webp"],
   },

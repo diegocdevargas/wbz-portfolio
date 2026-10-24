@@ -52,7 +52,7 @@ function afterLoadIdle(cb: () => void) {
  * scene whether to run its reduced-motion and phone variants. The still frame shows at
  * once; the WebGL scene mounts after load (see `afterLoadIdle`).
  */
-export function SceneStage({ projectsLabel }: { projectsLabel: string }) {
+export function SceneStage({ projectsLabel, touchToggleLabel }: { projectsLabel: string; touchToggleLabel: string }) {
   const [mode, setMode] = useState<"pending" | "webgl" | "still">("pending");
   const [reducedMotion, setReducedMotion] = useState(false);
   const [compact, setCompact] = useState(false);
@@ -91,6 +91,7 @@ export function SceneStage({ projectsLabel }: { projectsLabel: string }) {
           compact={compact}
           onReady={sceneStore.markReady}
           projectsLabel={projectsLabel}
+          touchToggleLabel={touchToggleLabel}
         />
       )}
       <div className={styles.overlay} />

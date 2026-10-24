@@ -8,7 +8,11 @@ import gsap from "gsap";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { sceneConstants as C, sceneStates, type SceneValues } from "./sceneStates";
+
+// The hero group sits far right for wide screens; on phones that pushes the planet off-screen.
+const COMPACT_HERO_GROUP_X = 6;
 import { sceneStore } from "./sceneStore";
+import { PlanetTouchToggle } from "./PlanetTouchToggle";
 import { diskFragmentShader, diskVertexShader } from "./diskShader";
 import { playIgnitionZap, readBlipLevels, setPlanetSoundscape } from "@/components/ui/menuChord";
 
@@ -157,6 +161,7 @@ const PAGE_CONTENT_SELECTOR = [
   "[data-scene-track] > #hero-section",
   "[data-scene-track] > [data-scene-state]",
   "[data-scene-track] > #journey-section",
+  "[data-planet-hint]",
   "[data-site-cursor]",
 ].join(", ");
 
@@ -209,9 +214,10 @@ type Props = {
   compact: boolean;
   onReady?: () => void;
   projectsLabel: string;
+  touchToggleLabel: string;
 };
 
-type RigProps = Omit<Props, "locale" | "projectsLabel"> & {
+type RigProps = Omit<Props, "locale" | "projectsLabel" | "touchToggleLabel"> & {
   cursorTarget: React.RefObject<HTMLAnchorElement | null>;
   entering: React.RefObject<{ progress: number; boom: number }>;
 };
@@ -225,7 +231,7 @@ type RigProps = Omit<Props, "locale" | "projectsLabel"> & {
  * On larger screens a post-processing pass adds bloom, a touch of chromatic aberration
  * and a vignette; phones skip it and the disk shader compresses its own highlights.
  */
-export default function OrbitScene({ reducedMotion, compact, onReady, projectsLabel }: Props) {
+export default function OrbitScene({ reducedMotion, compact, onReady, projectsLabel, touchToggleLabel }: Props) {
   const [active, setActive] = useState(sceneStore.active);
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const cursorTarget = useRef<HTMLAnchorElement>(null);
@@ -328,20 +334,23 @@ export default function OrbitScene({ reducedMotion, compact, onReady, projectsLa
       </Canvas>
       {portalRoot &&
         createPortal(
-          <Link
-            ref={cursorTarget}
-            href={projectsHref}
-            prefetch={false}
-            onClick={onPlanetClick}
-            data-cursor-target
-            data-cursor-hit-area
-            data-cursor-shape="circle"
-            data-cursor-label="Explore"
-            aria-label={projectsLabel}
-            onPointerEnter={() => setPlanetSoundscape(true)}
-            onPointerLeave={() => setPlanetSoundscape(false)}
-            style={{ position: "fixed", zIndex: 99, pointerEvents: "auto", display: active ? undefined : "none" }}
-          />,
+          <>
+            <Link
+              ref={cursorTarget}
+              href={projectsHref}
+              prefetch={false}
+              onClick={onPlanetClick}
+              data-cursor-target
+              data-cursor-hit-area
+              data-cursor-shape="circle"
+              data-cursor-label="Explore"
+              aria-label={projectsLabel}
+              onPointerEnter={() => setPlanetSoundscape(true)}
+              onPointerLeave={() => setPlanetSoundscape(sceneStore.touchHover)}
+              style={{ position: "fixed", zIndex: 99, pointerEvents: "auto", display: active ? undefined : "none" }}
+            />
+            {compact && active && <PlanetTouchToggle label={touchToggleLabel} reducedMotion={reducedMotion} />}
+          </>,
           portalRoot,
         )}
     </>
@@ -372,7 +381,9 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
   const planetWorldScale = useRef(new THREE.Vector3());
   const planetNdc = useRef(new THREE.Vector3());
   const spin = useRef({ planet: 0, clouds: 0, orbit: 0, w: 0, disk: 0, time: 0 });
-  const values = useRef<SceneValues>({ ...sceneStates[sceneStore.state] });
+  const stateValues = (name: typeof sceneStore.state): SceneValues =>
+    compact && name === "hero" ? { ...sceneStates.hero, groupX: COMPACT_HERO_GROUP_X } : sceneStates[name];
+  const values = useRef<SceneValues>({ ...stateValues(sceneStore.state) });
 
   const [albedo, normal, roughness, cloudsMap] = useLoader(THREE.TextureLoader, TEXTURES);
   albedo.colorSpace = THREE.SRGBColorSpace;
@@ -535,8 +546,8 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
     const target = values.current;
     const go = (name: typeof sceneStore.state) => {
       gsap.killTweensOf(target);
-      if (reducedMotion) Object.assign(target, sceneStates[name]);
-      else gsap.to(target, { ...sceneStates[name], duration: C.transition, ease: "power1.inOut" });
+      if (reducedMotion) Object.assign(target, stateValues(name));
+      else gsap.to(target, { ...stateValues(name), duration: C.transition, ease: "power1.inOut" });
     };
     go(sceneStore.state);
     const off = sceneStore.subscribe(go);
@@ -676,9 +687,9 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
       g?.updateMatrixWorld(true);
       raycaster.current.setFromCamera(pointer.current, camera);
       const firstHit = planet.current ? raycaster.current.intersectObjects([planet.current], true)[0]?.object : undefined;
-      planetHovered.current = firstHit !== undefined && planet.current?.getObjectById(firstHit.id) !== undefined;
+      planetHovered.current = sceneStore.touchHover || (firstHit !== undefined && planet.current?.getObjectById(firstHit.id) !== undefined);
     } else {
-      planetHovered.current = false;
+      planetHovered.current = sceneStore.touchHover;
     }
     hoverProgress.current = THREE.MathUtils.damp(
       hoverProgress.current,

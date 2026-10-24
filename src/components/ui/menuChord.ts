@@ -411,8 +411,8 @@ export function playSelectorNote(index: number) {
  * "Journey" descends an octave lower.
  */
 const SCENE_VOICINGS = [
-  { shift: 0, pick: (i: number) => i * 2 },
-  { shift: 1, pick: (i: number) => i * 3 + 1 },
+  { shift: 0, pick: (i: number) => (i < 3 ? i * 2 : 5) },
+  { shift: 1, pick: (i: number) => i },
   { shift: -1, pick: (i: number) => 5 - i },
 ] as const;
 export function playSceneChord(section: number, index: number, delay = 0) {

@@ -3,6 +3,7 @@ import type { Dictionary } from "@/content/dictionaries";
 import { Icon } from "@/components/ui/Icon";
 import { Marquee } from "@/components/ui/Marquee";
 import { SceneStage } from "@/components/scene/SceneStage";
+import { PlanetHint } from "@/components/scene/PlanetHint";
 import { SceneChoreography } from "./SceneChoreography";
 import styles from "./SceneTrack.module.css";
 
@@ -17,7 +18,8 @@ export function SceneTrack({ t, projectsLabel }: { t: Dictionary["home"]; projec
   return (
     <section id="landing-part-1" className={styles.track} aria-label="Webcraftz" data-scene-track>
       <div className={styles.stage}>
-        <SceneStage projectsLabel={projectsLabel} />
+        <SceneStage projectsLabel={projectsLabel} touchToggleLabel={t.planetToggle} />
+        <PlanetHint label={t.planetHint} />
       </div>
 
       {/* Hero copy over the scene; it scrolls away normally. */}

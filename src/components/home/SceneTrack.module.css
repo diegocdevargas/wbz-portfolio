@@ -206,6 +206,22 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.85);
+  transition:
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
+}
+
+/* Lit by the choreography in time with each box's chord (why us and services only). */
+.valueCard .card {
+  transition:
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
+}
+
+.valueCard[data-lit] .card,
+.serviceCard[data-lit] {
+  border-color: var(--violet);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--violet) 45%, transparent);
 }
 
 .serviceIcon {

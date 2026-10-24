@@ -114,6 +114,8 @@ export const en: Dictionary = {
       mailLead: "or write to",
     },
     loader: { caption: "Preparing for orbit", enter: "Click to enter", soundNotice: "This site uses sound for the best experience." },
+    planetToggle: "Toggle planet effects and sound",
+    planetHint: "Click planet to explore",
   },
 
   footer: {

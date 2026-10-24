@@ -29,6 +29,8 @@ export const sceneStore = {
       listeners.delete(listener);
     };
   },
+  /** Touch screens have no hover: this holds the planet's hover state on (set by the tap toggle). */
+  touchHover: false,
   /** Whether the scene is on screen; the canvas stops rendering while it is not. */
   get active() {
     return active;

@@ -17,7 +17,8 @@ gsap.registerPlugin(ScrollTrigger);
  * - On desktop, cards and headings are scrubbed between "scroll targets": a 50 vh
  *   trigger brings them in while it scrolls fully into view, and a cleanup trigger
  *   takes them out the same way.
- * - On phone there are no triggers; each block fades up (1 s) as it enters.
+ * - On phone, headings fade up (1 s) as they enter and every box (why, services, journey)
+ *   lights up with its own chord once it passes mid-screen.
  * - Journey steps light their card once the step passes mid-screen.
  */
 const SCENE_ORDER: SceneStateName[] = ["hero", "why", "features", "journey"];
@@ -69,11 +70,26 @@ export function SceneChoreography() {
       lastCue = now;
       return true;
     };
+    // Lights a box's border and keeps it on; the delay matches its chord.
+    const light = (el: HTMLElement | undefined, delay = 0) => {
+      if (!el) return;
+      gsap.delayedCall(delay, () => el.setAttribute("data-lit", ""));
+    };
+    const unlight = (el: HTMLElement) => {
+      el.removeAttribute("data-lit");
+      el.querySelectorAll("[data-lit]").forEach((child) => child.removeAttribute("data-lit"));
+    };
     const cueReveal = (el: HTMLElement) => {
-      if (!settled()) return;
-      if (el.dataset.revealGroup === "why") playSceneChord(0, Number(el.dataset.index ?? 0));
-      else if (el.dataset.revealGroup === "features-content") {
-        playSceneChord(1, 0);
+      const group = el.dataset.revealGroup;
+      // The four cards complete together, so only the first one cues the whole run. Checked before
+      // the throttle so the (silent) heading finishing at the same moment can't swallow it.
+      const count = group === "why" && el.dataset.index === "0" ? 4 : group === "features-content" ? 6 : 0;
+      if (!count || !settled()) return;
+      const section = group === "why" ? 0 : 1;
+      const cards = q(group === "why" ? '[data-reveal-group="why"][data-index]' : '[data-reveal-group="features-content"] [data-appear]');
+      for (let i = 0; i < count; i += 1) {
+        playSceneChord(section, i, i * 0.14);
+        light(cards[i], i * 0.14);
       }
     };
 
@@ -186,6 +202,8 @@ export function SceneChoreography() {
                 immediateRender: true,
                 // Fires once the block is fully revealed (scrolling down), not on every scrub tick.
                 onComplete: () => cueReveal(el),
+                // Scrolled back above the reveal: the lights go out with the boxes.
+                onReverseComplete: () => unlight(el),
                 scrollTrigger: { trigger: show, start: "top bottom", end: "bottom bottom", scrub: true },
               });
               gsap.fromTo(
@@ -200,9 +218,9 @@ export function SceneChoreography() {
               );
             });
           } else {
-            // Phone: per-block appear effects, replayed when scrolling back.
+            // Phone: headings and hero blocks fade up as they enter, replayed when scrolling back.
             const blocks = q(
-              '[data-reveal]:not([data-reveal-group="features-content"]), [data-reveal-group="features-content"] [data-appear], #hero-section [data-appear]',
+              '#hero-section [data-appear], [data-reveal="rise-exit-up"]',
             );
             blocks.forEach((el) => {
               gsap.fromTo(
@@ -214,6 +232,37 @@ export function SceneChoreography() {
                   duration: 1,
                   ease: APPEAR_EASE,
                   scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" },
+                },
+              );
+            });
+
+            // Boxes (why, services, journey) share the journey's behaviour: each lights up with
+            // its own chord once it passes mid-screen, and goes back when scrolling up past it.
+            const boxes: Array<[HTMLElement, number, number]> = [
+              ...q('[data-reveal-group="why"][data-index]').map((el, i): [HTMLElement, number, number] => [el, 0, i]),
+              ...q('[data-reveal-group="features-content"] [data-appear]').map(
+                (el, i): [HTMLElement, number, number] => [el, 1, i],
+              ),
+            ];
+            boxes.forEach(([el, section, index]) => {
+              gsap.fromTo(
+                el,
+                { opacity: 0, x: -12, y: 0 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  duration: 0.5,
+                  ease: APPEAR_EASE,
+                  scrollTrigger: {
+                    trigger: el,
+                    start: "center 55%",
+                    toggleActions: "play none none reverse",
+                    onEnter: () => {
+                      light(el);
+                      if (settled()) playSceneChord(section, index);
+                    },
+                    onLeaveBack: () => unlight(el),
+                  },
                 },
               );
             });
