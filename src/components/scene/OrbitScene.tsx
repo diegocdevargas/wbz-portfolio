@@ -14,7 +14,7 @@ const COMPACT_HERO_GROUP_X = 6;
 import { sceneStore } from "./sceneStore";
 import { PlanetTouchToggle } from "./PlanetTouchToggle";
 import { diskFragmentShader, diskVertexShader } from "./diskShader";
-import { playIgnitionZap, readBlipLevels, setPlanetSoundscape } from "@/components/ui/menuChord";
+import { playIgnitionZap, readBlipLevels, readCueLevels, setPlanetSoundscape } from "@/components/ui/menuChord";
 
 const DEG = Math.PI / 180;
 const MAIN_PURPLE = new THREE.Color(0x9b6dff);
@@ -616,6 +616,7 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
       clouds.current.rotation.set(0, v.planetRotY * DEG + s.clouds, 0);
     }
     const blipLevels = readBlipLevels();
+    const cueLevels = readCueLevels();
     for (const [index, orbitalGroup] of modelOrbits.current.entries()) {
       if (!orbitalGroup) continue;
       const config = ORBIT_MODELS[index];
@@ -628,7 +629,10 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
 
       // Particles, shake and the spark pop only play while the planet is hovered.
       const hoverNow = hoverProgress.current;
-      const spark = Math.min(1, sparkPulse(s.time, config.sparkIndex) + blipLevels[index]) * hoverNow;
+      const spark = Math.min(
+        1,
+        Math.min(1, sparkPulse(s.time, config.sparkIndex) + blipLevels[index]) * hoverNow + cueLevels[index],
+      );
       const cycle = sparkCycle(s.time, config.sparkIndex);
       if (
         !reducedMotion &&
@@ -662,7 +666,7 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
       for (const material of orbitalScenes[index].materials) {
         material.emissiveIntensity = glow;
         // As each note rings, the letter's glow shifts toward the main purple and fades back.
-        material.emissive.set(config.emissive).lerp(MAIN_PURPLE, blipLevels[index] * hoverNow);
+        material.emissive.set(config.emissive).lerp(MAIN_PURPLE, Math.min(1, blipLevels[index] * hoverNow + cueLevels[index]));
       }
     }
 

@@ -27,6 +27,9 @@ const SCENE_ORDER: SceneStateName[] = ["hero", "why", "features", "journey"];
 const APPEAR_EASE = "power2.out";
 const snapEase = (progress: number) => progress * progress * (3 - 2 * progress);
 
+// Seconds between one box's chord (and border drawing) and the next on desktop.
+const CUE_STAGGER = 0.55;
+
 const FROM = {
   "from-right": { opacity: 0, x: 40, y: 0 },
   "from-left": { opacity: 0, x: -40, y: 0 },
@@ -70,14 +73,32 @@ export function SceneChoreography() {
       lastCue = now;
       return true;
     };
-    // Lights a box's border and keeps it on; the delay matches its chord.
+    // Lights a box's border and keeps it on; the delay matches its chord. Re-lighting restarts
+    // the draw and replaces any pending light, so scrolling back and forth never leaves it stale.
+    const pendingLight = new WeakMap<HTMLElement, gsap.core.Tween>();
+    const clear = (el: HTMLElement) => {
+      pendingLight.get(el)?.kill();
+      pendingLight.delete(el);
+      el.removeAttribute("data-lit");
+    };
+    // A reveal element is either one box or the whole services grid.
+    const unlight = (el: HTMLElement) => {
+      clear(el);
+      el.querySelectorAll<HTMLElement>("[data-appear]").forEach(clear);
+    };
     const light = (el: HTMLElement | undefined, delay = 0) => {
       if (!el) return;
-      gsap.delayedCall(delay, () => el.setAttribute("data-lit", ""));
-    };
-    const unlight = (el: HTMLElement) => {
-      el.removeAttribute("data-lit");
-      el.querySelectorAll("[data-lit]").forEach((child) => child.removeAttribute("data-lit"));
+      clear(el);
+      pendingLight.set(
+        el,
+        gsap.delayedCall(delay, () => {
+          // The draw starts exactly at the top-left corner; its angle from the box centre depends on the box's shape.
+          const box = el.querySelector<HTMLElement>("[data-cursor-target]") ?? el;
+          const corner = 360 - (Math.atan2(box.offsetWidth, box.offsetHeight) * 180) / Math.PI;
+          el.style.setProperty("--draw-start", `${corner.toFixed(1)}deg`);
+          el.setAttribute("data-lit", "");
+        }),
+      );
     };
     const cueReveal = (el: HTMLElement) => {
       const group = el.dataset.revealGroup;
@@ -88,8 +109,8 @@ export function SceneChoreography() {
       const section = group === "why" ? 0 : 1;
       const cards = q(group === "why" ? '[data-reveal-group="why"][data-index]' : '[data-reveal-group="features-content"] [data-appear]');
       for (let i = 0; i < count; i += 1) {
-        playSceneChord(section, i, i * 0.14);
-        light(cards[i], i * 0.14);
+        playSceneChord(section, i, i * CUE_STAGGER);
+        light(cards[i], i * CUE_STAGGER);
       }
     };
 

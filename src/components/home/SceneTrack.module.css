@@ -206,22 +206,101 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.85);
-  transition:
-    border-color 0.35s var(--ease-out),
-    box-shadow 0.35s var(--ease-out);
 }
 
-/* Lit by the choreography in time with each box's chord (why us and services only). */
-.valueCard .card {
-  transition:
-    border-color 0.35s var(--ease-out),
-    box-shadow 0.35s var(--ease-out);
+/* Lit by the choreography in time with each box's chord (why us and services only).
+   Kept cheap: the border ring is one small pseudo-element drawn once, and the glow is a
+   pre-rendered shadow that only fades in (opacity), so nothing else repaints. */
+@property --draw {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
-.valueCard[data-lit] .card,
-.serviceCard[data-lit] {
-  border-color: var(--violet);
+.valueCard .card,
+.serviceCard {
+  position: relative;
+}
+
+.valueCard .card::before,
+.serviceCard::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  /* Starts at the top-left corner (angle set per box by the choreography) and runs clockwise. */
+  background:
+    conic-gradient(from var(--draw-start, 295deg), var(--violet) 0 var(--draw), transparent 0),
+    linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+.valueCard .card::after,
+.serviceCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
   box-shadow: 0 0 14px color-mix(in srgb, var(--violet) 45%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+  pointer-events: none;
+}
+
+.valueCard[data-lit] .card::before,
+.serviceCard[data-lit]::before {
+  animation: borderDraw 0.45s ease-out 0.15s forwards;
+}
+
+.valueCard[data-lit] .card::after,
+.serviceCard[data-lit]::after {
+  opacity: 1;
+  transition-delay: 0.55s;
+}
+
+/* The icon fires first (transform only); the border then draws around the box. */
+.valueCard[data-lit] .cardIcon,
+.serviceCard[data-lit] .serviceIcon {
+  animation: iconSpark 0.35s ease-out;
+}
+
+@keyframes iconSpark {
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+@keyframes borderDraw {
+  to {
+    --draw: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .valueCard[data-lit] .card::before,
+  .serviceCard[data-lit]::before,
+  .valueCard[data-lit] .cardIcon,
+  .serviceCard[data-lit] .serviceIcon {
+    animation: none;
+  }
+
+  .valueCard[data-lit] .card::before,
+  .serviceCard[data-lit]::before {
+    --draw: 360deg;
+  }
+
+  .valueCard[data-lit] .card::after,
+  .serviceCard[data-lit]::after {
+    transition-delay: 0s;
+  }
 }
 
 .serviceIcon {

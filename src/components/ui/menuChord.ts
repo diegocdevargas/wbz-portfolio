@@ -24,6 +24,7 @@ let noiseBuffer: AudioBuffer | undefined;
 const BLIP_PITCHES = [1046.5, 1318.5, 1568, 1760, 2093, 2637] as const;
 const BLIP_DECAY_MS = 220;
 const blipTimes = [-1e9, -1e9, -1e9];
+const cueTimes = [-1e9, -1e9, -1e9];
 let visualBlipTimer = 0;
 
 function getAudioContext() {
@@ -422,6 +423,17 @@ export function playSceneChord(section: number, index: number, delay = 0) {
   // Scroll-driven cues never try to wake a locked context; they stay silent until the first click.
   if (audio.state !== "running") return;
   scheduleChord(audio, triad, delay, 0.06, voicing.shift);
+  // A random letter model flashes with the chord, using the same glow as the hover blips.
+  const model = Math.floor(Math.random() * cueTimes.length);
+  window.setTimeout(() => {
+    cueTimes[model] = performance.now();
+  }, delay * 1000);
+}
+
+/** Per-model energy (0..1) of the scroll chord cues, independent of planet hover. */
+export function readCueLevels(): number[] {
+  const now = performance.now();
+  return cueTimes.map((time) => Math.exp(-(now - time) / BLIP_DECAY_MS));
 }
 
 /** Every menu chord in sequence, ringing over each other: the logo's hover signature. */
