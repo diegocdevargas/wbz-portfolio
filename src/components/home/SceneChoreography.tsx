@@ -27,9 +27,6 @@ const SCENE_ORDER: SceneStateName[] = ["hero", "why", "features", "journey"];
 const APPEAR_EASE = "power2.out";
 const snapEase = (progress: number) => progress * progress * (3 - 2 * progress);
 
-// Seconds between one box's chord (and border drawing) and the next on desktop.
-const CUE_STAGGER = 0.21;
-
 const FROM = {
   "from-right": { opacity: 0, x: 40, y: 0 },
   "from-left": { opacity: 0, x: -40, y: 0 },
@@ -100,19 +97,6 @@ export function SceneChoreography() {
         }),
       );
     };
-    const cueReveal = (el: HTMLElement) => {
-      const group = el.dataset.revealGroup;
-      // The four cards complete together, so only the first one cues the whole run. Checked before
-      // the throttle so the (silent) heading finishing at the same moment can't swallow it.
-      const count = group === "why" && el.dataset.index === "0" ? 4 : group === "features-content" ? 6 : 0;
-      if (!count || !settled()) return;
-      const section = group === "why" ? 0 : 1;
-      const cards = q(group === "why" ? '[data-reveal-group="why"][data-index]' : '[data-reveal-group="features-content"] [data-appear]');
-      for (let i = 0; i < count; i += 1) {
-        playSceneChord(section, i, i * CUE_STAGGER);
-        light(cards[i], i * CUE_STAGGER);
-      }
-    };
 
     const ctx = gsap.context(() => {
       // Render only while the track is on screen.
@@ -165,6 +149,12 @@ export function SceneChoreography() {
         },
         (context) => {
           const { desktop } = context.conditions as { desktop: boolean; phone: boolean };
+          const boxes: Array<[HTMLElement, number, number]> = [
+            ...q('[data-reveal-group="why"][data-index]').map((el, i): [HTMLElement, number, number] => [el, 0, i]),
+            ...q('[data-reveal-group="features-content"] [data-appear]').map(
+              (el, i): [HTMLElement, number, number] => [el, 1, i],
+            ),
+          ];
 
           if (desktop) {
             const snapTargets = q(
@@ -214,19 +204,19 @@ export function SceneChoreography() {
               const show = group && triggerEl(group.show);
               const clean = group && triggerEl(group.clean);
               if (!show || !clean) return;
+              const staged = el.matches('[data-reveal-group="why"][data-index], [data-reveal-group="features-content"]');
               // In: while the show trigger scrolls fully into view. Out: same for cleanup.
-              gsap.fromTo(el, FROM[kind], {
-                opacity: 1,
-                x: 0,
-                y: 0,
-                ease: "none",
-                immediateRender: true,
-                // Fires once the block is fully revealed (scrolling down), not on every scrub tick.
-                onComplete: () => cueReveal(el),
-                // Scrolled back above the reveal: the lights go out with the boxes.
-                onReverseComplete: () => unlight(el),
-                scrollTrigger: { trigger: show, start: "top bottom", end: "bottom bottom", scrub: true },
-              });
+              // Staged boxes reveal one by one in the sequence below instead.
+              if (!staged) {
+                gsap.fromTo(el, FROM[kind], {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  ease: "none",
+                  immediateRender: true,
+                  scrollTrigger: { trigger: show, start: "top bottom", end: "bottom bottom", scrub: true },
+                });
+              }
               gsap.fromTo(
                 el,
                 { opacity: 1, x: 0, y: 0 },
@@ -237,6 +227,39 @@ export function SceneChoreography() {
                   scrollTrigger: { trigger: clean, start: "top bottom", end: "bottom bottom", scrub: true },
                 },
               );
+            });
+
+            // Each box gets its own slice of the show trigger's scroll distance: it fades in, its
+            // border draws, its chord plays and a letter flashes. Scrolling back replays it in reverse.
+            const sequences: Array<[string, HTMLElement[], number]> = [
+              ["why-show", boxes.filter(([, section]) => section === 0).map(([el]) => el), 0],
+              ["features-content-show", boxes.filter(([, section]) => section === 1).map(([el]) => el), 1],
+            ];
+            sequences.forEach(([showName, els, section]) => {
+              const show = triggerEl(showName);
+              if (!show || !els.length) return;
+              const slice = 1 / (els.length + 1);
+              const tl = gsap.timeline({
+                defaults: { ease: "none" },
+                scrollTrigger: { trigger: show, start: "top bottom", end: "bottom bottom", scrub: true },
+              });
+              tl.set({}, {}, 1);
+              els.forEach((el, index) => {
+                const from = section === 0 ? FROM[el.dataset.reveal as RevealKind] : { opacity: 0, x: 0, y: 24 };
+                tl.fromTo(el, from, { opacity: 1, x: 0, y: 0, duration: slice * 2 }, index * slice);
+                tl.call(
+                  () => {
+                    if (tl.scrollTrigger?.direction === -1) {
+                      unlight(el);
+                      return;
+                    }
+                    light(el);
+                    if (performance.now() - mountedAt >= 1200) playSceneChord(section, index);
+                  },
+                  undefined,
+                  index * slice + slice,
+                );
+              });
             });
           } else {
             // Phone: headings and hero blocks fade up as they enter, replayed when scrolling back.
@@ -259,12 +282,6 @@ export function SceneChoreography() {
 
             // Boxes (why, services, journey) share the journey's behaviour: each lights up with
             // its own chord once it passes mid-screen, and goes back when scrolling up past it.
-            const boxes: Array<[HTMLElement, number, number]> = [
-              ...q('[data-reveal-group="why"][data-index]').map((el, i): [HTMLElement, number, number] => [el, 0, i]),
-              ...q('[data-reveal-group="features-content"] [data-appear]').map(
-                (el, i): [HTMLElement, number, number] => [el, 1, i],
-              ),
-            ];
             boxes.forEach(([el, section, index]) => {
               gsap.fromTo(
                 el,

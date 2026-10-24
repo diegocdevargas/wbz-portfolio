@@ -14,7 +14,7 @@ const COMPACT_HERO_GROUP_X = 6;
 import { sceneStore } from "./sceneStore";
 import { PlanetTouchToggle } from "./PlanetTouchToggle";
 import { diskFragmentShader, diskVertexShader } from "./diskShader";
-import { playIgnitionZap, readBlipLevels, readCueLevels, setPlanetSoundscape } from "@/components/ui/menuChord";
+import { readBlipLevels, readCueLevels, setPlanetSoundscape } from "@/components/ui/menuChord";
 
 const DEG = Math.PI / 180;
 const MAIN_PURPLE = new THREE.Color(0x9b6dff);
@@ -365,7 +365,6 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
   const clouds = useRef<THREE.Group>(null);
   const modelOrbits = useRef<Array<THREE.Group | null>>(ORBIT_MODELS.map(() => null));
   const modelGroups = useRef<Array<THREE.Group | null>>(ORBIT_MODELS.map(() => null));
-  const lastCycle = useRef<number[]>(ORBIT_MODELS.map(() => 0));
   const flare = useRef<THREE.Group>(null);
   const keyLight = useRef<THREE.DirectionalLight>(null);
   const lightAngle = useRef(0);
@@ -633,16 +632,6 @@ function Rig({ reducedMotion, compact, onReady, cursorTarget, entering }: RigPro
         1,
         Math.min(1, sparkPulse(s.time, config.sparkIndex) + blipLevels[index]) * hoverNow + cueLevels[index],
       );
-      const cycle = sparkCycle(s.time, config.sparkIndex);
-      if (
-        !reducedMotion &&
-        hoverNow > 0.5 &&
-        lastCycle.current[index] < C.orbitSparkFlashAt &&
-        cycle >= C.orbitSparkFlashAt
-      ) {
-        playIgnitionZap((index - 1) * 0.4);
-      }
-      lastCycle.current[index] = cycle;
 
       const modelGroup = modelGroups.current[index];
       if (modelGroup) {
