@@ -6,7 +6,7 @@ import { sceneStore } from "./sceneStore";
 import styles from "./PlanetHint.module.css";
 
 /** Decorative nudge on the hero scene: a trail of dots leading up to the planet. */
-export function PlanetHint({ label, or }: { label: string; or: string }) {
+export function PlanetHint({ label, or, scroll }: { label: string; or: string; scroll: string }) {
   const [visible, setVisible] = useState(sceneStore.state === "hero" && sceneStore.active);
 
   useEffect(() => {
@@ -79,6 +79,7 @@ export function PlanetHint({ label, or }: { label: string; or: string }) {
           <rect x="7" y="2" width="10" height="20" rx="5" />
           <path ref={wheel} d="M12 6.5v3.5" />
         </svg>
+        {scroll}
       </span>
     </div>
   );

@@ -48,7 +48,7 @@ export const pt = {
     },
     services: {
       eyebrow: "O que eu Crio",
-      title: { text: "Tudo que seu Produto Precisa.", accent: "Feito do jeito Certo." },
+      title: { text: "Tudo que seu Produto precisa.", accent: "Feito do jeito certo!" },
       // Same order as `serviceIcons` in content/home.ts.
       items: [
         { title: "Aplicações Web", body: "Apps full-stack com React, Next.js e APIs sólidas." },
@@ -121,8 +121,9 @@ export const pt = {
     loader: { caption: "Preparando a órbita", enter: "Clique para entrar", soundNotice: "Este site usa som para uma melhor experiência." },
     planetToggle: "Ativar ou desativar os efeitos e o som do planeta",
     planetToggleTip: "Toque aqui para ativar os sinais",
-    planetHint: "no planeta para explorar",
+    planetHint: "no planeta para projetos",
     planetHintOr: "ou",
+    planetHintScroll: "para explorar",
   },
 
   footer: {

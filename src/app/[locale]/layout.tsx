@@ -7,6 +7,7 @@ import { htmlLang, isLocale, locales, type Locale } from "@/i18n/config";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { PageTransition } from "@/components/layout/PageTransition";
 import { Reveal } from "@/components/ui/Reveal";
 import { CoordsCursor } from "@/components/ui/cursor/CoordsCursor";
 import "../globals.css";
@@ -55,6 +56,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <SmoothScroll />
         <Reveal />
         <CoordsCursor />
+        <PageTransition />
       </body>
     </html>
   );

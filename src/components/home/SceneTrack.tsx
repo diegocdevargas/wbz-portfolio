@@ -19,7 +19,7 @@ export function SceneTrack({ t, projectsLabel }: { t: Dictionary["home"]; projec
     <section id="landing-part-1" className={styles.track} aria-label="Webcraftz" data-scene-track>
       <div className={styles.stage}>
         <SceneStage projectsLabel={projectsLabel} touchToggleLabel={t.planetToggle} touchToggleTip={t.planetToggleTip} />
-        <PlanetHint label={t.planetHint} or={t.planetHintOr} />
+        <PlanetHint label={t.planetHint} or={t.planetHintOr} scroll={t.planetHintScroll} />
       </div>
 
       {/* Hero copy over the scene; it scrolls away normally. */}

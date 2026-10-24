@@ -1,14 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { unlockMenuAudio } from "@/components/ui/menuChord";
 import styles from "./Loader.module.css";
 
 const WORDMARK = "Webcraftz";
 
-// Only the first visit in a session shows it; client-side returns to Home skip it.
+// Only the first visit in a session shows it. The flag also lives in sessionStorage so a
+// hard reload (e.g. after the planet click) does not bring it back on the way home.
+const STORAGE_KEY = "wbz-entered";
 let lifted = false;
+
+function hasEntered() {
+  if (lifted) return true;
+  try {
+    lifted = window.sessionStorage.getItem(STORAGE_KEY) === "1";
+  } catch {}
+  return lifted;
+}
 
 /**
  * Home loader: black screen, a wordmark whose letters fade in one over another, and a
@@ -27,6 +37,11 @@ export function Loader({
   const leaveTimer = useRef(0);
 
   useEffect(() => () => window.clearTimeout(leaveTimer.current), []);
+
+  // Already entered earlier in this session (before a hard reload): skip straight to the page.
+  useLayoutEffect(() => {
+    if (hasEntered()) setState("gone");
+  }, []);
 
   // Letters fade in one in front of another, then the button and the notice follow.
   useEffect(() => {
@@ -59,6 +74,9 @@ export function Loader({
   const enter = () => {
     if (lifted) return;
     lifted = true;
+    try {
+      window.sessionStorage.setItem(STORAGE_KEY, "1");
+    } catch {}
     unlockMenuAudio();
     setState("leaving");
     leaveTimer.current = window.setTimeout(() => setState("gone"), 600);

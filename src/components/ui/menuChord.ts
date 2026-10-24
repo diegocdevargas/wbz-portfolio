@@ -86,12 +86,13 @@ function getSoundscape(audio: AudioContext) {
 
   staticFilter.type = "bandpass";
   staticFilter.frequency.value = 3400;
-  staticFilter.Q.value = 1.6;
-  staticGain.gain.value = 0.035;
-  carrierGain.gain.value = 0.05;
+  staticFilter.Q.value = 1.1;
+  staticGain.gain.value = 0.011;
+  carrierGain.gain.value = 0.0111;
   humGain.gain.value = 0.3;
-  blipBus.gain.value = 0.5;
-  echo.delayTime.value = 0.23;
+  blipBus.gain.value = 3.8;
+  echo.delayTime.value = 111.11;
+  // echo.delayTime.value = 0.23;
   echoTone.type = "lowpass";
   echoTone.frequency.value = 2200;
   echoFeedback.gain.value = 0.4;
@@ -310,6 +311,148 @@ export function playIgnitionZap(pan = 0) {
   buzz.stop(end + 0.02);
   flutter.stop(end + 0.02);
   crackle.stop(start + 0.1);
+}
+
+/** A soft, low "dun" with a short echo tail, landing at `land`. */
+function scheduleDunIng(audio: AudioContext, land: number) {
+  const dun = audio.createOscillator();
+  const dunOvertone = audio.createOscillator();
+  const dunOvertoneGain = audio.createGain();
+  const dunGain = audio.createGain();
+  const echo = audio.createDelay(1);
+  const echoTone = audio.createBiquadFilter();
+  const echoFeedback = audio.createGain();
+  const echoGain = audio.createGain();
+
+  // The "dun": one low, rounded note with a quick attack and a gentle decay.
+  dun.type = "sine";
+  dun.frequency.setValueAtTime(123.47, land);
+  dun.frequency.exponentialRampToValueAtTime(110, land + 0.3);
+  dunOvertone.type = "triangle";
+  dunOvertone.frequency.value = 246.94;
+  dunOvertoneGain.gain.value = 0.18;
+  dunGain.gain.setValueAtTime(0.0001, land);
+  dunGain.gain.exponentialRampToValueAtTime(0.3, land + 0.02);
+  dunGain.gain.exponentialRampToValueAtTime(0.0001, land + 0.85);
+
+  echo.delayTime.value = 0.28;
+  echoTone.type = "lowpass";
+  echoTone.frequency.value = 900;
+  echoFeedback.gain.value = 0.35;
+  echoGain.gain.value = 0.3;
+
+  dun.connect(dunGain);
+  dunOvertone.connect(dunOvertoneGain);
+  dunOvertoneGain.connect(dunGain);
+  dunGain.connect(audio.destination);
+  dunGain.connect(echo);
+  echo.connect(echoTone);
+  echoTone.connect(echoFeedback);
+  echoFeedback.connect(echo);
+  echoTone.connect(echoGain);
+  echoGain.connect(audio.destination);
+
+}
+
+/**
+ * Page change cue while the void grows: a swell that rises into the cover. The resolving
+ * "dun iiing" waits for the reveal (see playPageReveal).
+ */
+export function playPageWarp() {
+  const audio = getAudioContext();
+  const fire = () => {
+    const start = audio.currentTime;
+    const land = start + 0.55;
+
+    const swell = audio.createOscillator();
+    const swellFilter = audio.createBiquadFilter();
+    const swellGain = audio.createGain();
+    const air = audio.createBufferSource();
+    const airFilter = audio.createBiquadFilter();
+    const airGain = audio.createGain();
+
+    // Reversed swell: pitch and brightness climb while the level builds toward the landing.
+    swell.type = "sine";
+    swell.frequency.setValueAtTime(70, start);
+    swell.frequency.exponentialRampToValueAtTime(330, land);
+    swellFilter.type = "lowpass";
+    swellFilter.frequency.setValueAtTime(200, start);
+    swellFilter.frequency.exponentialRampToValueAtTime(1600, land);
+    swellGain.gain.setValueAtTime(0.0001, start);
+    swellGain.gain.exponentialRampToValueAtTime(0.13, land - 0.04);
+    swellGain.gain.exponentialRampToValueAtTime(0.0001, land + 0.06);
+
+    // A breath of filtered noise rising with it, like air pulled toward the page.
+    air.buffer = getNoiseBuffer(audio);
+    airFilter.type = "bandpass";
+    airFilter.frequency.setValueAtTime(400, start);
+    airFilter.frequency.exponentialRampToValueAtTime(3200, land);
+    airFilter.Q.value = 0.9;
+    airGain.gain.setValueAtTime(0.0001, start);
+    airGain.gain.exponentialRampToValueAtTime(0.035, land - 0.05);
+    airGain.gain.exponentialRampToValueAtTime(0.0001, land + 0.05);
+
+    swell.connect(swellFilter);
+    swellFilter.connect(swellGain);
+    swellGain.connect(audio.destination);
+    air.connect(airFilter);
+    airFilter.connect(airGain);
+    airGain.connect(audio.destination);
+    swell.start(start);
+    air.start(start);
+    swell.stop(land + 0.1);
+    air.stop(land + 0.1);
+  };
+  if (audio.state === "running") fire();
+  else void audio.resume().then(fire, () => undefined);
+}
+
+/** Page change cue while the void shrinks: the swell turned around, falling away, ending on the "dun" as the void fades. */
+export function playPageReveal() {
+  const audio = getAudioContext();
+  const fire = () => {
+    const start = audio.currentTime;
+    const end = start + 0.7;
+    const swell = audio.createOscillator();
+    const swellFilter = audio.createBiquadFilter();
+    const swellGain = audio.createGain();
+    const air = audio.createBufferSource();
+    const airFilter = audio.createBiquadFilter();
+    const airGain = audio.createGain();
+
+    swell.type = "sine";
+    swell.frequency.setValueAtTime(330, start);
+    swell.frequency.exponentialRampToValueAtTime(70, end);
+    swellFilter.type = "lowpass";
+    swellFilter.frequency.setValueAtTime(1600, start);
+    swellFilter.frequency.exponentialRampToValueAtTime(200, end);
+    swellGain.gain.setValueAtTime(0.0001, start);
+    swellGain.gain.exponentialRampToValueAtTime(0.1, start + 0.06);
+    swellGain.gain.exponentialRampToValueAtTime(0.0001, end);
+
+    air.buffer = getNoiseBuffer(audio);
+    airFilter.type = "bandpass";
+    airFilter.frequency.setValueAtTime(3200, start);
+    airFilter.frequency.exponentialRampToValueAtTime(400, end);
+    airFilter.Q.value = 0.9;
+    airGain.gain.setValueAtTime(0.0001, start);
+    airGain.gain.exponentialRampToValueAtTime(0.028, start + 0.08);
+    airGain.gain.exponentialRampToValueAtTime(0.0001, end);
+
+    swell.connect(swellFilter);
+    swellFilter.connect(swellGain);
+    swellGain.connect(audio.destination);
+    air.connect(airFilter);
+    airFilter.connect(airGain);
+    airGain.connect(audio.destination);
+    swell.start(start);
+    air.start(start);
+    swell.stop(end + 0.05);
+    air.stop(end + 0.05);
+    scheduleDunIng(audio, end);
+  };
+  if (audio.state === "running") fire();
+  else void audio.resume().then(fire, () => undefined);
 }
 
 /** Low "boom" for the planet vanishing into the horizon. */
