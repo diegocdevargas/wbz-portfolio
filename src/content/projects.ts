@@ -14,6 +14,15 @@ export interface ImageAsset {
   alt: string;
   width: number;
   height: number;
+  /** A transparent cut-out (device mock-up) that floats with the scroll instead of sitting in a clipped frame. */
+  parallax?: boolean;
+  /** A hover-to-play clip shown in place of the still, which becomes its poster. */
+  video?: string;
+  /**
+   * "visible" lets the floating image paint outside its frame (above the section, over the next
+   * one); "hidden" (default) keeps it inside the frame.
+   */
+  overflow?: "visible" | "hidden";
 }
 
 export interface Metric {
@@ -80,10 +89,11 @@ const data: Project[] = [
     featured: true,
     order: 1,
     cover: {
-      src: "/images/projects/azeitonas-verdes/cover.jpg",
+      src: "/images/projects/azeitonas-verdes/desktop.webp",
       alt: "Show ao vivo com o público de braços erguidos diante de um palco iluminado por luzes verdes",
       width: 1408,
-      height: 768
+      height: 768,
+      overflow: "visible"
     },
     challenge: "Azeitonas Verdes é um power trio do interior do Rio Grande do Sul, o som se basea em rock, punk e um toque de psicodelia, embora existam raizes em muita coisa aléatoria também. As músicas, os vídeos e as datas de show estavam espalhados de forma aleatória. Então surgiu a necessidade de uma identidade que refletisse essa energia: alta, barulhenta, aleatória e meio descontrolada, mas que ainda facilitasse achar o próximo show ou dar o play.",
     approach: "Construímos a marca em torno de uma imagem: a azeitona. Um logotipo com contornos roxo e amarelo deslocados, resgata as fotocópias desalinhadas do punk. Filtros SVG de efeito misturados com manipulação de audio em sincronia com a música.",
@@ -104,16 +114,18 @@ const data: Project[] = [
     ],
     gallery: [
       {
-        src: "/images/projects/azeitonas-verdes/gallery-1.jpg",
-        alt: "Arte do logotipo Azeitonas Verdes com letras escorrendo em verde e uma azeitona com rosto",
-        width: 1024,
-        height: 1024
-      },
-      {
-        src: "/images/projects/azeitonas-verdes/gallery-2.jpg",
+        src: "/images/projects/azeitonas-verdes/tabletREduce 20% of.webp",
         alt: "Ilustração de uma azeitona verde derretendo no espaço, cercada por anéis roxos",
         width: 1408,
-        height: 768
+        height: 768,
+        overflow: "visible"
+      },
+      {
+        src: "/images/projects/azeitonas-verdes/azeitonas_mobile.webp",
+        alt: "Arte do logotipo Azeitonas Verdes com letras escorrendo em verde e uma azeitona com rosto",
+        width: 1024,
+        height: 1024,
+        overflow: "visible"
       },
       {
         src: "/images/projects/azeitonas-verdes/full-page.webp",
@@ -137,7 +149,7 @@ const data: Project[] = [
       "Website",
       "Tema WordPress Customizado",
       "Arquitetura de Conteúdo",
-      "Figma to code"
+      "Do Figma ao código"
     ],
     categories: [
       "websites"
@@ -196,7 +208,7 @@ const data: Project[] = [
     slug: "mi-brasil",
     title: "Xiaomi Brasil",
     year: 2021,
-    subtitle: "Official e-commerce / Consumer electronics",
+    subtitle: "E-commerce oficial / Eletrônicos de consumo",
     client: "Xiaomi Brasil",
     discipline: "Digital",
     services: [
@@ -345,10 +357,11 @@ const data: Project[] = [
     featured: true,
     order: 2,
     cover: {
-      src: "/images/projects/ceunsa/cover-canopy.jpg",
-      alt: "Vista de baixo para cima de uma grande árvore, com galhos e folhas verdes iluminados pelo sol",
-      width: 768,
-      height: 1364
+      src: "/images/projects/ceunsa/desktop.webp",
+      alt: "Site do CEUNSA exibido em um notebook, com a mensagem de boas-vindas sobre uma trilha entre samambaias",
+      width: 6500,
+      height: 3883,
+      overflow: "visible"
     },
     previewVideo: "/images/projects/ceunsa/scroll-preview-from-7s.mp4",
     challenge: "Fundado em Porto Alegre em 1959, o CEUNSA acolhe pessoas há mais de seis décadas com passes, giras e trabalho de caridade. Quem chega pela primeira vez quase sempre traz perguntas práticas: em que dia vir, que roupa usar, se precisa agendar, o que pode trazer. O templo precisava de um site que respondesse a tudo isso com a mesma calma e acolhimento que as pessoas sentem na porta, honrando 60 anos de história e os guias espirituais que formaram a casa.",
@@ -357,35 +370,36 @@ const data: Project[] = [
     metrics: [
       {
         value: "1959",
-        label: "Legacy brought online"
+        label: "Uma história de décadas levada para a web"
       },
       {
         value: "11",
-        label: "Sections, a full visit from welcome to contact"
+        label: "Seções, uma visita completa das boas-vindas ao contato"
       },
       {
         value: "3",
-        label: "Weekly gira days in a live calendar with moon phase"
+        label: "Dias de gira por semana em um calendário vivo, com fase da lua"
       }
     ],
     gallery: [
       {
-        src: "/images/projects/ceunsa/gallery-1.jpg",
+        src: "/images/projects/ceunsa/tablet.webp",
         alt: "Máquina de costura em um ateliê com pouca luz",
         width: 1200,
         height: 800
       },
       {
-        src: "/images/projects/ceunsa/gallery-2.jpg",
+        src: "/images/projects/ceunsa/mobile.webp",
         alt: "Tecido de veludo vermelho dobrado",
         width: 1200,
         height: 800
       },
       {
-        src: "/images/projects/ceunsa/gallery-3.jpg",
-        alt: "Tecido preto em dobras suaves sobre fundo escuro",
-        width: 1200,
-        height: 675
+        src: "/images/projects/ceunsa/hero-poster.webp",
+        alt: "Início do site do CEUNSA com a mensagem de boas-vindas sobre uma trilha de pedras entre samambaias",
+        width: 1920,
+        height: 1080,
+        video: "/images/projects/ceunsa/scroll-preview-from-7s.mp4"
       }
     ],
     needsReview: [
@@ -414,10 +428,11 @@ const data: Project[] = [
     featured: true,
     order: 6,
     cover: {
-      src: "/images/projects/luh-reis/cover-v2.webp",
+      src: "/images/projects/luh-reis/notebook_l.webp",
       alt: "Página de vendas desktop da Luh Reis para o método de treino Destrave Delas",
       width: 1905,
-      height: 1072
+      height: 1072,
+      overflow: "visible"
     },
     challenge: "A Luh Reis precisava apresentar seu método de treino de forma clara para mulheres que querem emagrecer, definir o corpo e construir uma rotina saudável. A página precisava explicar as opções de planilhas e consultoria, responder dúvidas comuns e facilitar o próximo passo.",
     approach: "Estruturamos a página como uma jornada de venda: uma chamada principal, identificação das dificuldades de quem tenta treinar sem um plano, apresentação da trajetória da Luh, explicação do método Destrave Delas, histórias de clientes, opções de treino, etapas da consultoria e perguntas frequentes. Chamadas para ação acompanham a visitante ao longo da página.",
@@ -425,16 +440,20 @@ const data: Project[] = [
     metrics: [],
     gallery: [
       {
-        src: "/images/projects/luh-reis/gallery-1-v2.webp",
+        src: "/images/projects/luh-reis/tablet_overall_case_.webp",
         alt: "Foto ilustrativa de treino de força com barra em uma academia, por Unsplash",
         width: 1400,
-        height: 933
+        height: 933,
+        parallax: true,
+        overflow: "visible"
       },
       {
-        src: "/images/projects/luh-reis/gallery-2-v2.webp",
+        src: "/images/projects/luh-reis/luh_mobile.webp",
         alt: "Foto ilustrativa de uma mulher fazendo exercício abdominal, por Unsplash",
         width: 1400,
-        height: 933
+        height: 933,
+        parallax: true,
+        overflow: "visible"
       },
       {
         src: "/images/projects/luh-reis/full-page-v3.webp",

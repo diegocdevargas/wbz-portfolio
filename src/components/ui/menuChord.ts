@@ -1,3 +1,4 @@
+//You can add/remove more triads here.
 const SCALE_TRIADS = [
   [0, 4, 7],
   [2, 5, 9],
@@ -565,7 +566,7 @@ export function playSceneChord(section: number, index: number, delay = 0) {
   const audio = getAudioContext();
   // Scroll-driven cues never try to wake a locked context; they stay silent until the first click.
   if (audio.state !== "running") return;
-  scheduleChord(audio, triad, delay, 0.06, voicing.shift);
+  scheduleChord(audio, triad, delay, 0.0708, voicing.shift);
   // A random letter model flashes with the chord, using the same glow as the hover blips.
   const model = Math.floor(Math.random() * cueTimes.length);
   window.setTimeout(() => {

@@ -10,7 +10,11 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { Icon } from "@/components/ui/Icon";
 import { MonoButton } from "@/components/ui/MonoButton";
 import { RichText } from "@/components/ui/RichText";
+import { ParallaxFloat } from "@/components/ui/ParallaxFloat";
+import { ParallaxImage } from "@/components/ui/ParallaxImage";
+import { ParallaxShape } from "@/components/ui/ParallaxShape";
 import { ScrollImage } from "@/components/ui/ScrollImage";
+import { HoverVideoPreview } from "@/components/work/HoverVideoPreview";
 import styles from "./page.module.css";
 
 const GALLERY_SIZES = "(min-width: 1440px) 437px, (min-width: 810px) 31vw, 92vw";
@@ -59,7 +63,18 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     { heading: t.result, text: project.result },
   ];
 
-  const crumbs = breadcrumbJsonLd(locale, [
+  const cover = (
+    <Image
+      src={project.cover.src}
+      alt={project.cover.alt}
+      fill
+      priority
+      sizes="(min-width: 1440px) 1376px, 100vw"
+      className={styles.cover}
+    />
+  );
+
+  const crumbs =breadcrumbJsonLd(locale, [
     { name: dict.footer.sitemap.home, path: "/" },
     { name: dict.work.metaTitle, path: "/cases" },
     { name: project.title, path: `/cases/${slug}` },
@@ -92,22 +107,18 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       </header>
 
       <div className={`container ${styles.heroWrap}`}>
-        <div className={styles.hero}>
-          <Image
-            src={project.cover.src}
-            alt={project.cover.alt}
-            fill
-            priority
-            sizes="(min-width: 1440px) 1376px, 100vw"
-            className={styles.cover}
-          />
+        <div className={project.cover.overflow === "visible" ? `${styles.hero} ${styles.heroFloat}` : styles.hero}>
+          <ParallaxFloat travel={40}>{cover}</ParallaxFloat>
         </div>
       </div>
 
       <section className={`container ${styles.story}`} aria-labelledby="case-study-label">
-        <h2 id="case-study-label" className={styles.storyLabel}>
-          {t.storyLabel}
-        </h2>
+        <div className={styles.storyLabel}>
+          <h2 id="case-study-label" className="sr-only">
+            {t.storyLabel}
+          </h2>
+          <ParallaxShape />
+        </div>
         <div className={styles.storyBody}>
           {story.map((s) => (
             <div key={s.heading} className={styles.storyBlock}>
@@ -140,22 +151,44 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               const tall = img.height / img.width > 2;
               // A tall print that would sit alone in the last row spans the full width instead.
               const wide = tall && i === project.gallery.length - 1 && project.gallery.length % 3 === 1;
+              // Photos float in the same direction. Every project follows one pattern: stills and mock-ups
+              // paint outside their cell, while a scrolling print or recording (tall image or video)
+              // stays clipped to its frame so its hover scroll starts at the top. `overflow` in the
+              // content overrides the default.
+              const float = img.overflow ? img.overflow === "visible" : !tall && !img.video;
+              const scrollImage = (
+                <ScrollImage
+                  src={img.src}
+                  alt={img.alt}
+                  width={img.width}
+                  height={img.height}
+                  sizes={wide ? WIDE_GALLERY_SIZES : GALLERY_SIZES}
+                />
+              );
               return (
                 <li
                   key={img.src}
-                  className={wide ? `${styles.galleryItem} ${styles.galleryItemWide}` : styles.galleryItem}
-                  data-cursor-target={tall ? "" : undefined}
+                  className={[
+                    styles.galleryItem,
+                    wide && styles.galleryItemWide,
+                    i === 1 && styles.gallerySecond,
+                    float && styles.galleryItemFloat,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  data-cursor-target={tall || img.video ? "" : undefined}
+                  data-hover-video={img.video ? "" : undefined}
                 >
-                  {tall ? (
-                    <ScrollImage
-                      src={img.src}
-                      alt={img.alt}
-                      width={img.width}
-                      height={img.height}
-                      sizes={wide ? WIDE_GALLERY_SIZES : GALLERY_SIZES}
-                    />
+                  {img.video ? (
+                    <HoverVideoPreview src={img.video} poster={img.src} className={styles.galleryVideo} />
+                  ) : img.parallax ? (
+                    <ParallaxImage src={img.src} alt={img.alt} sizes={GALLERY_SIZES} />
+                  ) : tall ? (
+                    scrollImage
                   ) : (
-                    <Image src={img.src} alt={img.alt} fill sizes={GALLERY_SIZES} className={styles.galleryImage} />
+                    <ParallaxFloat>
+                      <Image src={img.src} alt={img.alt} fill sizes={GALLERY_SIZES} className={styles.galleryImage} />
+                    </ParallaxFloat>
                   )}
                 </li>
               );
@@ -166,7 +199,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
       <nav className={styles.next} aria-label={t.nextNav}>
         <Link href={localePath(locale, `/cases/${next.slug}`)} className={`container ${styles.nextLink}`} data-cursor-target>
-          <span className={styles.nextLabel}>{t.nextLabel}</span>
+          {/* <span className={styles.nextLabel}>{t.nextLabel}</span> */}
           <span className={styles.nextRow}>
             <span className={styles.nextTitle}>{next.title}</span>
             <Icon name="arrowUpRight" size={72} className={styles.nextArrow} />

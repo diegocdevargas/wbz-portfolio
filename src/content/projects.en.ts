@@ -112,7 +112,7 @@ export const projectsEn: Record<string, ProjectCopy> = {
     subtitle: "Spirituality and community / Umbanda center",
     discipline: "Branding",
     services: ["UX/UI Design", "Website", "Headless WordPress", "Next.js Front-end"],
-    coverAlt: "Looking up through a large tree's branches and sunlit green leaves",
+    coverAlt: "The CEUNSA website on a laptop, with a welcome message over a stone path among ferns",
     challenge:
       "Founded in Porto Alegre in 1959, CEUNSA has welcomed people for more than six decades with passes, giras and charity work. First-time visitors almost always arrive with practical questions: which day to come, what to wear, whether they need to book ahead, what they can bring. The temple needed a site that answered all of that with the same calm and warmth people feel at the door, honoring 60 years of history and the spirit guides who shaped the house.",
     approach:

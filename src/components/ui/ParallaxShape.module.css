@@ -1,0 +1,48 @@
+.shape {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.layer {
+  position: absolute;
+  display: block;
+  will-change: transform;
+}
+
+.square {
+  top: 8px;
+  left: 4px;
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid currentColor;
+}
+
+.circle {
+  right: 4px;
+  bottom: 12px;
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+
+.triangle {
+  top: 4px;
+  right: 16px;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 32px solid currentColor;
+}
+
+@media (max-width: 809px) {
+  .shape {
+    width: 88px;
+    height: 88px;
+    margin-bottom: 8px;
+  }
+}

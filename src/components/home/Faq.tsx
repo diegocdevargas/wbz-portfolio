@@ -11,7 +11,7 @@ export function Faq({ t: faq }: { t: Dictionary["home"]["faq"] }) {
   return (
     <section id="faq-section" className={styles.section} aria-labelledby={`${baseId}-title`}>
       <div className={styles.head} data-fade="blur">
-        <p className="eyebrow">{faq.eyebrow}</p>
+        {/* <p className="eyebrow">{faq.eyebrow}</p> */}
         <h2 id={`${baseId}-title`} className={styles.title}>
           {faq.title.text}
           <br />

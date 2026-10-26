@@ -30,7 +30,7 @@ export const es: Dictionary = {
         { text: "Productos", accent: true },
         { text: "Reales.", accent: true },
       ],
-      lead: "Sitios web, aplicaciones web, asistentes con IA y automatizaciones, diseñados y desarrollados de punta a punta por un desarrollador con más de 13 años de experiencia.",
+      lead: "Sitios web, aplicaciones web, sistemas, asistentes con IA y automatizaciones, diseñados y desarrollados de punta a punta por un desarrollador con más de 10 años de experiencia.",
       techLabel: "Tecnologías",
     },
     values: {
@@ -40,7 +40,7 @@ export const es: Dictionary = {
         { title: "Lanza con Confianza", body: "Entrega un producto probado, seguro y listo para usuarios reales." },
         { title: "Un Único Contacto", body: "Diseño, código, IA e infraestructura con la misma persona." },
         { title: "Gana Velocidad", body: "Las automatizaciones y la IA eliminan el trabajo manual que frena a tu equipo." },
-        { title: "Experiencia Comprobada", body: "Más de 13 años creando para startups y grandes marcas." },
+        { title: "Experiencia Comprobada", body: "Más de 10 años creando para startups y grandes marcas." },
       ],
     },
     services: {
@@ -138,7 +138,7 @@ export const es: Dictionary = {
     kicker: "Casos de estudio",
     title: "En Órbita",
     intro:
-      "Sitios, apps e identidades hechos para dejar huella, no solo para lanzarse. Cada proyecto aquí empezó como una chispa que necesitaba dirección.",
+      "Algunos de más de 200 proyectos entregados con éxito a lo largo de 10 años!",
     categories: {
       all: "Todos",
       websites: "Sitios web",

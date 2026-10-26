@@ -24,7 +24,7 @@
   margin-top: 12px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(52px, 7.64vw, 110px);
+  font-size: clamp(36px, 5.35vw, 77px);
   line-height: 0.9;
   letter-spacing: -0.005em;
   text-transform: uppercase;

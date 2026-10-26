@@ -26,9 +26,9 @@ export default async function WorkPage({ params }: Props) {
   return (
     <div className={styles.page}>
       <header className={`container ${styles.head}`}>
-        <p className={styles.kicker}>
+        {/* <p className={styles.kicker}>
           {t.kicker}, {Math.min(...years)}–{Math.max(...years)}
-        </p>
+        </p> */}
         <h1 className={styles.title}>
           {t.title}
           <sup className={styles.count}>({projects.length})</sup>

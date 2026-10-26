@@ -31,7 +31,7 @@ export const en: Dictionary = {
         { text: "Working", accent: true },
         { text: "Products.", accent: true },
       ],
-      lead: "Websites, web apps, AI assistants and automations, designed and built end to end by a developer with more than 13 years of experience.",
+      lead: "Websites, web apps, systems, AI assistants and automations, designed and built end to end by a developer with more than 10 years of experience.",
       techLabel: "Technologies",
     },
     values: {
@@ -41,7 +41,7 @@ export const en: Dictionary = {
         { title: "Launch with Confidence", body: "Ship a tested, secure product that is ready for real users." },
         { title: "One Point of Contact", body: "Design, code, AI and infrastructure, all with the same person." },
         { title: "Move Faster", body: "Automations and AI remove the manual work that slows your team down." },
-        { title: "Proven Experience", body: "More than 13 years building for startups and major brands." },
+        { title: "Proven Experience", body: "More than 10 years building for startups and major brands." },
       ],
     },
     services: {
@@ -139,7 +139,7 @@ export const en: Dictionary = {
     kicker: "Case studies",
     title: "In Orbit",
     intro:
-      "Websites, apps and identities made to leave a mark, not just to launch. Every project here started as a spark that needed direction.",
+      "Some of more than 200 projects successfully delivered over 10 years!",
     categories: {
       all: "All work",
       websites: "Websites",

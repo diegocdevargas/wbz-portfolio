@@ -1,0 +1,10 @@
+.frame {
+  position: absolute;
+  inset: 0;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}

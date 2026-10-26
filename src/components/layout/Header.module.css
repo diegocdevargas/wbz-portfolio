@@ -324,3 +324,48 @@
     display: none;
   }
 }
+
+/* "Key press": a quick dip that springs back, fired by the same hover/focus that plays the sound. */
+@keyframes keyPress {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(0.94) translateY(1px);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.navLink,
+.platform,
+.contact {
+  transform-origin: center bottom;
+}
+
+.navLink:hover,
+.navLink:focus-visible,
+.platform:hover,
+.platform:focus-visible,
+.contact:hover,
+.contact:focus-visible {
+  animation: keyPress 200ms var(--ease-out);
+}
+
+.navLink:active,
+.platform:active,
+.contact:active {
+  transform: scale(0.95) translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navLink:hover,
+  .navLink:focus-visible,
+  .platform:hover,
+  .platform:focus-visible,
+  .contact:hover,
+  .contact:focus-visible {
+    animation: none;
+  }
+}

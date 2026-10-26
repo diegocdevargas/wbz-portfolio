@@ -21,7 +21,7 @@
   margin-top: 48px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(64px, 11.67vw, 168px);
+  font-size: clamp(45px, 8.17vw, 118px);
   line-height: 0.88;
   letter-spacing: -0.01em;
   text-transform: uppercase;
@@ -74,13 +74,20 @@
 
 .heroWrap {
   margin-top: 56px;
+  max-width: 70%;
 }
 
 .hero {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #111;
+  /* background: #111; */
+}
+
+/* A cut-out cover drifts past its frame, so the frame must not clip it. */
+.heroFloat {
+  overflow: visible;
+  z-index: 1;
 }
 
 .cover {
@@ -91,7 +98,7 @@
   display: grid;
   grid-template-columns: minmax(0, 344px) minmax(0, 780px);
   column-gap: 32px;
-  margin-top: 160px;
+  margin-top: 130px;
 }
 
 .storyLabel {
@@ -165,11 +172,30 @@
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: #111;
+  /* background: #111; */
+}
+
+/* Cut-out mock-ups drift past their cell, so the cell must not clip them. */
+.galleryItemFloat {
+  overflow: visible;
 }
 
 .galleryImage {
+  object-fit: contain;
+}
+
+/* A hover-to-play recording fills the same cell as a full-page print, so every project's third
+   item has the same height. A landscape recording is cropped from the left, where the headline
+   and logo sit. */
+.galleryItem .galleryVideo {
   object-fit: cover;
+  object-position: left center;
+}
+
+/* The second image (the device mock-up) is shown 20% smaller in every case. `scale` is its own
+   property, so it composes with the parallax transforms inside the cell. */
+.gallerySecond {
+  scale: 0.8;
 }
 
 @media (min-width: 810px) {
@@ -211,7 +237,7 @@
 
 .nextTitle {
   font-family: var(--font-display);
-  font-size: clamp(56px, 7.78vw, 112px);
+  font-size: clamp(39px, 5.45vw, 78px);
   line-height: 0.9;
   letter-spacing: -0.005em;
   text-transform: uppercase;

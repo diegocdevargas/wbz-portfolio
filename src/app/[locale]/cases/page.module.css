@@ -15,7 +15,7 @@
   margin-top: 40px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(70px, 11.67vw, 168px);
+  font-size: clamp(49px, 8.17vw, 118px);
   line-height: 0.88;
   letter-spacing: -0.01em;
   text-transform: uppercase;

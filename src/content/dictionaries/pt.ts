@@ -32,7 +32,7 @@ export const pt = {
         { text: "Produtos", accent: true },
         { text: "Reais.", accent: true },
       ],
-      lead: "Sites, aplicações web, assistentes com IA e automações, projetados e desenvolvidos de ponta a ponta por um dev com mais de 13 anos de experiência.",
+      lead: "Sites, aplicações web, sistemas, assistentes com IA e automações, projetados e desenvolvidos de ponta a ponta por um dev com mais de 10 anos de experiência.",
       techLabel: "Tecnologias",
     },
     values: {
@@ -43,7 +43,7 @@ export const pt = {
         { title: "Lance com Confiança", body: "Entregue um produto testado, seguro e pronto para usuários reais." },
         { title: "Um Único Contato", body: "Design, código, IA e infraestrutura com a mesma pessoa." },
         { title: "Ganhe Velocidade:", body: "Automações e IA eliminam o trabalho manual que atrasa sua equipe." },
-        { title: "Experiência Comprovada", body: "Mais de 13 anos criando para startups e grandes marcas." },
+        { title: "Experiência Comprovada", body: "Mais de 10 anos criando para startups e grandes marcas." },
       ],
     },
     services: {
@@ -141,16 +141,16 @@ export const pt = {
 
   work: {
     metaTitle: "Projetos",
-    kicker: "Case studies",
+    kicker: "Estudos de caso",
     title: "Em Órbita",
     intro:
-      "Sites, apps e identidades feitos para deixar marca, não só para lançar. Cada projeto aqui começou como uma faísca que precisava de direção.",
+      "Alguns dentre mais de 200 projetos já entregues com sucesso ao longo de 10 anos!",
     categories: {
-      all: "All work",
+      all: "Todos",
       websites: "Websites",
       ecommerce: "E-commerce",
       "web-apps": "Web Apps",
-      "ai-automacao": "AI & Automação",
+      "ai-automacao": "IA & Automação",
     },
     filterLabel: "Filtrar projetos por categoria",
     /** {count} and {label} are filled in. */
@@ -169,19 +169,19 @@ export const pt = {
 
   caseStudy: {
     back: "Todos os trabalhos",
-    client: "Client",
-    year: "Year",
-    discipline: "Discipline",
-    services: "Services",
+    client: "Cliente",
+    year: "Ano",
+    discipline: "Disciplina",
+    services: "Serviços",
     visit: "Visitar o site",
-    storyLabel: "(Case study)",
+    storyLabel: "(Estudo de caso)",
     challenge: "O desafio",
     approach: "Nossa abordagem",
     result: "O resultado",
     metricsLabel: "Resultados",
     galleryLabel: "Galeria",
     nextNav: "Próximo projeto",
-    nextLabel: "(Next project)",
+    nextLabel: "(Próximo projeto)",
   },
 };
 
