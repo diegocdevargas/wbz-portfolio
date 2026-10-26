@@ -11,10 +11,10 @@
   cursor: pointer;
 }
 
-/* The still fills the cell like a print; a landscape capture is cropped from the left. */
+/* The still is shown whole, never cropped, whatever shape the capture has. */
 .still {
-  object-fit: cover;
-  object-position: left center;
+  object-fit: contain;
+  object-position: center;
 }
 
 .play {

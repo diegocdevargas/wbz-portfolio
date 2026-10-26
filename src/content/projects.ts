@@ -229,7 +229,8 @@ const data: Project[] = [
       "E-commerce",
       "Desenvolvimento Front-end",
       "Implementação de UI",
-      "LINX Commerce"
+      "Lógica de carrinho",
+      "Linx Commerce"
     ],
     categories: [
       "ecommerce"
@@ -244,7 +245,7 @@ const data: Project[] = [
       height: 1144
     },
     challenge: "A Mi Brasil é a loja online oficial da Xiaomi no Brasil, onde smartphones, casa inteligente, wearables e itens do dia a dia chegam ao consumidor brasileiro com garantia oficial. O catálogo é enorme e muda o tempo todo, os lançamentos seguem cronogramas globais apertados, e a loja precisa ser inconfundivelmente Xiaomi sem deixar de funcionar para o consumidor brasileiro: 12x sem juros, desconto à vista, frete grátis a partir de um valor mínimo e atendimento local.",
-    approach: "Construímos a loja sobre o Oracle Commerce Cloud, levando a linguagem visual global da Xiaomi para uma loja local. A MiSans percorre todo o site, o laranja característico fica reservado para ações e ofertas, e o preto e o branco fazem o resto. A navegação segue o jeito como as pessoas realmente compram: celulares, smartwatches, casa inteligente, dia a dia, beleza e saúde, e áudio, cada uma abrindo subcategorias focadas, de carregadores a robôs aspiradores. Os argumentos de compra do brasileiro ganham espaço fixo: parcelamento, desconto à vista, frete grátis e o selo de garantia oficial ficam logo abaixo do header, então confiança e preço estão respondidos antes da primeira rolagem. Carrosséis de categoria, vitrines de ofertas exclusivas e banners modulares permitem trocar campanhas e lançamentos sem novo desenvolvimento.",
+    approach: "Construímos a loja sobre o Linx Commerce, levando a linguagem visual global da Xiaomi para uma loja local. A MiSans percorre todo o site, o laranja característico fica reservado para ações e ofertas, e o preto e o branco fazem o resto. A navegação segue o jeito como as pessoas realmente compram: celulares, smartwatches, casa inteligente, dia a dia, beleza e saúde, e áudio, cada uma abrindo subcategorias focadas, de carregadores a robôs aspiradores. Os argumentos de compra do brasileiro ganham espaço fixo: parcelamento, desconto à vista, frete grátis e o selo de garantia oficial ficam logo abaixo do header, então confiança e preço estão respondidos antes da primeira rolagem. Carrosséis de categoria, vitrines de ofertas exclusivas e banners modulares permitem trocar campanhas e lançamentos sem novo desenvolvimento. Minha parte mais forte no projeto foi a lógica do carrinho: as regras de itens, quantidades, ofertas, parcelamento, desconto à vista e frete grátis, do primeiro item adicionado até o checkout.",
     result: "A Xiaomi Brasil opera um canal oficial único que escala de acessórios do dia a dia a lançamentos topo de linha. As equipes de merchandising trocam campanhas, ofertas e novos produtos com componentes reutilizáveis, enquanto analytics, automação de marketing e o chat de atendimento se conectam à mesma loja.",
     metrics: [
       {
@@ -281,8 +282,7 @@ const data: Project[] = [
       }
     ],
     needsReview: [
-      "subtitle (em inglês no site atual)",
-      "services: LINX Commerce vs Oracle Commerce Cloud no texto"
+      "subtitle (em inglês no site atual)"
     ]
   },
   {
@@ -409,10 +409,10 @@ const data: Project[] = [
         height: 800
       },
       {
-        src: "/images/projects/ceunsa/hero-poster.webp",
+        src: "/images/projects/ceunsa/hero-poster-mobile.webp",
         alt: "Início do site do CEUNSA com a mensagem de boas-vindas sobre uma trilha de pedras entre samambaias",
-        width: 1920,
-        height: 1080,
+        width: 876,
+        height: 1094,
         video: "/images/projects/ceunsa/scroll-preview-from-7s.mp4"
       }
     ],
