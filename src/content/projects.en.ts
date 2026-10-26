@@ -5,15 +5,15 @@ export const projectsEn: Record<string, ProjectCopy> = {
   "luh-reis": {
     subtitle: "Fitness sales pages",
     discipline: "Digital",
-    services: ["Conversion strategy", "UX/UI Design", "Website", "Front-end development"],
+    services: ["Conversion strategy", "UX/UI Design", "Website", "Custom optimized website", "WordPress with a custom theme", "ACF"],
     coverAlt: "Luh Reis desktop sales page for the Destrave Delas training program",
     challenge:
       "Luh Reis needed to present her training method clearly to women looking to lose weight, build definition and create a healthy routine. The page needed to explain the training-plan and personal-consulting options, answer common questions and make the next step easy.",
     approach:
-      "We structured the page as a sales journey: a clear hero, relatable training challenges, Luh's background, the Destrave Delas method, client stories, training options, the consulting process and FAQs. Calls to action guide visitors throughout the page.",
+      "We structured the page as a sales journey: a clear hero, relatable training challenges, Luh's background, the Destrave Delas method, client stories, training options, the consulting process and FAQs. Calls to action guide visitors throughout the page. The site is custom built on WordPress, with its own theme and ACF custom fields, so content stays easy to edit without relying on heavy page builders. Lean code and optimized images push the page above 90 on PageSpeed.",
     result:
       "The site brings goal-based training plans and personalized consulting together, explaining the method, results, process and common questions before visitors get in touch or purchase.",
-    metrics: [],
+    metrics: [{ value: "90+", label: "PageSpeed Insights score" }],
     galleryAlts: [
       "Full desktop capture of the Luh Reis sales page, from header to footer",
       "Illustrative Unsplash photo of strength training with a barbell in a gym",
@@ -111,12 +111,12 @@ export const projectsEn: Record<string, ProjectCopy> = {
   ceunsa: {
     subtitle: "Spirituality and community / Umbanda center",
     discipline: "Branding",
-    services: ["UX/UI Design", "Website", "Headless WordPress", "Next.js Front-end"],
+    services: ["UX/UI Design", "Website", "Headless WordPress", "Next.js & React Front-end", "TypeScript", "Tailwind CSS", "GSAP & Three.js"],
     coverAlt: "The CEUNSA website on a laptop, with a welcome message over a stone path among ferns",
     challenge:
       "Founded in Porto Alegre in 1959, CEUNSA has welcomed people for more than six decades with passes, giras and charity work. First-time visitors almost always arrive with practical questions: which day to come, what to wear, whether they need to book ahead, what they can bring. The temple needed a site that answered all of that with the same calm and warmth people feel at the door, honoring 60 years of history and the spirit guides who shaped the house.",
     approach:
-      "We designed the site as a visit to the temple, one space at a time. It starts with a welcome and the temple's history, followed by the lineage of caciques and their mediums, the current board, the schedule, the spaces, visitor testimonials, a tour of the four sacred areas, hymns and prayers, FAQs and contact. The visual system is serene and luminous: a soft steel-blue palette with warm golden light, Newsreader for a respectful editorial voice and Work Sans for clear, practical reading. The schedule is the most useful feature. A calendar shows what each day holds (Pretos Velhos on Mondays, Povo do Oriente on Thursdays, Caboclos on Fridays), what to bring and the day's moon phase. Content is managed in WordPress and delivered through a fast Next.js front end.",
+      "We designed the site as a visit to the temple, one space at a time. It starts with a welcome and the temple's history, followed by the lineage of caciques and their mediums, the current board, the schedule, the spaces, visitor testimonials, a tour of the four sacred areas, hymns and prayers, FAQs and contact. The visual system is serene and luminous: a soft steel-blue palette with warm golden light, Newsreader for a respectful editorial voice and Work Sans for clear, practical reading. The schedule is the most useful feature. A calendar shows what each day holds (Pretos Velhos on Mondays, Povo do Oriente on Thursdays, Caboclos on Fridays), what to bring and the day's moon phase. Behind it, content is managed in WordPress with ACF PRO, organized into custom content types (caciques, schedules, hymns, testimonials and more) and delivered through a custom REST API to a Next.js and React front end, written in TypeScript and styled with Tailwind CSS. GSAP handles the animation, and a 3D moon built with Three.js follows the calendar. The contact form goes through its own route that validates the data before it reaches WordPress.",
     result:
       "CEUNSA now has a digital home that works like its front desk: welcoming, clear and always open. First-time visitors know when to come and how to prepare before they even leave home, and the temple's volunteers update schedules, hymns and announcements in WordPress without touching the front end.",
     metrics: [

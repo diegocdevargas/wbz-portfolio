@@ -1,10 +1,15 @@
+/* Cards in the same grid row share one height: the card fills its stretched cell and the
+   services line takes the spare space, so a longer list never leaves a shorter card behind. */
 .card {
+  height: 100%;
   background: var(--surface-2);
   padding: 15px;
 }
 
 .link {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .media {
@@ -86,6 +91,7 @@
 }
 
 .services {
+  flex: 1;
   margin-top: 14px;
   font-size: 16px;
   line-height: 1.6;

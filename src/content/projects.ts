@@ -362,7 +362,10 @@ const data: Project[] = [
       "UX/UI Design",
       "Website",
       "WordPress Headless",
-      "Front-end em Next.js"
+      "Front-end em Next.js e React",
+      "TypeScript",
+      "Tailwind CSS",
+      "GSAP e Three.js"
     ],
     categories: [
       "websites"
@@ -379,7 +382,7 @@ const data: Project[] = [
     },
     previewVideo: "/images/projects/ceunsa/scroll-preview-from-7s.mp4",
     challenge: "Fundado em Porto Alegre em 1959, o CEUNSA acolhe pessoas há mais de seis décadas com passes, giras e trabalho de caridade. Quem chega pela primeira vez quase sempre traz perguntas práticas: em que dia vir, que roupa usar, se precisa agendar, o que pode trazer. O templo precisava de um site que respondesse a tudo isso com a mesma calma e acolhimento que as pessoas sentem na porta, honrando 60 anos de história e os guias espirituais que formaram a casa.",
-    approach: "Desenhamos o site como uma visita ao templo, um espaço de cada vez. Ele começa com as boas-vindas e a história do templo, depois vêm a linhagem de caciques e seus aparelhos, a diretoria atual, os horários, os espaços, os depoimentos de visitantes, um tour pelas quatro áreas sagradas, hinos e orações, perguntas frequentes e contato. O sistema visual é sereno e luminoso: uma paleta suave de azul-aço com luz dourada quente, a Newsreader para uma voz editorial respeitosa e a Work Sans para uma leitura clara e prática. A programação é o recurso mais útil. Um calendário mostra o que cada dia reserva (Pretos Velhos às segundas, Povo do Oriente às quintas, Caboclos às sextas), o que trazer e a fase da lua do dia. O conteúdo é gerenciado no WordPress e entregue por um front-end rápido em Next.js.",
+    approach: "Desenhamos o site como uma visita ao templo, um espaço de cada vez. Ele começa com as boas-vindas e a história do templo, depois vêm a linhagem de caciques e seus aparelhos, a diretoria atual, os horários, os espaços, os depoimentos de visitantes, um tour pelas quatro áreas sagradas, hinos e orações, perguntas frequentes e contato. O sistema visual é sereno e luminoso: uma paleta suave de azul-aço com luz dourada quente, a Newsreader para uma voz editorial respeitosa e a Work Sans para uma leitura clara e prática. A programação é o recurso mais útil. Um calendário mostra o que cada dia reserva (Pretos Velhos às segundas, Povo do Oriente às quintas, Caboclos às sextas), o que trazer e a fase da lua do dia. Por trás, o conteúdo é gerenciado no WordPress com ACF PRO, organizado em tipos de conteúdo próprios (caciques, horários, hinos, depoimentos e mais) e entregue por uma API REST sob medida a um front-end em Next.js e React, escrito em TypeScript e estilizado com Tailwind CSS. A animação fica por conta do GSAP, e uma lua em 3D, feita com Three.js, acompanha o calendário. O formulário de contato passa por uma rota própria que valida os dados antes de chegar ao WordPress.",
     result: "O CEUNSA agora tem uma casa digital que funciona como a sua recepção: acolhedora, clara e sempre aberta. Quem vem pela primeira vez sabe quando vir e como se preparar antes mesmo de sair de casa, e os voluntários do templo atualizam horários, hinos e avisos no WordPress sem mexer no front-end.",
     metrics: [
       {
@@ -433,7 +436,9 @@ const data: Project[] = [
       "Estratégia de conversão",
       "UX/UI Design",
       "Website",
-      "Desenvolvimento Front-end"
+      "Site personalizado e otimizado",
+      "WordPress com tema próprio",
+      "ACF"
     ],
     categories: [
       "websites"
@@ -449,9 +454,14 @@ const data: Project[] = [
       overflow: "visible"
     },
     challenge: "A Luh Reis precisava apresentar seu método de treino de forma clara para mulheres que querem emagrecer, definir o corpo e construir uma rotina saudável. A página precisava explicar as opções de planilhas e consultoria, responder dúvidas comuns e facilitar o próximo passo.",
-    approach: "Estruturamos a página como uma jornada de venda: uma chamada principal, identificação das dificuldades de quem tenta treinar sem um plano, apresentação da trajetória da Luh, explicação do método Destrave Delas, histórias de clientes, opções de treino, etapas da consultoria e perguntas frequentes. Chamadas para ação acompanham a visitante ao longo da página.",
+    approach: "Estruturamos a página como uma jornada de venda: uma chamada principal, identificação das dificuldades de quem tenta treinar sem um plano, apresentação da trajetória da Luh, explicação do método Destrave Delas, histórias de clientes, opções de treino, etapas da consultoria e perguntas frequentes. Chamadas para ação acompanham a visitante ao longo da página. O site foi desenvolvido sob medida em WordPress, com tema próprio e campos personalizados em ACF, o que mantém o conteúdo fácil de editar sem depender de page builders pesados. Com o código enxuto e as imagens otimizadas, a página passa dos 90 pontos no PageSpeed.",
     result: "O site reúne em um único lugar as planilhas de treino por objetivo e a consultoria personalizada, com informações sobre o método, resultados, processo e dúvidas frequentes antes do contato ou da compra.",
-    metrics: [],
+    metrics: [
+      {
+        value: "90+",
+        label: "Pontuação no PageSpeed Insights"
+      }
+    ],
     gallery: [
       {
         src: "/images/projects/luh-reis/tablet_overall_case_.webp",
