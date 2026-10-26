@@ -151,6 +151,7 @@ export const pt = {
       ecommerce: "E-commerce",
       "web-apps": "Web Apps",
       "ai-automacao": "IA & Automação",
+      legacy: "Legacy",
     },
     filterLabel: "Filtrar projetos por categoria",
     /** {count} and {label} are filled in. */
@@ -180,6 +181,8 @@ export const pt = {
     result: "O resultado",
     metricsLabel: "Resultados",
     galleryLabel: "Galeria",
+    watchVideo: "Assistir ao vídeo",
+    closeVideo: "Fechar vídeo",
     nextNav: "Próximo projeto",
     nextLabel: "(Próximo projeto)",
   },

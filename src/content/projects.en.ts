@@ -23,12 +23,12 @@ export const projectsEn: Record<string, ProjectCopy> = {
   "azeitonas-verdes": {
     subtitle: "Punk rock theme",
     discipline: "Branding",
-    services: ["Identity", "Branding", "Website", "Design System"],
+    services: ["Identity", "Branding", "Website", "Design System", "Experimental", "Audio API Manipulation"],
     coverAlt: "Live show with the crowd's arms raised in front of a stage lit in green",
     challenge:
       "Azeitonas Verdes is a power trio from the countryside of Rio Grande do Sul playing raw, straight-ahead punk rock with a psychedelic streak. Their music, videos and show dates were scattered across social media. The band needed a home of its own that sounded the way it looks: loud, sticky and a little out of control, while still making it easy to find the next show or hit play.",
     approach:
-      "We built the brand around one image: the olive as goo. A dripping logo with offset purple and yellow outlines recalls the misaligned photocopies of punk. SVG goo filters make the olives melt and merge, pulsing in sync with the music. The system is lean: a near-black stage, a single acid green as the accent color, purple and yellow saved for psychedelic touches, condensed poster type and terminal-style `//` labels that hold the chaos together. Each section works like a track on a record: about, videos, discography, shows, gallery, the band (\"the ingredients in the jar\") and contact.",
+      "We built the brand around one image: the olive as goo. A dripping logo with offset purple and yellow outlines recalls the misaligned photocopies of punk. SVG goo filters make the olives melt and merge, pulsing in sync with the music. The system is lean: a near-black stage, a single acid green as the accent color, purple and yellow saved for psychedelic touches, condensed poster type and terminal-style `//` labels that hold the chaos together. Each section works like a track on a record: about, videos, discography, shows, gallery, the band (\"the ingredients in the jar\") and contact. The audio is visual material too: a Web Audio API AnalyserNode reads the energy of the sound in real time and drives the SVG filters, the feColorMatrix matrix (contrast and alpha) and the feGaussianBlur stdDeviation, so the olives pulse and melt to the music.",
     result:
       "The band now has a single hub of its own for live videos, releases and tour dates, with an identity strong enough for posters, merch and stage visuals.",
     metrics: [

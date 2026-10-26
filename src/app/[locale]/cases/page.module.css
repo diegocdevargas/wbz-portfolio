@@ -30,6 +30,13 @@
   color: var(--violet);
 }
 
+/* The count is a sample of the work, so a smaller "+" sits after the number. */
+.plus {
+  margin-left: 0.04em;
+  font-size: 0.6em;
+  vertical-align: 0.35em;
+}
+
 @media (max-width: 809px) {
   .page {
     padding-top: 72px;

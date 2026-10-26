@@ -9,6 +9,13 @@ import { projectsEs } from "./projects.es";
 
 export type Category = "websites" | "ecommerce" | "web-apps" | "ai-automacao";
 
+/** Projects made before this year predate AI-assisted building and are shown as "legacy". */
+export const LEGACY_BEFORE_YEAR = 2022;
+
+export function isLegacy(project: { year: number }): boolean {
+  return project.year < LEGACY_BEFORE_YEAR;
+}
+
 export interface ImageAsset {
   src: string;
   alt: string;
@@ -16,7 +23,12 @@ export interface ImageAsset {
   height: number;
   /** A transparent cut-out (device mock-up) that floats with the scroll instead of sitting in a clipped frame. */
   parallax?: boolean;
-  /** A hover-to-play clip shown in place of the still, which becomes its poster. */
+  /**
+   * A recording for sites that cannot be captured as a still (transitions, scroll-driven
+   * animation). Use it on the last gallery item: `src` is the still shown in the cell (same size
+   * and parallax as a full-page print) and a click plays the video uncropped in an overlay, so it
+   * can be recorded in any shape (16:9, 1920x1080 or larger, is the usual choice).
+   */
   video?: string;
   /**
    * "visible" lets the floating image paint outside its frame (above the section, over the next
@@ -80,7 +92,9 @@ const data: Project[] = [
       "Identidade",
       "Branding",
       "Website",
-      "Design System"
+      "Design System",
+      "Experimental",
+      "Audio API Manipulation"
     ],
     categories: [
       "websites"
@@ -96,7 +110,7 @@ const data: Project[] = [
       overflow: "visible"
     },
     challenge: "Azeitonas Verdes é um power trio do interior do Rio Grande do Sul, o som se basea em rock, punk e um toque de psicodelia, embora existam raizes em muita coisa aléatoria também. As músicas, os vídeos e as datas de show estavam espalhados de forma aleatória. Então surgiu a necessidade de uma identidade que refletisse essa energia: alta, barulhenta, aleatória e meio descontrolada, mas que ainda facilitasse achar o próximo show ou dar o play.",
-    approach: "Construímos a marca em torno de uma imagem: a azeitona. Um logotipo com contornos roxo e amarelo deslocados, resgata as fotocópias desalinhadas do punk. Filtros SVG de efeito misturados com manipulação de audio em sincronia com a música.",
+    approach: "Construímos a marca em torno de uma imagem: a azeitona. Um logotipo com contornos roxo e amarelo deslocados, resgata as fotocópias desalinhadas do punk. Filtros SVG de efeito misturados com manipulação de audio em sincronia com a música. O áudio da banda também vira matéria-prima visual: um AnalyserNode da Web Audio API lê a energia do som em tempo real e manipula os filtros SVG, a matriz do feColorMatrix (contraste e alfa) e o stdDeviation do feGaussianBlur, para que as azeitonas pulsem e derretam no ritmo da música.",
     result: "A banda agora tem um hub único e próprio para os vídeos ao vivo, os lançamentos e a agenda de shows, com uma identidade forte o bastante para cartazes, merch e visuais de palco.",
     metrics: [
       {
@@ -114,7 +128,7 @@ const data: Project[] = [
     ],
     gallery: [
       {
-        src: "/images/projects/azeitonas-verdes/tabletREduce 20% of.webp",
+        src: "/images/projects/azeitonas-verdes/tablet.webp",
         alt: "Ilustração de uma azeitona verde derretendo no espaço, cercada por anéis roxos",
         width: 1408,
         height: 768,
@@ -357,7 +371,7 @@ const data: Project[] = [
     featured: true,
     order: 2,
     cover: {
-      src: "/images/projects/ceunsa/desktop.webp",
+      src: "/images/projects/ceunsa/desktop_n.webp",
       alt: "Site do CEUNSA exibido em um notebook, com a mensagem de boas-vindas sobre uma trilha entre samambaias",
       width: 6500,
       height: 3883,

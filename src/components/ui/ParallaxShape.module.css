@@ -1,7 +1,7 @@
 .shape {
   position: relative;
-  width: 112px;
-  height: 112px;
+  width: 180px;
+  height: 180px;
   color: var(--text-dim);
   pointer-events: none;
 }
@@ -9,40 +9,63 @@
 .layer {
   position: absolute;
   display: block;
+  overflow: visible;
   will-change: transform;
 }
 
-.square {
-  top: 8px;
-  left: 4px;
-  width: 64px;
-  height: 64px;
-  border: 1.5px solid currentColor;
+.line,
+.dash {
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.circle {
-  right: 4px;
-  bottom: 12px;
-  width: 56px;
-  height: 56px;
-  border: 1.5px solid currentColor;
-  border-radius: 50%;
+.dash {
+  stroke-dasharray: 2.5 2.5;
+  opacity: 0.7;
 }
 
-.triangle {
-  top: 4px;
-  right: 16px;
-  width: 0;
-  height: 0;
-  border-left: 18px solid transparent;
-  border-right: 18px solid transparent;
-  border-bottom: 32px solid currentColor;
+.a {
+  top: 0;
+  left: 0;
+  width: 104px;
+  height: 104px;
+}
+
+.b {
+  right: -6px;
+  bottom: 0;
+  width: 90px;
+  height: 90px;
+}
+
+.c {
+  top: -10px;
+  right: 10px;
+  width: 70px;
+  height: 70px;
 }
 
 @media (max-width: 809px) {
   .shape {
-    width: 88px;
-    height: 88px;
+    width: 120px;
+    height: 120px;
     margin-bottom: 8px;
+  }
+
+  .a {
+    width: 68px;
+    height: 68px;
+  }
+
+  .b {
+    width: 60px;
+    height: 60px;
+  }
+
+  .c {
+    width: 46px;
+    height: 46px;
   }
 }

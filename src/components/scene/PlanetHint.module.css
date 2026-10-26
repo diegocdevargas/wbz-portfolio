@@ -31,6 +31,11 @@
   flex: none;
 }
 
+/* The click ripple is drawn in the accent colour so it reads against the planet. */
+.ring {
+  stroke: var(--violet);
+}
+
 /* Dots light up one after another, travelling toward the planet above. */
 .dots {
   display: flex;

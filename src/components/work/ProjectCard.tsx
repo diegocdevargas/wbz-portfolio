@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Project } from "@/content/projects";
+import { isLegacy, type Project } from "@/content/projects";
 import { ScrollImage } from "@/components/ui/ScrollImage";
 import { localePath, type Locale } from "@/i18n/config";
 import { HoverVideoPreview } from "./HoverVideoPreview";
+import { LegacyBadge } from "./LegacyBadge";
 import styles from "./ProjectCard.module.css";
 
 type Props = {
@@ -12,9 +13,11 @@ type Props = {
   /** Responsive `sizes` for the cover; the grid is 2 columns ≥ 810px. */
   sizes?: string;
   priority?: boolean;
+  /** Label of the badge shown on projects made before 2022. */
+  legacyLabel: string;
 };
 
-export function ProjectCard({ project, locale, sizes, priority }: Props) {
+export function ProjectCard({ project, locale, sizes, priority, legacyLabel }: Props) {
   const mediaSizes = sizes ?? "(min-width: 810px) 50vw, 100vw";
   // A full-page layout print in the gallery previews on hover: it fades in over the cover and
   // scrolls from top to bottom. Decorative (the cover already describes the project).
@@ -50,6 +53,7 @@ export function ProjectCard({ project, locale, sizes, priority }: Props) {
               className={styles.preview}
             />
           ) : null}
+          {isLegacy(project) && <LegacyBadge label={legacyLabel} />}
         </div>
         <div className={styles.meta}>
           <h3 className={styles.title}>{project.title}</h3>

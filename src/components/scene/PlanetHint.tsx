@@ -41,13 +41,15 @@ export function PlanetHint({ label, or, scroll }: { label: string; or: string; s
         .to(arrowEl, { x: 1, y: 1, duration: 0.12, ease: "sine.in" }, 0)
         .to(arrowEl, { x: 0, y: 0, duration: 0.35, ease: "back.out(2)" }, 0.12);
     }
+    // The click ripple spreads wider on desktop, where the hint sits further from the eye.
+    const reach = window.matchMedia("(min-width: 810px)").matches ? 10 : 7.5;
     rings.forEach((ring, i) => {
       if (!ring) return;
       click.fromTo(
         ring,
-        { attr: { r: 0.5 }, opacity: 0.9 },
-        { attr: { r: 5.5 }, opacity: 0, duration: 0.7, ease: "sine.out" },
-        0.1 + i * 0.18,
+        { attr: { r: 0.5 }, opacity: 1 },
+        { attr: { r: reach }, opacity: 0, duration: 0.85, ease: "sine.out" },
+        0.1 + i * 0.2,
       );
     });
     gsap.set(rings, { opacity: 0 });
@@ -67,8 +69,8 @@ export function PlanetHint({ label, or, scroll }: { label: string; or: string; s
       </span>
       <span className={styles.text}>
         <svg className={styles.icon} viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" overflow="visible">
-          <circle ref={ring1} cx="5" cy="3" r="0.5" strokeWidth="1" opacity="0" />
-          <circle ref={ring2} cx="5" cy="3" r="0.5" strokeWidth="1" opacity="0" />
+          <circle ref={ring1} className={styles.ring} cx="5" cy="3" r="0.5" strokeWidth="1.5" opacity="0" />
+          <circle ref={ring2} className={styles.ring} cx="5" cy="3" r="0.5" strokeWidth="1.1" opacity="0" />
           <path ref={arrow} d="M5 3l14 8-6.5 2L10 19.5z" />
         </svg>
         {label}

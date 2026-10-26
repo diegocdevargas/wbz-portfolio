@@ -1,22 +1,26 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Category, Project } from "@/content/projects";
+import { isLegacy, type Category, type Project } from "@/content/projects";
 import { format, type Dictionary } from "@/content/dictionaries/format";
 import type { Locale } from "@/i18n/config";
 import { ProjectCard } from "./ProjectCard";
 import styles from "./WorkGrid.module.css";
 
-type Filter = Category | "all";
+type Filter = Category | "all" | "legacy";
 
-const categoryIds: Filter[] = ["all", "websites", "ecommerce", "web-apps", "ai-automacao"];
+const categoryIds: Filter[] = ["all", "websites", "ecommerce", "web-apps", "ai-automacao", "legacy"];
 
 type Props = { projects: Project[]; locale: Locale; t: Dictionary["work"] };
 
 export function WorkGrid({ projects, locale, t }: Props) {
   const [filter, setFilter] = useState<Filter>("all");
   const visible = useMemo(
-    () => (filter === "all" ? projects : projects.filter((p) => p.categories.includes(filter))),
+    () => {
+      if (filter === "all") return projects;
+      if (filter === "legacy") return projects.filter(isLegacy);
+      return projects.filter((p) => p.categories.includes(filter));
+    },
     [filter, projects],
   );
   const activeLabel = t.categories[filter];
@@ -54,6 +58,7 @@ export function WorkGrid({ projects, locale, t }: Props) {
                   project={project}
                   locale={locale}
                   priority={i < 2}
+                  legacyLabel={t.categories.legacy}
                   sizes="(min-width: 1440px) 642px, (min-width: 810px) 46vw, 92vw"
                 />
               </li>

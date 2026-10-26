@@ -31,7 +31,7 @@ export default async function WorkPage({ params }: Props) {
         </p> */}
         <h1 className={styles.title}>
           {t.title}
-          <sup className={styles.count}>({projects.length})</sup>
+          <sup className={styles.count}>({projects.length}<span className={styles.plus}>+</span>)</sup>
         </h1>
       </header>
       <WorkGrid projects={projects} locale={locale} t={t} />

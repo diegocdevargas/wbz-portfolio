@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getNextProject, getProject, projectSlugs } from "@/content/projects";
+import { getNextProject, getProject, isLegacy, projectSlugs } from "@/content/projects";
 import { getDictionary } from "@/content/dictionaries";
 import { locales, localePath, type Locale } from "@/i18n/config";
 import { breadcrumbJsonLd, pageMetadata, projectOgImage } from "@/app/seo";
@@ -14,7 +14,8 @@ import { ParallaxFloat } from "@/components/ui/ParallaxFloat";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { ParallaxShape } from "@/components/ui/ParallaxShape";
 import { ScrollImage } from "@/components/ui/ScrollImage";
-import { HoverVideoPreview } from "@/components/work/HoverVideoPreview";
+import { VideoLightbox } from "@/components/work/VideoLightbox";
+import { LegacyBadge } from "@/components/work/LegacyBadge";
 import styles from "./page.module.css";
 
 const GALLERY_SIZES = "(min-width: 1440px) 437px, (min-width: 810px) 31vw, 92vw";
@@ -109,6 +110,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       <div className={`container ${styles.heroWrap}`}>
         <div className={project.cover.overflow === "visible" ? `${styles.hero} ${styles.heroFloat}` : styles.hero}>
           <ParallaxFloat travel={40}>{cover}</ParallaxFloat>
+          {isLegacy(project) && <LegacyBadge label={dict.work.categories.legacy} />}
         </div>
       </div>
 
@@ -172,15 +174,25 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                     styles.galleryItem,
                     wide && styles.galleryItemWide,
                     i === 1 && styles.gallerySecond,
+                    i === 1 && isLegacy(project) && styles.gallerySecondLegacy,
                     float && styles.galleryItemFloat,
                   ]
                     .filter(Boolean)
                     .join(" ")}
                   data-cursor-target={tall || img.video ? "" : undefined}
-                  data-hover-video={img.video ? "" : undefined}
                 >
                   {img.video ? (
-                    <HoverVideoPreview src={img.video} poster={img.src} className={styles.galleryVideo} />
+                    // A recording stands in for a print when the site cannot be captured as a still
+                    // (transitions, scroll-driven animation): the still keeps the print's cell and
+                    // parallax, and a click plays the video uncropped in an overlay.
+                    <VideoLightbox
+                      video={img.video}
+                      poster={img.src}
+                      alt={img.alt}
+                      sizes={GALLERY_SIZES}
+                      watchLabel={t.watchVideo}
+                      closeLabel={t.closeVideo}
+                    />
                   ) : img.parallax ? (
                     <ParallaxImage src={img.src} alt={img.alt} sizes={GALLERY_SIZES} />
                   ) : tall ? (

@@ -8,7 +8,7 @@ import type { Dictionary } from "@/content/dictionaries/format";
 import { localePath, type Locale } from "@/i18n/config";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { smoothScroll } from "./SmoothScroll";
-import { playMenuChord, playMenuComposition, playSelectorNote, unlockMenuAudio } from "@/components/ui/menuChord";
+import { playCardChord, playMenuChord, playMenuComposition, playSelectorNote, unlockMenuAudio } from "@/components/ui/menuChord";
 import styles from "./Header.module.css";
 
 const HIDE_AFTER = 80;
@@ -39,7 +39,7 @@ export function Header({ locale, t, newTabLabel }: Props) {
       if (!source || source.contains(event.relatedTarget as Node | null)) return;
       const note = Number(source.dataset.hoverNote ?? 0);
       if (source.dataset.hoverSound === "selector") playSelectorNote(note);
-      else if (source.dataset.hoverSound === "card") playSelectorNote(cardStep++ * 2 + 1);
+      else if (source.dataset.hoverSound === "card") playCardChord(cardStep++);
       else if (source.dataset.hoverSound === "letter") playMenuChord(note);
       else if (source.dataset.hoverSound === "cta") playMenuComposition();
     };

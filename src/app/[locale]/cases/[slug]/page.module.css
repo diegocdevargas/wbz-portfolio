@@ -184,18 +184,15 @@
   object-fit: contain;
 }
 
-/* A hover-to-play recording fills the same cell as a full-page print, so every project's third
-   item has the same height. A landscape recording is cropped from the left, where the headline
-   and logo sit. */
-.galleryItem .galleryVideo {
-  object-fit: cover;
-  object-position: left center;
-}
-
 /* The second image (the device mock-up) is shown 20% smaller in every case. `scale` is its own
    property, so it composes with the parallax transforms inside the cell. */
 .gallerySecond {
   scale: 0.8;
+}
+
+/* Legacy projects have smaller captures, so their mock-up gets less shrinking. */
+.gallerySecondLegacy {
+  scale: 0.92;
 }
 
 @media (min-width: 810px) {

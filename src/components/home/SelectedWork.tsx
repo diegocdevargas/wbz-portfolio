@@ -1,5 +1,5 @@
 import { getFeaturedProjects } from "@/content/projects";
-import type { Dictionary } from "@/content/dictionaries";
+import { getDictionary, type Dictionary } from "@/content/dictionaries";
 import { localePath, type Locale } from "@/i18n/config";
 import { MonoButton } from "@/components/ui/MonoButton";
 import { ProjectCard } from "@/components/work/ProjectCard";
@@ -9,6 +9,7 @@ type Props = { locale: Locale; t: Dictionary["home"]["selectedWork"] };
 
 export function SelectedWork({ locale, t: selectedWork }: Props) {
   const featuredProjects = getFeaturedProjects(locale);
+  const legacyLabel = getDictionary(locale).work.categories.legacy;
   return (
     <section className={styles.section} aria-labelledby="selected-work-title">
       <div className={styles.inner}>
@@ -27,6 +28,7 @@ export function SelectedWork({ locale, t: selectedWork }: Props) {
               <ProjectCard
                 project={project}
                 locale={locale}
+                legacyLabel={legacyLabel}
                 sizes="(min-width: 1440px) 614px, (min-width: 810px) 44vw, 90vw"
               />
             </li>

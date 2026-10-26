@@ -6,12 +6,9 @@ import styles from "./ProjectCard.module.css";
 type Props = {
   src: string;
   className?: string;
-  /** Still shown until the video plays. */
-  poster?: string;
 };
 
-/** Plays while its card link, or any ancestor marked `data-hover-video`, is hovered or focused. */
-export function HoverVideoPreview({ src, className, poster }: Props) {
+export function HoverVideoPreview({ src, className }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const failedRef = useRef(false);
   const [failed, setFailed] = useState(false);
@@ -25,7 +22,7 @@ export function HoverVideoPreview({ src, className, poster }: Props) {
 
   useEffect(() => {
     const video = videoRef.current;
-    const link = video?.closest<HTMLElement>("a, [data-hover-video]");
+    const link = video?.closest("a");
     if (!video || !link) return;
 
     const start = () => {
@@ -64,7 +61,6 @@ export function HoverVideoPreview({ src, className, poster }: Props) {
       ref={videoRef}
       className={`${className ?? ""} ${styles.videoPreview}`}
       src={src}
-      poster={poster}
       muted
       loop
       playsInline

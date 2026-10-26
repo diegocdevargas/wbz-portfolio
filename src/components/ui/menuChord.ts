@@ -43,7 +43,16 @@ function getNoiseBuffer(audio: AudioContext) {
   return noiseBuffer;
 }
 
-function scheduleChord(audio: AudioContext, index: number, delay = 0, gain = 0.07, octaveShift = 0) {
+function scheduleChord(
+  audio: AudioContext,
+  index: number,
+  delay = 0,
+  gain = 0.07,
+  octaveShift = 0,
+  // Soft chords use pure sine voices and a darker filter, so no triangle overtones ring on top.
+  soft = false,
+  semitoneShift = 0,
+) {
   const start = audio.currentTime + delay;
   const filter = audio.createBiquadFilter();
   const volume = audio.createGain();
@@ -51,8 +60,8 @@ function scheduleChord(audio: AudioContext, index: number, delay = 0, gain = 0.0
   const octave = Math.floor(index / SCALE_TRIADS.length) + octaveShift;
 
   filter.type = "lowpass";
-  filter.frequency.setValueAtTime(760, start);
-  filter.frequency.exponentialRampToValueAtTime(1850, start + 0.18);
+  filter.frequency.setValueAtTime(soft ? 600 : 760, start);
+  filter.frequency.exponentialRampToValueAtTime(soft ? 1100 : 1850, start + 0.18);
   volume.gain.setValueAtTime(0.0001, start);
   volume.gain.exponentialRampToValueAtTime(gain, start + 0.025);
   volume.gain.exponentialRampToValueAtTime(0.0001, start + 0.34);
@@ -61,8 +70,8 @@ function scheduleChord(audio: AudioContext, index: number, delay = 0, gain = 0.0
 
   for (const [voice, semitones] of triad.entries()) {
     const oscillator = audio.createOscillator();
-    oscillator.type = voice === 0 ? "sine" : "triangle";
-    oscillator.frequency.value = 261.63 * 2 ** ((semitones + octave * 12) / 12);
+    oscillator.type = soft || voice === 0 ? "sine" : "triangle";
+    oscillator.frequency.value = 261.63 * 2 ** ((semitones + octave * 12 + semitoneShift) / 12);
     oscillator.connect(filter);
     oscillator.start(start);
     oscillator.stop(start + 0.36);
@@ -546,6 +555,18 @@ export function playSelectorNote(index: number) {
       oscillator.stop(start + 0.3);
     }
   };
+  if (audio.state === "running") play();
+  else void audio.resume().then(play, () => undefined);
+}
+
+/**
+ * Project card hover: the menu's own chords, softened (pure tones, no overtones) and moved up a
+ * fifth, so they sit between the left menu's register and the right menu's higher selector notes.
+ * Each card steps to the next chord, like a passage from one menu to the other.
+ */
+export function playCardChord(step: number) {
+  const audio = getAudioContext();
+  const play = () => scheduleChord(audio, step % SCALE_TRIADS.length, 0, 0.05, 0, true, 7);
   if (audio.state === "running") play();
   else void audio.resume().then(play, () => undefined);
 }
