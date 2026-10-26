@@ -369,7 +369,7 @@ const data: Project[] = [
     ],
     url: "https://ceunsa.com.br/",
     featured: true,
-    order: 2,
+    order: 3,
     cover: {
       src: "/images/projects/ceunsa/desktop_n.webp",
       alt: "Site do CEUNSA exibido em um notebook, com a mensagem de boas-vindas sobre uma trilha entre samambaias",
@@ -440,7 +440,7 @@ const data: Project[] = [
     ],
     url: "https://luhreis.com/",
     featured: true,
-    order: 6,
+    order: 2,
     cover: {
       src: "/images/projects/luh-reis/notebook_l.webp",
       alt: "Página de vendas desktop da Luh Reis para o método de treino Destrave Delas",
