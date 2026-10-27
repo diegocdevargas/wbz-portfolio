@@ -1,5 +1,5 @@
 // Builds the 1200×630 JPEG share images (Open Graph / Twitter) in public/images/og/:
-//   default.jpg  from public/images/scene-hero.jpg (home, /cases)
+//   default.jpg  from scripts/og-hero.jpg, a capture of the live hero at 1920×1008 (home, /cases)
 //   <slug>.jpg   from public/images/projects/<slug>/cover.* (each case study)
 // Run after adding a project or changing a cover: npm run og-images
 import { readdir, mkdir } from "node:fs/promises";
@@ -18,7 +18,7 @@ async function render(src, name) {
   console.log(`og/${name}.jpg  ${Math.round(size / 1024)} KB`);
 }
 
-await render(path.join(root, "scene-hero.jpg"), "default");
+await render(path.join(import.meta.dirname, "og-hero.jpg"), "default");
 
 const projects = path.join(root, "projects");
 for (const slug of await readdir(projects)) {
